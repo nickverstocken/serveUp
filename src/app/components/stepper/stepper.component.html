@@ -1,0 +1,99 @@
+<div class="stepper" *ngIf="steps">
+  <div class="stepperLeft">
+    <div class="stepsWrap">
+      <div class="step" *ngFor="let step of steps; let i = index" id="step{{i + 1}}">
+        <form *ngIf="(i + 1) === currentStep" class="form" id="frmStep{{i + 1}}" name="frmStep{{i + 1}}">
+       <div *ngFor="let input of step.items" class="inputs {{input.class}}">
+         <div class="form-group relative">
+           <label for="{{input.name}}" id="{{input.name}}Label">{{input.label}}</label>
+           <div *ngIf="input.name === 'email'" class="has-error">
+             <p>
+               {{emailError}}
+             </p>
+           </div>
+           <input tabindex="{{currentStep -1 === i ? '' : -1}}" maxlength="{{input.maxlength ? input.maxlength : ''}}" (keyup)="showAutofill($event, input.name)" (blur)="checkValidation($event, input.validation ? input.validation : [])" *ngIf="input.type === 'text' || input.type === 'password'"  type="{{input.type}}" id="{{input.name}}" name="{{input.name}}" class="{{input.readonly ? 'disabled' : ''}}" [(ngModel)]="model[input.name]" readonly="{{input.readonly}}">
+
+           <div *ngIf="input.type === 'imageUpload'">
+             <app-image-uploader [id]="input.name" (fileload)="handleFileUpload($event)" [options]="{width: '90px', height: '90px', 'border-radius': '50%'}"></app-image-uploader>
+           </div>
+           <div *ngIf="input.type === 'textarea'">
+             <textarea tabindex="{{currentStep -1 === i ? '' : -1}}" name="{{input.name}}" maxlength="{{input.maxlength ? input.maxlength : ''}}" [(ngModel)]="model[input.name]" id="{{input.name}}"></textarea>
+           </div>
+           <div *ngIf="input.type === 'dayselector'">
+             <app-day-select></app-day-select>
+           </div>
+           <div *ngIf="input.type === 'select'">
+             <app-select></app-select>
+           </div>
+           <div *ngIf="input.type === 'taginput'">
+             <app-tag-input></app-tag-input>
+           </div>
+           <div class="checkboxChoices" *ngIf="input.type === 'travel'">
+             <div class="checkboxChoice">
+               <label class="checkContainer">
+                 <input id="notravel" type="checkbox">
+                 <span class="checkmark"></span>
+               </label>
+               <span (click)="checkCheckBox($event, 'notravel')">Mijn klanten komen naar mij.</span>
+             </div>
+             <div class="checkboxChoice">
+               <label class="checkContainer">
+                 <input id="travel" type="checkbox">
+                 <span class="checkmark"></span>
+               </label>
+               <span (click)="checkCheckBox($event, 'travel')" >Ik ga zelf naar mijn klanten</span>
+               <app-select *ngIf="showMaxKm" class="select" [options]="maxKms" [placeHolder]="'Max km'"></app-select>
+             </div>
+           </div>
+           <span id="{{input.name}}Error" class="error fas fa-times hide"></span>
+           <span id="{{input.name}}Success" class="success fas fa-check hide"></span>
+         </div>
+         <div id="autoFill{{input.name}}" *ngIf="input.name === 'city'" class="autoFill hide">
+           <ul>
+             <li (click)="fillInCity(city)" *ngFor="let city of cities | searchZip: model.zip"><span class="leftAutoFill">{{city.name}}</span> <span class="rightAutoFill">{{city.zip}}</span></li>
+           </ul>
+         </div>
+         <div id="autoFill{{input.name}}" *ngIf="input.name === 'service_city'" class="autoFill hide">
+           <ul>
+             <li (click)="fillInServiceCity(city)" *ngFor="let city of cities | searchZip: model.service_zip"><span class="leftAutoFill">{{city.name}}</span> <span class="rightAutoFill">{{city.zip}}</span></li>
+           </ul>
+         </div>
+       </div>
+        </form>
+      </div>
+    </div>
+    <div class="pageError has-error">
+      <p>
+        {{pageErrors}}
+      </p>
+    </div>
+    <div class="stepButtons">
+      <div class="buttons">
+        <button (click)="moveTopage(currentStep -1)" class="disabled prev">Vorige stap</button>
+        <button *ngIf="!showRegisterButton"  (click)="moveTopage(currentStep +1)" class="next {{pageHasErrors ? 'disabled' : ''}}">Volgende stap</button>
+        <button *ngIf="showRegisterButton" (click)="confirmLastPage()" class="next confirm {{pageHasErrors ? 'disabled' : ''}}">{{lastSteptext}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="stepperRight {{completed ? 'completed' : ''}}">
+    <div class="stepperPagination">
+      <ul>
+        <li (click)="moveTopage(i + 1)" *ngFor="let step of steps; let i = index" id="pagination{{i + 1}}" class="{{i + 1 == 1 ? 'current' : ''}}"><a>{{i + 1}}</a></li>
+      </ul>
+      <div class="seperator"></div>
+    </div>
+    <div class="stepperHeader">
+      <div class="stepperIcon">
+        <span class="{{completed ? (error ? 'lnr lnr-sad error' : 'lnr lnr-smile success') : steps[currentStep - 1].icon}}"></span>
+      </div>
+      <div class="stepperDescription">
+        <h2>{{completed ? (error ? completedHeaderErrorText : completedHeaderText) :steps[currentStep -1].headerText}}</h2>
+        <p>
+          {{completed ? (error ? errorText : completedText) : steps[currentStep -1].description}}
+        </p>
+        <button (click)="tryAgain()" *ngIf="completed && error">{{completedButtonErrorText}}</button>
+        <button routerLink="/home" *ngIf="completed && !error">{{completedButtonText}}</button>
+      </div>
+    </div>
+  </div>
+</div>

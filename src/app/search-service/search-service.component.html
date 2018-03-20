@@ -1,0 +1,41 @@
+<div class="banner">
+  <img src="../../assets/images/searchBanner.jpg" alt="heroImage">
+  <div class="bannerContent centerStacked">
+    <div>
+      <h1>
+       Zoek naar verschillende services en start je volgend project!
+      </h1>
+    </div>
+    <div>
+      <form name="form" #f="ngForm" novalidate>
+        <div class="form-group searchbtn">
+          <input placeholder="Zoek hier naar een service" type="text"/><button class="btnWithIcon"><span class="fas fa-search"></span>Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div class="heading">
+  <h1>Ontdek</h1>
+  <div class="seperator"></div>
+  <div class="smallInfo">
+    <small>Ontdek alle categorieën</small>
+  </div>
+</div>
+  <div class="categoriesWrap">
+    <div class="cardsWrap row">
+      <div *ngFor="let cat of categories" class="card imagecard">
+        <div class="cardHead">
+          <img src="{{cat.picture}}"/>
+        </div>
+        <div class="cardBody">
+          <h2>{{cat.name}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <app-footer></app-footer>
+</div>

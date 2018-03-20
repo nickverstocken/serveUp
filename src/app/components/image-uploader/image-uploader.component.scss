@@ -1,0 +1,68 @@
+@import '../../../color';
+.uploader input {
+  display: none;
+}
+
+.uploader {
+  background: #fff;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin:2px;
+  border:5px solid $borderColor;
+}
+
+
+.uploader .icon {
+  pointer-events: none;
+}
+
+.uploader,
+.uploader .icon {
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  -ms-transition: all 100ms ease-in;
+  -o-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+}
+
+.uploader .icon {
+  color: $borderColor;
+  left: 50%;
+  top: 50%;
+  font-size:1.8em;
+  z-index:0;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+img {
+  z-index:1;
+  position: relative;
+  opacity: 0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  -webkit-transition: all 300ms ease-in;
+  -moz-transition: all 300ms ease-in;
+  -ms-transition: all 300ms ease-in;
+  -o-transition: all 300ms ease-in;
+  transition: all 300ms ease-in;
+  cursor:pointer;
+
+  &:hover{
+
+  }
+}
+img[class] {
+  width: 100%;
+}
+img.loaded {
+  opacity: 1;
+}

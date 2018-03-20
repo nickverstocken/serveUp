@@ -1,0 +1,21 @@
+<label class="uploader" ondragover="return false;"
+       [class.loaded]="loaded"
+       [ngStyle]="options"
+       (dragenter)="handleDragEnter()"
+       (dragleave)="handleDragLeave()"
+       (mouseenter)="mouseEnter()"
+       (mouseleave)="mouseLeave()"
+       (drop)="handleDrop($event)">
+
+  <span [class]="dragging ? 'icon fas fa-plus' : 'icon fas fa-image'"></span>
+
+  <img
+          class="img"
+          [src]="imageSrc"
+          (load)="handleImageLoad()"
+
+          [class.loaded]="imageLoaded"/>
+
+  <input id="{{id}}" type="file" name="file" accept="image/x-png,image/jpeg"
+         (change)="handleInputChange($event)">
+</label>

@@ -1,0 +1,89 @@
+<div id="userProfile">
+  <div id="topPart">
+    <div class="profileBanner">
+      <img src="../../../assets/images/bannertest.jpg"/>
+    </div>
+    <div class="profilePicture">
+      <div class="profilePictureImage">
+        <img
+          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+      </div>
+    </div>
+    <div class="namereview">
+      <h2>Dj Nick Verstocken</h2>
+      <div class="reviewScore">
+        <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
+        class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
+        <span class="reviewCount">7</span>
+      </div>
+    </div>
+  </div>
+  <div id="aboutDetails" class="details">
+    <div id="about">
+      <h2>Over</h2>
+      <p id="abouttext">
+        In tegenstelling tot wat algemeen aangenomen wordt is Lorem Ipsum niet zomaar willekeurige tekst. het heeft zijn
+        wortels in een stuk klassieke latijnse literatuur uit 45 v.Chr. en is dus meer dan 2000 jaar oud. Richard
+        McClintock, een professor latijn aan de Hampden-Sydney College in Virginia, heeft één van de meer obscure
+        latijnse woorden, consectetur, uit een Lorem Ipsum passage opgezocht, en heeft tijdens het zoeken naar het woord
+        in de klassieke literatuur de onverdachte bron ontdekt. Lorem Ipsum komt uit de secties 1.10.32 en 1.10.33 van
+        "de Finibus Bonorum et Malorum" (De uitersten van goed en kwaad) door Cicero, geschreven in 45 v.Chr. Dit boek
+        is een verhandeling over de theorie der ethiek, erg populair tijdens de renaissance. De eerste regel van Lorem
+        Ipsum, "Lorem ipsum dolor sit amet..", komt uit een zin in sectie 1.10.32.
+      </p>
+      <div class="viewMore">
+        <button (click)="showAllText($event)">Toon meer</button>
+      </div>
+    </div>
+  </div>
+  <div id="contactDetails" class="details">
+    <h2>Contact</h2>
+    <div class="listContact">
+      <ul>
+        <li><span class="fas fa-map-pin"></span><span class="label">Locatie </span><span class="text">Kruisstraat 60, 9111 Belsele</span>
+        </li>
+        <li><span class="fas fa-phone-volume"></span><span class="label">Telefoon </span><span class="text">+324 73 67 02 14</span>
+        </li>
+        <li><span class="fas fa-trophy"></span><span class="label">Jaar ervaring </span><span class="text">3</span></li>
+        <li><span class="fas fa-link"></span><span class="label">Website </span><span class="text"><a>www.nickverstocken.be</a></span>
+        </li>
+        <li><span class="fas fa-share-alt"></span><span class="label">Social media</span><span class="text">
+          <a class="social facebook"><span class="fab fa-facebook-f"></span></a>
+         <a class="social twitter"><span class="fab fa-twitter"></span></a>
+           <a class="social linkedin"><span class="fab fa-linkedin-in"></span></a>
+        </span></li>
+      </ul>
+    </div>
+  </div>
+  <div id="qandaDetails" class="details">
+    <h2>Q&A</h2>
+    <div id="qanda">
+      <div class="qandaItem">
+        <h3><span>Q.</span> Hoe onderscheid jij je van de concurrentie?</h3>
+        <span> A. </span>
+        <p> Ik probeer van elk evenement een persoonlijke missie te maken zodat iedereen tevreden is!</p>
+      </div>
+
+      <div *ngIf="qAndAIsFull">
+        <div class="qandaItem">
+          <h3><span>Q.</span> Wat zit er allemaal in de prijs en wat niet?</h3>
+          <span> A. </span>
+          <p><b>In de prijs :</b> Vervoerskosten, geluidsinstallatie, rookmachine. <br/> <b>Niet in de prijs :</b> Boxen
+            (€ 50)</p>
+        </div>
+        <div class="qandaItem">
+          <h3><span>Q.</span> Wat moet er allemaal voorzien zijn op de locatie zelf?</h3>
+          <span> A. </span>
+          <p>Drank, Eten, Artiestenlounge </p>
+        </div>
+      </div>
+      <div class="viewMore">
+        <button (click)="showAllQAndA($event)">Toon meer</button>
+      </div>
+    </div>
+  </div>
+  <div id="reviews" class="details">
+    <h2>Reviews</h2>
+    <app-reviews></app-reviews>
+  </div>
+</div>

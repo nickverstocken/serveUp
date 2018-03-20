@@ -1,0 +1,121 @@
+@import "../../color";
+footer{
+  margin-top: 50px;
+  border-top:1px solid $borderColor;
+  padding-bottom: 50px;
+}
+.columnWrap{
+  max-width: 1024px;
+  padding:0px 15px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  @include clearfix;
+  .column{
+    width:25%;
+    margin-top: 40px;
+  }
+  .logo{
+    margin-bottom: 20px;
+    a{
+      height:40px;
+      color:$orange;
+    }
+  }
+  .title{
+    height:40px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color:$titleColor;
+  }
+  ul{
+    margin: 0;
+    padding:0;
+
+    list-style: none;
+    li{
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  }
+  p{
+    font-size: 14px;
+    &#privacy{
+      margin-top: 15px;
+      a:first-child{
+        padding-right: 10px;
+      }
+      a:last-child{
+        padding-left: 10px;
+      }
+    }
+  }
+  a{
+    color:$textColor;
+  }
+}
+.logo{
+  padding:0;
+}
+#social{
+  display:flex;
+  margin-top: 15px;
+  a{
+    margin-right: 5px;
+    background:$textColor;
+    color:#fff;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    &:hover, &:focus{
+      text-decoration: none;
+    }
+    &#facebook:hover{
+      background:#3B5998;
+    }
+    &#twitter:hover{
+      background:#1DA1F3;
+    }
+    &#pinterest:hover{
+      background:#BD081C;
+    }
+    &#google:hover{
+      background:#DC4A38;
+    }
+  }
+
+}
+@media all and (max-width: 800px) {
+  .columnWrap{
+    .title{
+      justify-content: center;
+    }
+    #social{
+      justify-content: center;
+    }
+    .logo{
+     a{
+       justify-content: center;
+     }
+    }
+    .column{
+      width:50%;
+      text-align: center;
+    }
+  }
+}
+@media all and (max-width: 450px) {
+  .columnWrap{
+    .column{
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+<div class="banner">
+  <img src="../../assets/images/herobg-sm.jpg" srcset="../../assets/images/herobg-md.jpg 1000w, ../../assets/images/herobg-lg.jpg 2000w" alt="heroImage">
+  <div class="bannerContent">
+    <div class="left">
+      <h1>
+        Start nu met je volgend project!
+      </h1>
+    </div>
+    <div class="right">
+      <h2>Login</h2>
+      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="f.submitted && email.invalid && (email.dirty || email.touched) ?  'has-error' : ''">
+          <label for="email">Email</label>
+          <input [placeholder]="(f.submitted && email.invalid && (email.dirty || email.touched)) ? 'Vul een correct email adres in a.u.b.' :'Email'" id="email" type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+        </div>
+        <div class="form-group" [ngClass]="f.submitted && password.invalid && (password.dirty || password.touched) ? 'has-error' : ''">
+          <label for="password">Password</label>
+          <input [placeholder]="(f.submitted && password.invalid && (password.dirty || password.touched)) ? 'Vul je wachtwoord in a.u.b.' :'Wachtwoord'" id="password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+        </div>
+        <div class="has-error">
+          <p>
+            {{errors}}
+          </p>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="landingWrap">
+  <div class="landingItem intro">
+    <div class="landingItemContent">
+      <h1>Wij helpen je de juiste persoon aan te nemen voor jouw project</h1>
+      <div class="seperator"></div>
+      <div class="smallInfo">
+        <small>Hoe werkt Serve Up?</small>
+      </div>
+    </div>
+  </div>
+  <div class="landingItem">
+    <div class="landingItemContent">
+      <div class="splitScreenContent">
+        <div class="leftItem">
+          <h2>1. Kennis maken met professionals</h2>
+          <p>
+            Vertel ons wat je zoekt en wij zullen u kennis laten maken met ervaren professionals in uw regio die klaar zijn om uw project te voltooien.
+
+          </p>
+        </div>
+        <div class="rightItem">
+          <img src="../../assets/images/step1.png" alt="Serve Up stap 1" />
+        </div>
+      </div>
+      <div class="splitScreenContent">
+        <div class="leftItem">
+          <img src="../../assets/images/step2.png" alt="Serve Up stap 1" />
+        </div>
+        <div class="rightItem">
+          <div class="rightItemText">
+            <h2>2. Vergelijk</h2>
+            <p>
+              We brengen je in contact met de beschikbare services. Je krijgt direct een overzicht van de services waarbij je per service volgende dingen kan zien/doen:
+            </p>
+            <div class="itemIconList">
+                <ul>
+                  <li><span class="lnr lnr-user"></span>Service profiel</li>
+                  <li><span class="lnr lnr-diamond"></span>Geschatte prijs</li>
+                  <li><span class="lnr lnr-star"></span>Klanten reviews</li>
+                  <li><span class="lnr lnr-license"></span>Contact info</li>
+                  <li><span class="lnr lnr-bubble"></span>Persoonlijke chat</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="splitScreenContent">
+        <div class="leftItem">
+          <h2>3. Kies de perfecte service</h2>
+          <p>
+            Ben je klaar? Kies de juiste service voor de prijs die jou het beste past.
+
+          </p>
+        </div>
+        <div class="rightItem">
+          <img src="../../assets/images/step3.png" alt="Serve Up stap 1" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <app-footer></app-footer>
+</div>

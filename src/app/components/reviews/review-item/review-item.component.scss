@@ -1,0 +1,42 @@
+@import '../../../../color';
+.reviewItem{
+  padding-top:25px;
+  padding-bottom: 25px;
+  border-top: 1px solid $borderColor;
+}
+.reviewHead{
+  display: flex;
+  margin-bottom: 15px;
+}
+.rate{
+  font-size: 12px;
+}
+h4{
+  margin:0;
+  margin-bottom: 5px;
+}
+.reviewText{
+  display: inline;
+  font-size: 15px;
+}
+.imageDate{
+  margin-right: 15px;
+}
+.reviewScore{
+  margin-left: auto;
+  span{
+    font-size: 12px;
+    top:-1px;
+  }
+}
+.profilePicture{
+  .profilePictureImage{
+    margin-right: 15px;
+    img{
+      width:40px;
+      height:40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+}

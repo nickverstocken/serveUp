@@ -1,0 +1,68 @@
+@import '../../../color';
+.daySelectWrap{
+  display:flex;
+  flex-wrap: wrap;
+  padding:10px;
+  border-radius: $borderRadius;
+  border: 1px solid $borderColor;
+  background:#fff;
+  justify-content: space-between;
+  .days{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    .day{
+      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-items: center;
+      justify-content: center;
+
+      .daySelect{
+        cursor: pointer;
+        width:35px;
+        height:35px;
+        border-radius: 50%;
+        border:1px solid $borderColor;
+        color:$textColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.selected{
+          background:$orange;
+          color:#fff;
+      }
+      }
+      p{
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .time{
+    flex:1 auto;
+    .select{
+     width:50%;
+    }
+    p{
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      width:100%;
+    }
+    span{
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .timewrap{
+      display:flex;
+      align-items: center;
+      .selectwrap{
+        display:flex;
+        align-items: center;
+        flex:1 auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,253 @@
+@import "../../../color";
+h2,h3{
+  line-height: 1;
+  margin: 0;
+}
+.fixedWrap{
+  position: relative;
+  width:100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  margin-bottom: -50px;
+}
+.leftSubNav, .rightAsside{
+  position: fixed;
+  width:25vw;
+  z-index: 0;
+  max-width: 400px;
+  height:calc(100% - 60px);
+  border-left:1px solid $borderColor;
+  border-right:1px solid $borderColor;
+  top:60px;
+}
+.middleFixed{
+  position: relative;
+  width: 50vw;
+  top:0;
+  margin:0 auto;
+  overflow: auto;
+
+}
+h2{
+  padding:25px;
+  font-weight: 200;
+  background:$backgroundColor;
+  margin-bottom: 5px;
+}
+.leftSubNav{
+  right:75vw;
+  overflow-y: auto;
+}
+.number{
+  margin-left: 5px;
+}
+
+
+.rightAsside{
+  left:75vw;
+  .priceBlock{
+    text-align: center;
+    padding:25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid $borderColor;
+    .priceBig{
+      line-height: 1;
+      .price{
+        font-size: 60px;
+        font-weight: 200;
+        .valuta{
+          font-size: 35px;
+          position: relative;
+          top:3px;
+          vertical-align: top;
+        }
+      }
+      .rate{
+        margin-top:5px;
+        margin-bottom: 5px;
+      }
+    }
+    .available{
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    .action{
+      margin-top: 10px;
+
+      button{
+        padding-top: 12px;
+        padding-bottom: 12px;
+        width:100%;
+      }
+    }
+  }
+  .chatBlock{
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    .chatter{
+      display: block;
+      flex:1 auto;
+      position: relative;
+    }
+    h2{
+      display: block;
+      text-align: center;
+    }
+  }
+}
+#overlayProjectDetails{
+  &.opened{
+    z-index:2;
+  }
+}
+#overview{
+  z-index:4;
+  position: fixed;
+  background: $backgroundColor;
+  color:$titleColor;
+  border: 0;
+  top:60px;
+  left:0;
+  display: none;
+  margin-left: -1px;
+  border-radius: 0;
+  padding:15px;
+  transition: all 0.2s linear;
+  span{
+    transition:transform 0.3s ease ;
+  }
+  &.open{
+    left:320px;
+    margin-left: -55px;
+    span{
+      transform: rotate(-540deg);
+    }
+  }
+  &:hover{
+    box-shadow: none;
+  }
+}
+@media all and (max-width: 1200px) {
+  .leftSubNav, .rightAsside{
+    width:30vw;
+  }
+  .leftSubNav{
+    right: 70vw;
+  }
+  .rightAsside{
+    left:70vw;
+  }
+  .middleFixed{
+    width:40vw;
+  }
+}
+@media all and (max-width: 1024px) {
+  #overview{
+    display: inline-block;
+  }
+  .leftSubNav{
+    z-index:3;
+    left:-320px;
+    width:100%;
+
+    transition: all 0.2s linear;
+    max-width: 320px;
+    background: #fff;
+    &.open{
+      left:0;
+    }
+    @include boxShadowMedium;
+  }
+  .rightAsside{
+    width: 35%;
+    left:65vw;
+  }
+  .middleFixed{
+    width: 65%;
+    left:0;
+    margin:0;
+  }
+}
+@media all and (max-width: 960px) {
+  .fixedWrap{
+    position: relative;
+    width:100%;
+    max-width: 1440px;
+    height:auto;
+    margin: 0 auto;
+    margin-bottom: -50px;
+  }
+  .middleFixed{
+    width:100%;
+    top:auto;
+    height:auto;
+  }
+  .rightAsside{
+    position: fixed;
+    height:70px;
+    left:0;
+    bottom:0;
+    max-width: initial;
+    background: #fff;
+    top:auto;
+    width:100%;
+    @include boxShadowSmall;
+    .priceBlock{
+      flex-direction: row;
+      align-items: center;
+      height: 100%;
+      text-align: left;
+      padding:0;
+      margin:0 auto;
+      border-bottom:0;
+      .priceBigWrap{
+        margin-right: 10%;
+      }
+      .priceBig{
+        margin-top: 10px;
+        position: relative;
+        .price{
+          display: inline-block;
+          font-size: 25px;
+          font-weight: 700;
+          .valuta{
+            font-size:25px;
+            font-weight: 700;
+            top:0px;
+            vertical-align: top;
+          }
+        }
+        .rate{
+          display: inline-block;
+          margin-top:0px;
+          position: absolute;
+          font-size: 12px;
+          margin-left: 5px;
+          margin-bottom: 5px;
+          span{
+            vertical-align: top;
+          }
+        }
+      }
+      .available{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        p{
+          font-size: 12px;
+        }
+      }
+      .action{
+        margin-top: 0;
+        button{
+          min-width: 100px  ;
+        }
+      }
+    }
+    .chatBlock{
+      display: none;
+    }
+  }
+}

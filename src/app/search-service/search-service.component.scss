@@ -1,0 +1,36 @@
+.searchbtn{
+  display: flex;
+  input{
+    padding:10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  button{
+    width:150px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+}
+.banner{
+  height:445px;
+  margin-bottom: -50px;
+}
+.heading{
+  h1{
+    text-align: center;
+  }
+}
+.content{
+  padding-bottom: 10px;
+}
+.categoriesWrap{
+  max-width: 1024px;
+  margin:0 auto;
+  margin-top: 50px;
+  .imagecard{
+    cursor: pointer;
+  }
+}
+.content{
+  padding-top: 25px;
+}

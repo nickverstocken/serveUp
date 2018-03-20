@@ -1,0 +1,30 @@
+#signUpWrap{
+  padding:0px 15px;
+  margin-top: 60px;
+  padding-top: 30px;
+  max-width: 1024px;
+  margin:0 auto;
+}
+.title{
+  h1{
+    max-width: 900px;
+    margin:20px auto;
+  }
+  text-align: center;
+}
+#loginChooser{
+  margin-bottom: 20px;
+}
+
+#profileLabel{
+  text-align: center;
+}
+#profilePictureWrap{
+  margin-right: 35px;
+}
+#emailLabel{
+  float:left;
+}
+.has-error{
+  float: right;
+}

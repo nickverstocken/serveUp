@@ -1,0 +1,3 @@
+<div (click)="tagInputFocus()" class="tagInputWrap">
+  <app-tag class="taggable" *ngFor="let tag of tags" [name]="tag.name" (tagRemove)="removeTag($event)"></app-tag><input autocomplete="off" (keyup)="addTag($event)" [(ngModel)]="newTag.name" class="tagInput" type="text" placeholder="+ nieuwe tag" id="tagInput" name="tagInput">
+</div>

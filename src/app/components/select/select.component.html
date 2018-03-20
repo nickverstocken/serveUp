@@ -1,0 +1,14 @@
+<div class="select">
+  <select class="select-hidden">
+    <option value="hide">Select</option>
+    <option *ngFor="let option of options"  value="{{option.value}}">{{option.name}}</option>
+  </select>
+  <div (click)="showOptions($event)" class="select-styled {{showOption ? 'active' : ''}}">
+    {{selectedItem ? selectedItem[0] : placeHolder}}
+  </div>
+  <ul class="select-options" *ngIf="showOption">
+    <li class="option" *ngFor="let option of options" data-value="{{option.value}}" (click)="selectValue(option.name, option.value)">
+      {{option.name}}
+    </li>
+  </ul>
+</div>

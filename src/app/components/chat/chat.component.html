@@ -1,0 +1,68 @@
+<div class="chatwrap">
+  <div id="messages" class="messageWrap">
+    <div class="message">
+      <div class="userwrap">
+        <div class="userPicture">
+          <img
+            src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        </div>
+
+      </div>
+      <div class="messageText reveived">
+        <div class="timeAgo"><span>15 min. geleden</span></div>
+        <p>
+          is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
+        </p>
+      </div>
+    </div>
+    <div class="message">
+      <div class="messageText send">
+        <div class="timeAgo"><span>15 min. geleden</span></div>
+        <p>
+          Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
+        </p>
+      </div>
+      <div class="userwrap">
+        <div class="userPicture">
+          <img
+            src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        </div>
+
+      </div>
+    </div>
+    <div class="message">
+      <div class="messageText send">
+        <div class="timeAgo"><span>15 min. geleden</span></div>
+        <p>
+          Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
+        </p>
+      </div>
+      <div class="userwrap">
+        <div class="userPicture">
+          <img
+            src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        </div>
+
+      </div>
+    </div>
+    <div class="message">
+      <div class="userwrap">
+        <div class="userPicture">
+          <img
+            src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        </div>
+
+      </div>
+      <div class="messageText reveived">
+        <div class="timeAgo"><span>15 min. geleden</span></div>
+        <p>
+          is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="messageInput">
+    <textarea id="textarea" [(ngModel)]="chatmessage" (keydown)="autoGrow()" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
+    <button id="sendMessage"><span class="far fa-paper-plane"></span></button>
+  </div>
+</div>

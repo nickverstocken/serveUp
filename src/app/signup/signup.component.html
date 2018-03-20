@@ -1,0 +1,64 @@
+<div id="signUpWrap">
+  <div class="title">
+    <h1>Registreer en bereik je doel!</h1>
+    <div class="seperator"></div>
+    <div class="smallInfo">
+      <small>{{smallText}}</small>
+    </div>
+  </div>
+  <div>
+
+  </div>
+  <div id="chooserWrap" *ngIf="choice===''">
+    <div class="chooser">
+      <div class="left">
+        <h2>Ik wil mijn service uitbouwen</h2>
+        <p>
+          Kom in contact met juiste klanten voor jouw service en bouw je klantenbestand uit.
+        </p>
+        <button routerLink="/register" [queryParams]="{ as: 'service' }">Registreer als service</button>
+      </div>
+      <div class="seperatorMiddle">
+        <p>
+          of
+        </p>
+      </div>
+      <div class="right">
+        <h2>Ik zoek een service</h2>
+        <p>
+          Zoek en vindt direct de juist service voor jouw project en/of doel.
+        </p>
+        <button routerLink="/register" [queryParams]="{ as: 'user' }" >Registreer als klant</button>
+      </div>
+    </div>
+    <div class="title">
+      <h1>Heb je al een account?</h1>
+      <div class="seperator"></div>
+      <div class="smallInfo">
+        <small>Log in</small>
+      </div>
+    </div>
+    <div id="loginChooser" class="chooser">
+      <div class="left noBg">
+        <h2>Ready to go</h2>
+        <p>
+          Waar wacht je nog op? Log snel in!
+        </p>
+        <button routerLink="/home">Log in</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="choice === 'user'">
+    <app-stepper #stepperUser [completedHeaderText]="'Welkom bij Serve Up!'" [completedHeaderErrorText]="'Oei, dit is gênant...'"  [completedText]="'Bedankt om te registreren! Check gauw je email om deze te bevestigen en ga direct aan de slag'" [completedButtonErrorText]="'Probeer opnieuw'" [completedButtonText]="'Login'"
+                 [errorText]="'Er ging iets mis, probeer het later opnieuw'" [steps]="stepsUser" [lastSteptext]="'Registreer'" (lastStepCallBack)="register($event)"></app-stepper>
+  </div>
+  <div *ngIf="choice === 'service'">
+    <app-stepper #stepperService [completedHeaderText]="'Welkom bij Serve Up!'" [completedHeaderErrorText]="'Oei, dit is gênant...'" [completedText]="'Bedankt om te registreren! Check gauw je email om deze te bevestigen en ga direct aan de slag'" [completedButtonErrorText]="'Probeer opnieuw'" [completedButtonText]="'Login'"
+                 [errorText]="'Er ging iets mis, probeer het later opnieuw'"  [steps]="stepsService" [lastSteptext]="'Registreer'" (lastStepCallBack)="registerService($event)"></app-stepper>
+  </div>
+</div>
+<div class="footer">
+  <app-footer></app-footer>
+</div>
+
+

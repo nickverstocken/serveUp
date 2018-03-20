@@ -1,0 +1,209 @@
+@import "../../../color";
+textarea{
+  height:100px;
+}
+#emailLabel{
+  float:left;
+}
+.has-error{
+  float: right;
+}
+.step{
+  transition: all 0.2s ease;
+}
+.pageError{
+  float:none;
+  display:block;
+  text-align: right;
+  min-height: 15px;
+}
+.form{
+  display: block;
+  @include clearfix;
+  margin-left: -15px;
+}
+.stepper{
+  position: relative;
+  margin-top: 50px;
+  border: 1px solid $borderColor;
+  display:flex;
+  .stepButtons{
+  }
+  .stepperLeft, .stepperRight{
+    position: relative;
+    padding:25px;
+  }
+  .stepperLeft{
+    flex:1 auto;
+    transition: all 0.2s ease-out;
+    min-height: 302px;
+
+    background: $backgroundColor;
+    .autoFill{
+      margin-top: -7px;
+    }
+    .stepButtons{
+      margin-top: auto;
+      .buttons{
+        text-align: right;
+      }
+    }
+  }
+  .stepperRight{
+    min-width: 250px;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background:#fff;
+    &.completed{
+      max-width: initial;
+      position:absolute;
+      width:100%;
+      height:100%;
+      .stepperHeader{
+        .stepperIcon{
+          font-size: 55px;
+        }
+      }
+      .stepperPagination{
+        display:none;
+      }
+    }
+    @include boxShadowLarge;
+    .seperator{
+      max-width: 50px;
+    }
+    .stepperPagination{
+      ul{
+        padding:0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        margin-bottom: 25px;
+        li{
+          width:32px;
+          height:32px;
+          display:flex;
+          margin:0px 5px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          a{
+            color:$textColor;
+            font-weight: 700;
+            &:hover, &:focus{
+              text-decoration: none;
+            }
+          }
+          &.current{
+            border:2px solid $blue;
+            a{
+              color:$blue;
+            }
+          }
+
+        }
+      }
+    }
+    .stepperHeader{
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      flex:1 auto;
+      h2{
+        margin:0;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      p{
+        font-size: 14px;
+      }
+      text-align: center;
+      .stepperIcon{
+        font-size: 35px;
+        color:$orange;
+        margin-bottom: 25px;
+      }
+      button{
+        margin-top: 15px;
+      }
+    }
+  }
+}
+@media all and (max-width: 800px) {
+  .stepper{
+    display:block;
+    padding-top: 130px;
+    .stepperRight{
+      box-shadow: none;
+      height:130px;
+      border-bottom: 1px solid $borderColor;
+      position: absolute;
+      top:0;
+      flex-direction: row;
+      max-width: initial;
+      width:100%;
+      .seperator{
+        display: none;
+      }
+      .stepperPagination{
+        ul{
+          margin: 0;
+        }
+      }
+      .stepperHeader{
+        .stepperIcon{
+         display:none;
+        }
+        .stepperDescription{
+          text-align: right;
+          padding-left:35px;
+        }
+        align-items: center;
+        flex-direction: row;
+      }
+    }
+  }
+}
+.checkboxChoices{
+  background: #fff;
+  border-radius: $borderRadius;
+  border: 1px solid $borderColor;
+  .checkContainer{
+    margin-right: 10px;
+  }
+    .select{
+      display: inherit;
+      min-width:110px;
+    }
+  .checkboxChoice{
+    align-items: center;
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid $borderColor;
+    padding:10px;
+    span{
+      cursor: pointer;
+      display: block;
+      flex:1 auto;
+      color:$textColor;
+      vertical-align: top;
+    }
+    &:last-child{
+     border:0;
+    }
+  }
+}
+@media all and (max-width: 500px) {
+  .stepper{
+    padding-top: 83px;
+    .stepperRight{
+      height:auto;
+      .stepperHeader{
+        display: none;
+      }
+    }
+  }
+
+}

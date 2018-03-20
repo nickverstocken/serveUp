@@ -1,0 +1,50 @@
+<header class="notLoggedIn" *ngIf="!authenticated">
+  <nav class="navigation">
+    <div class="logo"><a routerLink="/home">Serve Up!</a></div>
+    <ul>
+      <li><a routerLink="/register" routerLinkActive="selected" href="">Registreer</a></li>
+      <li><a (click)="srollToTop()" routerLink="/home" routerLinkActive="selected" href="">Login</a></li>
+    </ul>
+  </nav>
+</header>
+<header class="loggedIn" *ngIf="authenticated">
+  <nav class="navigation">
+    <a (click)="openMobileMenu()" *ngIf="mobile" class="menumobile">
+      <i class="fas fa-bars"></i>
+    </a>
+    <div class="logo"><a href="">Serve Up!</a></div>
+    <ul *ngIf="!mobile">
+      <li><a routerLink="/">Zoek</a></li>
+      <li><a routerLink="projects">Projecten</a></li>
+      <li><a routerLink="/">Berichten</a></li>
+      <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a>
+        <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
+        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
+          class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+        {{user.fname}} {{user.name}}<i *ngIf="showSubnav === ''" class="fas fa-caret-up"></i><i
+        *ngIf="showSubnav === 'hideSubnav'" class="fas fa-caret-down"></i>
+      </a></li>
+    </ul>
+    <ul *ngIf="mobile" class="mobileMenu {{mobileMenu}}">
+      <a (click)="openMobileMenu()" class="close"><span class="lnr lnr-cross"></span></a>
+      <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a
+        routerLink="/">
+        <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
+        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
+          class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+        {{user.fname}} {{user.name}}<i *ngIf="showSubnav === ''" class="fas fa-caret-up"></i><i
+        *ngIf="showSubnav === 'hideSubnav'" class="fas fa-caret-down"></i>
+      </a></li>
+      <li><a><span class="lnr lnr-user"></span>Profiel</a></li>
+      <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
+      <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
+      <li><a routerLink="/"><span class="lnr lnr-bubble"></span>Berichten</a></li>
+      <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
+    </ul>
+  </nav>
+  <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" class="overlay {{mobileMenu}}"></a>
+  <ul *ngIf="!mobile" class="subnav {{showSubnav}}">
+    <li><a routerLink="profile/{{user.id}}">Profiel</a></li>
+    <li><a (click)="logout()">Uitloggen</a></li>
+  </ul>
+</header>

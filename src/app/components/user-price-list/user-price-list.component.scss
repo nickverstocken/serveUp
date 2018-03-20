@@ -1,0 +1,59 @@
+@import '../../../color';
+ul{
+  list-style: none;
+  padding:0;
+  margin: 0;
+  li{
+    display: block;
+    a{
+      color:$textColor;
+      padding:25px 10px;
+      display: flex;
+      align-items: center;
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      &:hover, &.selected, &:focus{
+        border-top: 2px solid lighten($borderColor,5%);
+        border-bottom: 2px solid lighten($borderColor,5%);
+        text-decoration: none;
+        background:lighten($borderColor,8%);
+      }
+    }
+  }
+  .userPrice{
+    margin-left: auto;
+    line-height: 1;
+    .price{
+      font-weight: 200;
+      color:$titleColor;
+      .valuta{
+        font-size: 20px;
+        vertical-align: top;
+      }
+      position: relative;
+      font-size:27px;
+    }
+    .rate{
+      font-size: 12px;
+      text-align: right;
+      padding-right:2px;
+    }
+  }
+}
+.userPicture{
+  img{
+    width:50px;
+    height:50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+.userInfo{
+  padding-left: 10px;
+  h3{
+    font-weight: 400;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    font-size: 16px;
+  }
+}
