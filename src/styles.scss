@@ -60,7 +60,7 @@ button{
   }
 }
 label{
-  color:$titleColor;
+  color:$textColor;
   font-size: 14px;
 }
 input, textarea{
@@ -70,10 +70,11 @@ input, textarea{
   padding:5px;
   border:1px solid $borderColor;
   outline: 0;
-  color:$textColor;
+  color:$titleColor;
   &.disabled {
     background: $backgroundColor;
     border: 1px solid $borderColor;
+    color:$textColor;
     &:focus, &:hover {
       border: 1px solid $borderColor;
       cursor: not-allowed;
@@ -297,11 +298,35 @@ h1,h2,h3,h4,h5{
     border:2px solid $borderColor;
   }
 }
-.error{
+.error, .red{
   color:$red;
 }
-.success{
+.redbg{
+  background:$red;
+}
+.success, .green{
   color:$green;
+}
+.greenbg{
+  background:$green;
+}
+.orange{
+  color:$orange;
+}
+.orangebg{
+  background:$orange;
+}
+.yellow{
+  color:$yellow;
+}
+.yellowbg{
+  background:$yellow;
+}
+.blue{
+  color:$blue;
+}
+.bluebg{
+  background:$blue;
 }
 .smallInfo{
   text-align: center;
@@ -561,6 +586,68 @@ display:flex;
     font-weight: 700;
     margin-left: 3px;
     color:lighten($textColor, 30%);
+  }
+}
+.accordion{
+  list-style: none;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  margin: 5px;
+  padding:0;
+  .acHead{
+    padding:15px;
+    cursor: pointer;
+    border-bottom: 1px solid $borderColor;
+    .acIcon{
+      margin-right: 15px;
+    }
+  }
+  .acBody{
+    padding: 15px;
+    padding-bottom: 10px;
+    display: none;
+    background: #fdfdfd;
+    border-bottom: 1px solid $borderColor;
+    transform-origin: top;
+    transition: transform 0.2s ease-in;
+    .actions{
+      text-align: right;
+      margin-top: 10px;
+      padding:15px;
+      padding-bottom: 5px;
+      margin-right: -15px;
+      margin-left: -15px;
+      border-top: 1px solid $borderColor;
+      .editting{
+        display: none;
+      }
+      .button{
+        background: 0;
+        color:$titleColor;
+        padding: 0;
+        font-weight: 400;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-right: 15px;
+        &:hover{
+          box-shadow: none;
+        }
+      }
+
+      .button:last-child{
+        margin-right: 5px;
+        color:$blue;
+      }
+    }
+    textarea{
+      height: 250px;
+    }
+    input, textarea{
+      font-size: 14px;
+      padding: 10px;
+      margin-bottom: 5px;
+    }
   }
 }
 .card{

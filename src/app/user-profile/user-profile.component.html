@@ -1,4 +1,113 @@
-<div class="profilePreview">
-  <app-profile></app-profile>
+<div id="userProfileWrap">
+  <div class="profileEdit">
+    <h2>Instellingen</h2>
+    <div class="accordionWrap">
+      <ul class="accordion">
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac1')">
+            <span class="acIcon fas fa-user"></span><span>Persoonlijke info</span>
+          </div>
+          <div class="acBody" id="ac1">
+            <input class="editable disabled" readonly value="Nick" id="fname" placeholder="Voornaam" />
+            <input class="editable disabled" readonly id="name" placeholder="Achternaam" />
+            <input class="editable disabled" readonly id="email" placeholder="Email" />
+            <input class="editable disabled" readonly id="address" placeholder="Adres" />
+            <input class="editable disabled" readonly id="place" placeholder="Plaats" />
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac1')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac1')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac2')">
+            <span class="acIcon fas fa-key"></span><span>Wijzig wachtwoord</span>
+          </div>
+          <div class="acBody" id="ac2">
+            <input class="editable disabled" readonly  id="oldpass" placeholder="Huidig wachtwoord" />
+            <input class="editable disabled" readonly  id="newpass" placeholder="Nieuw wachtwoord" />
+            <input class="editable disabled" readonly  id="newpassconfirm" placeholder="Herhaal nieuw wachtwoord" />
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac2')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac2')"  class="button">Annuleer</button><button class="button">Wijzig wachtwoord</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac3')">
+            <span class="acIcon fas fa-info-circle"></span><span>Service beschrijving</span>
+          </div>
+          <div class="acBody" id="ac3">
+            <input class="editable disabled" readonly id="service_name" placeholder="Service naam" />
+            <textarea spellcheck="false" class="editable disabled" readonly  id="description" placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac3')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac3')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac4')">
+            <span class="acIcon fas fa-address-book"></span><span>Service contact</span>
+          </div>
+          <div class="acBody" id="ac4">
+            <input class="editable disabled" readonly id="service_address" placeholder="Adres" />
+            <input class="editable disabled" readonly id="service_place" placeholder="Plaats" />
+            <input class="editable disabled" readonly id="service_tel" placeholder="Telefoon" />
+            <input class="editable disabled" readonly type="number" id="service_experience" placeholder="Jaar ervaring" />
+            <input class="editable disabled" readonly id="service_website" placeholder="Website" />
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac4')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac4')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac5')">
+            <span class="acIcon fas fas fa-clock"></span><span>Service werkdagen</span>
+          </div>
+          <div class="acBody" id="ac5">
+            <app-day-select></app-day-select>
+            <div class="actions">
+              <div class="edit">
+                <button (click)="cancelEditMode('ac5')" class="button">Annuleer</button> <button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="acHead" (click)="toggleAccOpened('ac6')">
+            <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
+          </div>
+          <div class="acBody" id="ac6">
+            <div class="actions">
+              <div class="edit">
+                <button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="profilePreview">
+    <app-profile></app-profile>
+  </div>
 </div>
 
