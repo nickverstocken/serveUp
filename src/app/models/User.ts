@@ -1,21 +1,22 @@
+import {Service} from './Service';
+import {City} from './City';
+
 export class User {
   id: number;
   name: string;
   fname: string;
-  username: string;
   email: string;
+  introduction: string;
   password: string;
   password_confirmation: string;
-  picture: string;
+  picture: any;
   picture_thumb: string;
   city_id: number;
-  address_name?: string;
-  address_number?: string;
-  address?: string = this.address_name + ' ' + this.address_number;
-  zip: string;
+  address: string;
   city: string;
+  zip: number;
   province: string;
   country: string;
   role: string;
-
+  service: Service[];
 }

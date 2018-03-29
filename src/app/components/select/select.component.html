@@ -3,7 +3,7 @@
     <option value="hide">Select</option>
     <option *ngFor="let option of options"  value="{{option.value}}">{{option.name}}</option>
   </select>
-  <div (click)="showOptions($event)" class="select-styled {{showOption ? 'active' : ''}}">
+  <div (click)="showOptions($event)" class="select-styled {{disabled ? 'disabled' : showOption ? 'active' : ''}}">
     {{selectedItem ? selectedItem[0] : placeHolder}}
   </div>
   <ul class="select-options" *ngIf="showOption">

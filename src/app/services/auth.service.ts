@@ -21,19 +21,16 @@ export class AuthService {
 
   populate() {
 
-    if(this.getToken()){
-      this.apiService.get('/login/user')
+    if(this.tokenExpiration()){
+      this.apiService.get('/login/user?include=service.faq')
         .subscribe(data => {
           this.setAuth(data.user);
         });
-    }else{
-      console.log('populate');
-      this.router.navigate(['/home']);
     }
   }
 
   login(fields) {
-    return this.apiService.post('/login', fields);
+    return this.apiService.post('/login?include=service.faq', fields);
   }
 
   setAuth(user: User) {

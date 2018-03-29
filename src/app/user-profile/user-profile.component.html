@@ -1,6 +1,11 @@
-<div id="userProfileWrap">
+<div *ngIf="user" id="userProfileWrap">
   <div class="profileEdit">
-    <h2>Instellingen</h2>
+    <div *ngIf="user.role === 'service'" class="heading">
+      <app-service-select [id]="'settingsServiceSelect'" [services]="user.service"></app-service-select>
+    </div>
+    <div *ngIf="user.role !== 'service'">
+      <h2>Instellingen</h2>
+    </div>
     <div class="accordionWrap">
       <ul class="accordion">
         <li>
@@ -8,19 +13,32 @@
             <span class="acIcon fas fa-user"></span><span>Persoonlijke info</span>
           </div>
           <div class="acBody" id="ac1">
-            <input class="editable disabled" readonly value="Nick" id="fname" placeholder="Voornaam" />
-            <input class="editable disabled" readonly id="name" placeholder="Achternaam" />
-            <input class="editable disabled" readonly id="email" placeholder="Email" />
-            <input class="editable disabled" readonly id="address" placeholder="Adres" />
-            <input class="editable disabled" readonly id="place" placeholder="Plaats" />
+            <form [formGroup]="formAc1">
+            <div class="uploadGroup">
+              <div class="imgUpload">
+                <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)" [disabled]="disallowUpload" [image]="user.picture" [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
+              </div>
+              <div class="groupLast">
+                <input [class.has-error]="!formAc1.controls['fname'].valid && formAc1.controls['fname'].touched" formControlName="fname" class="editable disabled" readonly value="Nick" id="fname" placeholder="Voornaam" />
+                <input [class.has-error]="!formAc1.controls['name'].valid && formAc1.controls['name'].touched" formControlName="name" class="editable disabled" readonly id="name" placeholder="Achternaam" />
+              </div>
+            </div>
+            <input [class.has-error]="!formAc1.controls['email'].valid && formAc1.controls['email'].touched" formControlName="email" class="editable disabled" readonly id="email" placeholder="Email" />
+            <input [class.has-error]="!formAc1.controls['address'].valid && formAc1.controls['address'].touched" formControlName="address" class="editable disabled" readonly id="address" placeholder="Adres" />
+            <div class="inputswrap address">
+              <input [class.has-error]="!formAc1.controls['zip'].valid && formAc1.controls['zip'].touched" formControlName="zip" class="editable disabled" readonly id="zip" placeholder="Postcode" />
+              <input [class.has-error]="!formAc1.controls['city'].valid && formAc1.controls['city'].touched" formControlName="city" class="editable disabled" readonly id="place" placeholder="Plaats" />
+            </div>
+              <textarea formControlName="introduction"  id="introduction" class="editable disabled" readonly placeholder="Stel jezelf kort voor..."></textarea>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac1')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac1')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac1')"  class="button">Annuleer</button><button [disabled]="!formAc1.valid" (click)="saveUser()" type="submit" class="button">Opslaan</button>
               </div>
             </div>
+            </form>
           </div>
         </li>
         <li>
@@ -41,12 +59,21 @@
             </div>
           </div>
         </li>
-        <li>
+        <li *ngIf="user.role === 'service'">
           <div class="acHead" (click)="toggleAccOpened('ac3')">
             <span class="acIcon fas fa-info-circle"></span><span>Service beschrijving</span>
           </div>
           <div class="acBody" id="ac3">
-            <input class="editable disabled" readonly id="service_name" placeholder="Service naam" />
+            <div class="uploadGroup">
+            <div class="imgUpload">
+            <app-image-uploader [disabled]="disallowUpload" [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
+            </div>
+              <div class="groupLast">
+                <input class="editable disabled" readonly id="service_name" placeholder="Service naam" />
+                <button class="fullWidth btnstyle2">Wijzig banner</button>
+              </div>
+            </div>
+
             <textarea spellcheck="false" class="editable disabled" readonly  id="description" placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
             <div class="actions">
               <div class="edit">
@@ -58,13 +85,18 @@
             </div>
           </div>
         </li>
-        <li>
+        <li *ngIf="user.role === 'service'">
           <div class="acHead" (click)="toggleAccOpened('ac4')">
             <span class="acIcon fas fa-address-book"></span><span>Service contact</span>
           </div>
           <div class="acBody" id="ac4">
             <input class="editable disabled" readonly id="service_address" placeholder="Adres" />
-            <input class="editable disabled" readonly id="service_place" placeholder="Plaats" />
+
+            <div class="inputswrap address">
+              <input class="editable disabled" readonly id="service_zip" placeholder="Postcode" />
+              <input class="editable disabled" readonly id="service_place" placeholder="Plaats" />
+            </div>
+
             <input class="editable disabled" readonly id="service_tel" placeholder="Telefoon" />
             <input class="editable disabled" readonly type="number" id="service_experience" placeholder="Jaar ervaring" />
             <input class="editable disabled" readonly id="service_website" placeholder="Website" />
@@ -78,7 +110,7 @@
             </div>
           </div>
         </li>
-        <li>
+        <li *ngIf="user.role === 'service'">
           <div class="acHead" (click)="toggleAccOpened('ac5')">
             <span class="acIcon fas fas fa-clock"></span><span>Service werkdagen</span>
           </div>
@@ -91,14 +123,60 @@
             </div>
           </div>
         </li>
-        <li>
+        <li *ngIf="user.role === 'service'">
           <div class="acHead" (click)="toggleAccOpened('ac6')">
             <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
           </div>
           <div class="acBody" id="ac6">
+            <app-select [disabled]="!isEditMode" (selectedValueChange)="selectedRadiusChange($event)" class="userselect" [options]="maxkm"></app-select>
+            <app-map-area (mapLoaded)="mapLoaded($event)" #map></app-map-area>
             <div class="actions">
               <div class="edit">
-                <button class="button">Opslaan</button>
+                <button (click)="editMode('ac6')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac6')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngIf="user.role === 'service'">
+          <div class="acHead" (click)="toggleAccOpened('ac7')">
+            <span class="acIcon fas fa-dollar-sign"></span><span>Prijs instellingen</span>
+          </div>
+          <div class="acBody" id="ac7">
+            <div class="inputswrap">
+              <input class="editable disabled" type="number" id="service_price" readonly placeholder="Prijs" /><input class="editable disabled" type="text" readonly id="rate" id="service_rate" placeholder="Tarief"/>
+            </div>
+            <label>Prijs extra's</label>
+            <div class="inputswrap price">
+              <input class="editable disabled" readonly placeholder="Beschrijving" />
+              <input class="editable disabled priceinput" readonly placeholder="Prijs" />
+              <button class="btnstyle2"><span class="fas fa-plus"></span></button>
+            </div>
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac7')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac7')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngIf="user.role === 'service'">
+          <div class="acHead" (click)="toggleAccOpened('ac8')">
+            <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
+          </div>
+          <div class="acBody" id="ac8">
+            <p>Kies hier de keywoorden waarop je wilt gevonden worden. Let op je kan er maximuum 10 kiezen!</p>
+            <app-tag-input></app-tag-input>
+            <div class="actions">
+              <div class="edit">
+                <button (click)="editMode('ac8')" class="button">Wijzig</button>
+              </div>
+              <div class="editting">
+                <button (click)="cancelEditMode('ac8')"  class="button">Annuleer</button><button class="button">Opslaan</button>
               </div>
             </div>
           </div>
@@ -107,7 +185,7 @@
     </div>
   </div>
   <div class="profilePreview">
-    <app-profile></app-profile>
+    <app-profile [user]="user"></app-profile>
   </div>
 </div>
 

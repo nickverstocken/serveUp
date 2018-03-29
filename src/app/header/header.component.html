@@ -19,12 +19,11 @@
       <li><a routerLink="/">Berichten</a></li>
       <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
-        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
-          class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
-        {{user.fname}} {{user.name}}<i *ngIf="showSubnav === ''" class="fas fa-caret-up"></i><i
-        *ngIf="showSubnav === 'hideSubnav'" class="fas fa-caret-down"></i>
-      </a></li>
+        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+      </a>
+      </li>
     </ul>
+
     <ul *ngIf="mobile" class="mobileMenu {{mobileMenu}}">
       <a (click)="openMobileMenu()" class="close"><span class="lnr lnr-cross"></span></a>
       <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a
@@ -32,19 +31,45 @@
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
         <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
           class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
-        {{user.fname}} {{user.name}}<i *ngIf="showSubnav === ''" class="fas fa-caret-up"></i><i
-        *ngIf="showSubnav === 'hideSubnav'" class="fas fa-caret-down"></i>
-      </a></li>
-      <li><a><span class="lnr lnr-user"></span>Profiel</a></li>
+        {{user.fname}} {{user.name}}
+      </a>
+        <div *ngIf="user.role === 'service'" id="selectService">
+          <app-service-select [services]="user.service"></app-service-select>
+        </div>
+
+      </li>
+      <li><a routerLink="profile"><span class="lnr lnr-user"></span>Profiel</a></li>
       <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
       <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
       <li><a routerLink="/"><span class="lnr lnr-bubble"></span>Berichten</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
   </nav>
+
   <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" class="overlay {{mobileMenu}}"></a>
-  <ul *ngIf="!mobile" class="subnav {{showSubnav}}">
-    <li><a routerLink="profile/{{user.id}}">Profiel</a></li>
-    <li><a (click)="logout()">Uitloggen</a></li>
-  </ul>
+
+  <div *ngIf="!mobile" class="subnav {{showSubnav}}">
+    <div id="userInfo">
+      <div id="info">
+        <div class="userImageMedium">
+          <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
+          <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
+            class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+        </div>
+        <div class="userInfotext">
+          <div class="username">{{user.fname}} {{user.name}}</div>
+          <div class="email">{{user.email}}</div>
+          <div><button routerLink="profile">Mijn account</button></div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="user.role === 'service'" id="selectService">
+      <app-service-select [services]="user.service"></app-service-select>
+    </div>
+    <div id="links">
+      <button *ngIf="user.role === 'service'">Service toevoegen</button>
+      <button (click)="logout()">Uitloggen</button>
+    </div>
+
+  </div>
 </header>

@@ -7,6 +7,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/throw';
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   isrefreshing = false;
@@ -29,11 +30,11 @@ export class AuthInterceptor implements HttpInterceptor {
         this.isrefreshing = false;
         return next.handle(this.addToken(req, response.token));
       }
-
     );
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     const auth = this.inj.get(AuthService);
     return next.handle(this.addToken(req, auth.getToken()))
       .catch((error) => {
@@ -41,20 +42,25 @@ export class AuthInterceptor implements HttpInterceptor {
           switch ((<HttpErrorResponse>error).status) {
             case 401: {
               if (!this.isrefreshing) {
-                if (!auth.tokenExpiration()) {
-                  this.isrefreshing = true;
+                if (auth.getToken()) {
+                  if (!auth.tokenExpiration()) {
+                    this.isrefreshing = true;
                     return this.getRefreshToken(next, req);
-
-                } else {
+                  }
                   return next.handle(this.addToken(req, auth.getToken()));
+                } else {
+                  this.router.navigate(['/home']);
+
+                  return Observable.throw(error);
                 }
               }
+              break;
             }
             case 400: {
               if (!this.isrefreshing) {
-                this.router.navigate(['/']);
-                break;
+                this.router.navigate(['/home']);
               }
+              break;
             }
             case 422: {
               return Observable.throw(error);
@@ -65,7 +71,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           }
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
           return Observable.throw(error);
         }
       });

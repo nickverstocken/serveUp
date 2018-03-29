@@ -36,11 +36,11 @@
       </div>
     </div>
   </div>
-  <div id="contactDetails" class="details">
+  <div *ngIf="service" id="contactDetails" class="details">
     <h2>Contact</h2>
     <div class="listContact">
-      <ul>
-        <li><span class="fas fa-map-pin"></span><span class="label">Locatie </span><span class="text">Kruisstraat 60, 9111 Belsele</span>
+      <ul >
+        <li><span class="fas fa-map-pin"></span><span class="label">Adres </span><span class="text">Kruisstraat 60, 9111 Belsele</span>
         </li>
         <li><span class="fas fa-phone-volume"></span><span class="label">Telefoon </span><span class="text">+324 73 67 02 14</span>
         </li>
@@ -55,7 +55,7 @@
       </ul>
     </div>
   </div>
-  <div id="qandaDetails" class="details">
+  <div  *ngIf="services"  id="qandaDetails" class="details">
     <h2>Q&A</h2>
     <div id="qanda">
       <div class="qandaItem">

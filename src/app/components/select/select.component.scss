@@ -19,6 +19,8 @@
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  align-items: center;
   border-radius: $borderRadius;
   border:1px solid $borderColor;
   background-color: #fff;
@@ -35,7 +37,10 @@
     font-size: 20px;
     right: 25px;
   }
-  &:active, &.active {
+  &.disabled{
+    background-color: $backgroundColor;
+  }
+  &.active {
     background-color: $backgroundColor;
     &:after{
       content:"\f0d8";

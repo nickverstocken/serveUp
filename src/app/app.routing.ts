@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   { path: '', component: SearchServiceComponent},
   { path: 'projects', component: ProjectsComponent},
   { path: 'project/:id', component: ProjectDetailComponent},
-  { path: 'profile/:id', component: UserProfileComponent},
+  { path: 'profile', component: UserProfileComponent},
   { path: '**', redirectTo: '/home'}
 ];
 

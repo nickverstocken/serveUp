@@ -13,9 +13,9 @@
           class="img"
           [src]="imageSrc"
           (load)="handleImageLoad()"
-
+          (error)="imageLoaded=false"
           [class.loaded]="imageLoaded"/>
 
-  <input id="{{id}}" type="file" name="file" accept="image/x-png,image/jpeg"
+  <input [disabled]="disabled" id="{{id}}" type="file" name="file" accept="image/x-png,image/jpeg"
          (change)="handleInputChange($event)">
 </label>

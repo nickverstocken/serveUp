@@ -1,4 +1,6 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Input} from '@angular/core';
+import {User} from '../../models/User';
+import {Service} from '../../models/Service';
 
 declare var $: any;
 
@@ -8,6 +10,8 @@ declare var $: any;
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @Input() user: User;
+  @Input() service: Service;
   fullAboutText;
   isFullText = false;
   qAndAIsFull = false;

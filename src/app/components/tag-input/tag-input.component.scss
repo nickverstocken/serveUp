@@ -1,16 +1,21 @@
 @import '../../../color';
 .taggable{
-  display: inline-block;
+
 }
 .tagInput{
   display: inline-block;
   width:102px;
   background:0;
   border:0;
+  height:26px;
+  padding:0 7px !important;
+  margin: 0 !important;
 }
 .tagInputWrap{
   background:#fff;
   padding:5px;
   border:1px solid $borderColor;
   border-radius: $borderRadius;
+  display: flex;
+  flex-wrap: wrap;
 }

@@ -36,6 +36,7 @@ button{
   font-weight: 700;
   text-align: center;
   transition:all 0.2s ease;
+
   &.btnWithIcon{
     span{
       margin-right: 10px;
@@ -53,10 +54,20 @@ button{
     }
   }
   &:hover{
-    @include boxShadowMedium;
+    @include boxShadowSmall;
   }
   &.confirm{
     background: $green;
+  }
+  &.btnstyle2{
+    background: 0;
+    color:$textColor;
+    border: 1px solid $borderColor;
+    &:hover{
+      box-shadow: none;
+      color:$blue;
+      border: 1px solid $blue;
+    }
   }
 }
 label{
@@ -203,6 +214,11 @@ h1,h2,h3,h4,h5{
   height:2px;
   background:$orange;
   margin: 0 auto;
+}
+input.has-error{
+  color:$red;
+  border: 1px solid $red;
+
 }
 .has-error{
   p, input{
@@ -467,6 +483,34 @@ h1,h2,h3,h4,h5{
     }
   }
 }
+.inputswrap{
+  display: flex;
+  .priceinput{
+    width:60px;
+  }
+  button{
+    height:31px;
+    margin-left: 5px;
+
+  }
+  input:first-child{
+    margin-right: 5px;
+  }
+  &.address{
+    input:first-child{
+      width:60px;
+    }
+  }
+  &.reverse{
+    flex-direction: row-reverse;
+    input:first-child{
+      margin-right: 0px;
+    }
+    input:last-child{
+      margin-right: 5px;
+    }
+  }
+}
 .inputs{
   float:left;
   width: 100%;
@@ -600,10 +644,13 @@ display:flex;
     cursor: pointer;
     border-bottom: 1px solid $borderColor;
     .acIcon{
+      width:17px;
+      text-align: center;
       margin-right: 15px;
     }
   }
   .acBody{
+    position: relative;
     padding: 15px;
     padding-bottom: 10px;
     display: none;
@@ -611,6 +658,19 @@ display:flex;
     border-bottom: 1px solid $borderColor;
     transform-origin: top;
     transition: transform 0.2s ease-in;
+    label{
+      margin-top: 5px;
+      margin-bottom: 5px;
+      display: block;
+      text-align: center;
+    }
+    .uploadGroup{
+      display: flex;
+      .imgUpload{
+        margin-right: 5px;
+        margin-bottom: 0px;
+      }
+    }
     .actions{
       text-align: right;
       margin-top: 10px;
@@ -630,18 +690,20 @@ display:flex;
         font-size: 14px;
         text-transform: uppercase;
         margin-right: 15px;
+        &[disabled]{
+          color:$borderColor !important;
+        }
         &:hover{
           box-shadow: none;
         }
       }
-
       .button:last-child{
         margin-right: 5px;
         color:$blue;
       }
     }
     textarea{
-      height: 250px;
+      height: 150px;
     }
     input, textarea{
       font-size: 14px;
@@ -729,6 +791,14 @@ display:flex;
    }
    font-size:14px;
  }
+}
+.mapboxgl-ctrl-attrib{
+  display:none;
+}
+.marker {
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 10px #888;
+  border-radius: 50%;
 }
 @media all and (max-width: 1024px) {}
 @media all and (max-width: 800px) {

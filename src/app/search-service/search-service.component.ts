@@ -9,10 +9,11 @@ import {Category} from '../models/Category';
   styleUrls: ['./search-service.component.scss']
 })
 export class SearchServiceComponent implements OnInit {
-  categories: Category[] = [];
+  categories: Category[];
   constructor(private auth: AuthService, private serveUpService: ServupService) { }
 
   ngOnInit() {
+
     this.serveUpService.getCategories().subscribe(
       result => {
         this.categories = result.categories;

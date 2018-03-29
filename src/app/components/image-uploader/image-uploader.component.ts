@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-
+declare var $: any;
 @Component({
   selector: 'app-image-uploader',
   templateUrl: './image-uploader.component.html',
@@ -10,10 +10,12 @@ export class ImageUploaderComponent implements OnInit {
   loaded = false;
   imageLoaded = false;
   imageSrc = '';
+
   @Output() fileload: EventEmitter<any> = new EventEmitter();
   @Input() image = '';
   @Input() options = {};
   @Input() id;
+  @Input() disabled = false;
   constructor() {
 
   }
@@ -24,17 +26,24 @@ export class ImageUploaderComponent implements OnInit {
     }
   }
   handleDragEnter() {
-    this.dragging = true;
+    if(!this.disabled){
+      this.dragging = true;
+    }
+
   }
 
   handleDragLeave() {
-    this.dragging = false;
+    if(!this.disabled) {
+      this.dragging = false;
+    }
   }
 
   handleDrop(e) {
-    e.preventDefault();
-    this.dragging = false;
-    this.handleInputChange(e);
+    if(!this.disabled) {
+      e.preventDefault();
+      this.dragging = false;
+      this.handleInputChange(e);
+    }
   }
 
   handleImageLoad() {
@@ -56,6 +65,7 @@ export class ImageUploaderComponent implements OnInit {
 
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
+
   }
 
   _handleReaderLoaded(e) {
@@ -63,15 +73,20 @@ export class ImageUploaderComponent implements OnInit {
     this.imageSrc = reader.result;
     this.loaded = true;
     const input = (<HTMLInputElement> document.getElementById(this.id));
-    let fileList: FileList = input.files;
+    const fileList: FileList = input.files;
     if (fileList.length > 0) {
       this.fileload.emit({'file' : fileList[0], 'control_id' : this.id});
+      $('#' + this.id).prop('value', '');
     }
   }
   mouseEnter(){
-    this.dragging = true;
+    if(!this.disabled) {
+      this.dragging = true;
+    }
   }
   mouseLeave(){
-    this.dragging = false;
+    if(!this.disabled) {
+      this.dragging = false;
+    }
   }
 }

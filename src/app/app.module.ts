@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import {Routing} from './app.routing';
 
@@ -34,6 +34,8 @@ import { UserPriceListComponent } from './components/user-price-list/user-price-
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ReviewItemComponent } from './components/reviews/review-item/review-item.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MapAreaComponent } from './components/map-area/map-area.component';
+import { ServiceSelectComponent } from './components/service-select/service-select.component';
 
 @NgModule({
   declarations: [
@@ -59,12 +61,15 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserPriceListComponent,
     ReviewsComponent,
     ReviewItemComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    MapAreaComponent,
+    ServiceSelectComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     Routing,
     HttpClientModule
   ],

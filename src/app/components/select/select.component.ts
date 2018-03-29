@@ -11,6 +11,7 @@ export class SelectComponent implements OnInit {
   @Input() options = [];
   @Input() selectedItemInit;
   @Input() placeHolder = 'Kies';
+  @Input() disabled = false;
   @Output() selectedValueChange: EventEmitter<any> = new EventEmitter();
   showOption = false;
   selectedItem;
@@ -31,6 +32,9 @@ export class SelectComponent implements OnInit {
     this.showOption = false;
   }
   showOptions(event){
-    this.showOption ? this.showOption = false : this.showOption = true;
+    if(!this.disabled){
+      this.showOption ? this.showOption = false : this.showOption = true;
+    }
+
   }
 }
