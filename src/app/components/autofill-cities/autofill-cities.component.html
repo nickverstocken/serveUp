@@ -1,0 +1,13 @@
+<div id="{{id}}">
+<div [formGroup]="adressForm" class="inputswrap address">
+  <input [attr.maxlength]="4" numbermask (focus)="showAutoFill=true"  (rawChange)="rawNumber=$event" (keydown.tab)="fillAll($event)"  (keyup)="fillInCity($event)" [autocomplete]="off" [class.has-error]="!adressForm.controls['zip'].valid && adressForm.controls['zip'].touched" formControlName="zip" autocomplete="false" class="editable disabled zip" readonly placeholder="Postcode" />
+  <input [autocomplete]="off" [class.has-error]="!adressForm.controls['name'].valid && adressForm.controls['name'].touched" formControlName="name"  class="disabled" readonly placeholder="Plaats" />
+</div>
+<div *ngIf="cities" class="autoFillWrap {{showAutoFill ? '' : 'hidden'}}">
+  <div id="autoFill" class="autoFill fullWidth">
+    <ul>
+      <li *ngFor="let city of cities | searchZip: this.adressForm.controls.zip.value.toString() |slice:0:5" (click)="fillIn(city)" class="autofillitem"><span class="cityid hidden">{{city.id}}</span> <div class="leftAutoFill"><span>{{city.zip}}</span> </div><div class="rightAutoFill"><span>{{city.name}}</span></div></li>
+    </ul>
+  </div>
+</div>
+</div>

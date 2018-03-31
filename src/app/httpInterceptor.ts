@@ -57,10 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
               break;
             }
             case 400: {
-              if (!this.isrefreshing) {
-                this.router.navigate(['/home']);
-              }
-              break;
+              return Observable.throw(error);
             }
             case 422: {
               return Observable.throw(error);

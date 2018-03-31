@@ -2,9 +2,15 @@
   <div class="days">
     <div *ngFor="let day of daysOfWeek" class="day" id="{{day}}">
       <p>{{day}}</p>
-      <div (click)="addOrRemoveDay(day)" class="daySelect {{daysSelected.days.includes(day) ? 'selected' : ''}}">
-        <span *ngIf="!daysSelected['days'].includes(day)" class="fas fa-times"></span>
-        <span *ngIf="daysSelected['days'].includes(day)" class="fas fa-check"></span>
+      <div (click)="addOrRemoveDay(day)" class="daySelect {{daysSelected ? daysSelected.days.includes(day) ? 'selected' : '' : ''}}">
+        <div *ngIf="daysSelected">
+          <span *ngIf="!daysSelected['days'].includes(day)" class="fas fa-times"></span>
+          <span *ngIf="daysSelected['days'].includes(day)" class="fas fa-check"></span>
+        </div>
+        <div *ngIf="!daysSelected">
+          <span class="fas fa-times"></span>
+
+        </div>
       </div>
     </div>
   </div>
@@ -14,9 +20,9 @@
     </div>
     <div class="timewrap">
       <div class="selectwrap">
-        <app-select class="select" [placeHolder]="'Begin'" [options]="timeoptions"></app-select>
+        <app-select class="select" (selectedValueChange)="assignTime('begin', $event)" [selectedItemInit]="daysSelected ? (daysSelected.begin ? [daysSelected.begin, daysSelected.begin] : null) : null"  [placeHolder]="'Begin'" [options]="timeoptions"></app-select>
         <span> - </span>
-        <app-select class="select" [placeHolder]="'Einde'" [options]="timeoptions"></app-select>
+        <app-select class="select" (selectedValueChange)="assignTime('end', $event)" [selectedItemInit]="daysSelected ? (daysSelected.end ? [daysSelected.end, daysSelected.end] : null) : null"  [placeHolder]="'Einde'" [options]="timeoptions"></app-select>
       </div>
     </div>
   </div>

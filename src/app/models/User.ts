@@ -13,10 +13,11 @@ export class User {
   picture_thumb: string;
   city_id: number;
   address: string;
-  city: string;
+  city: City;
   zip: number;
   province: string;
   country: string;
   role: string;
   service: Service[];
+  updated_at: string;
 }

@@ -1,157 +1,236 @@
 <div *ngIf="user" id="userProfileWrap">
   <div class="profileEdit">
     <div *ngIf="user.role === 'service'" class="heading">
-      <app-service-select [id]="'settingsServiceSelect'" [services]="user.service"></app-service-select>
+      <app-service-select [id]="'settingsServiceSelect'" [services]="user.service"
+                          (selectedService)="setService($event)"></app-service-select>
+      <div class="addService" *ngIf="user.service.length <= 0">
+        <button class="fullWidth btnstyle2">Service toevoegen</button>
+      </div>
     </div>
     <div *ngIf="user.role !== 'service'">
       <h2>Instellingen</h2>
     </div>
     <div class="accordionWrap">
       <ul class="accordion">
-        <li>
+        <li id="liac1">
           <div class="acHead" (click)="toggleAccOpened('ac1')">
             <span class="acIcon fas fa-user"></span><span>Persoonlijke info</span>
           </div>
           <div class="acBody" id="ac1">
+            <div class="has-error">
+              <div *ngIf="responseError['ac1']">
+                <p [innerHTML]="responseError['ac1']">
+
+                </p>
+              </div>
+              <div *ngIf="formAc1.controls['email'].errors && formAc1.controls['email'].errors.emailTaken">
+                <p>
+                  Deze email bestaat al!
+                </p>
+              </div>
+            </div>
             <form [formGroup]="formAc1">
-            <div class="uploadGroup">
-              <div class="imgUpload">
-                <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)" [disabled]="disallowUpload" [image]="user.picture" [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
+              <div class="uploadGroup">
+                <div class="imgUpload">
+                  <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
+                                      [disabled]="disallowUpload" [image]="user.picture"
+                                      [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
+                </div>
+                <div class="groupLast">
+                  <input [class.has-error]="!formAc1.controls['fname'].valid && formAc1.controls['fname'].touched"
+                         formControlName="fname" class="editable disabled" readonly value="Nick" id="fname"
+                         placeholder="Voornaam"/>
+                  <input [class.has-error]="!formAc1.controls['name'].valid && formAc1.controls['name'].touched"
+                         formControlName="name" class="editable disabled" readonly id="name" placeholder="Achternaam"/>
+                </div>
               </div>
-              <div class="groupLast">
-                <input [class.has-error]="!formAc1.controls['fname'].valid && formAc1.controls['fname'].touched" formControlName="fname" class="editable disabled" readonly value="Nick" id="fname" placeholder="Voornaam" />
-                <input [class.has-error]="!formAc1.controls['name'].valid && formAc1.controls['name'].touched" formControlName="name" class="editable disabled" readonly id="name" placeholder="Achternaam" />
+              <input [class.has-error]="!formAc1.controls['email'].valid && formAc1.controls['email'].touched"
+                     formControlName="email" class="editable disabled" readonly id="email" placeholder="Email"/>
+              <input [class.has-error]="!formAc1.controls['address'].valid && formAc1.controls['address'].touched"
+                     formControlName="address" class="editable disabled" readonly id="address" placeholder="Adres"/>
+              <div [formGroupName]="'city'">
+                <app-autofill-cities [id]="'userCity'" [group]="formAc1.controls['city']"></app-autofill-cities>
               </div>
-            </div>
-            <input [class.has-error]="!formAc1.controls['email'].valid && formAc1.controls['email'].touched" formControlName="email" class="editable disabled" readonly id="email" placeholder="Email" />
-            <input [class.has-error]="!formAc1.controls['address'].valid && formAc1.controls['address'].touched" formControlName="address" class="editable disabled" readonly id="address" placeholder="Adres" />
-            <div class="inputswrap address">
-              <input [class.has-error]="!formAc1.controls['zip'].valid && formAc1.controls['zip'].touched" formControlName="zip" class="editable disabled" readonly id="zip" placeholder="Postcode" />
-              <input [class.has-error]="!formAc1.controls['city'].valid && formAc1.controls['city'].touched" formControlName="city" class="editable disabled" readonly id="place" placeholder="Plaats" />
-            </div>
-              <textarea formControlName="introduction"  id="introduction" class="editable disabled" readonly placeholder="Stel jezelf kort voor..."></textarea>
-            <div class="actions">
-              <div class="edit">
-                <button (click)="editMode('ac1')" class="button">Wijzig</button>
+
+              <textarea formControlName="introduction" id="introduction" class="editable disabled" readonly
+                        placeholder="Stel jezelf kort voor..."></textarea>
+              <div class="actions">
+                <div class="edit">
+                  <button (click)="editMode('ac1')" class="button">Wijzig</button>
+                </div>
+                <div class="editting">
+                  <button (click)="cancelEditMode('ac1')" class="button">Annuleer</button>
+                  <button [disabled]="!formAc1.valid" (click)="saveUser('ac1')" type="submit" class="button">Opslaan
+                  </button>
+                </div>
               </div>
-              <div class="editting">
-                <button (click)="cancelEditMode('ac1')"  class="button">Annuleer</button><button [disabled]="!formAc1.valid" (click)="saveUser()" type="submit" class="button">Opslaan</button>
-              </div>
-            </div>
             </form>
           </div>
         </li>
-        <li>
+        <li id="liac2">
           <div class="acHead" (click)="toggleAccOpened('ac2')">
             <span class="acIcon fas fa-key"></span><span>Wijzig wachtwoord</span>
           </div>
           <div class="acBody" id="ac2">
-            <input class="editable disabled" readonly  id="oldpass" placeholder="Huidig wachtwoord" />
-            <input class="editable disabled" readonly  id="newpass" placeholder="Nieuw wachtwoord" />
-            <input class="editable disabled" readonly  id="newpassconfirm" placeholder="Herhaal nieuw wachtwoord" />
+
+            <div class="has-error">
+              <div *ngIf="responseError['ac2']">
+                <p [innerHTML]="responseError['ac2']">
+
+                </p>
+              </div>
+              <div
+                *ngIf="(!formAc2.controls['password'].valid && formAc2.controls['password'].touched && formAc2.controls['password'].hasError('minlength'))||(!formAc2.controls['new_password'].valid && formAc2.controls['new_password'].touched && formAc2.controls['new_password'].hasError('minlength'))||(!formAc2.controls['new_password_confirmation'].valid && formAc2.controls['new_password_confirmation'].touched && formAc2.controls['new_password_confirmation'].hasError('minlength'))">
+                <p>
+                  Wachtwoord moet minimuum 6 karakters hebben
+                </p>
+              </div>
+
+            </div>
+            <form [formGroup]="formAc2">
+              <input [class.has-error]="!formAc2.controls['password'].valid && formAc2.controls['password'].touched"
+                     formControlName="password" class="editable disabled" readonly type="password" id="oldpass"
+                     placeholder="Huidig wachtwoord"/>
+              <input
+                [class.has-error]="!formAc2.controls['new_password'].valid && formAc2.controls['new_password'].touched"
+                formControlName="new_password" class="editable disabled" readonly id="newpass"
+                placeholder="Nieuw wachtwoord" type="password"/>
+              <input
+                [class.has-error]="!formAc2.controls['new_password_confirmation'].valid && formAc2.controls['new_password_confirmation'].touched"
+                formControlName="new_password_confirmation" class="editable disabled" readonly id="newpassconfirm"
+                placeholder="Herhaal nieuw wachtwoord" type="password"/>
+            </form>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac2')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac2')"  class="button">Annuleer</button><button class="button">Wijzig wachtwoord</button>
+                <button (click)="cancelEditMode('ac2')" class="button">Annuleer</button>
+                <button [disabled]="!formAc2.valid"  class="button" (click)="changePassword('ac2')">Wijzig wachtwoord</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac3" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac3')">
             <span class="acIcon fas fa-info-circle"></span><span>Service beschrijving</span>
           </div>
           <div class="acBody" id="ac3">
-            <div class="uploadGroup">
-            <div class="imgUpload">
-            <app-image-uploader [disabled]="disallowUpload" [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
-            </div>
-              <div class="groupLast">
-                <input class="editable disabled" readonly id="service_name" placeholder="Service naam" />
-                <button class="fullWidth btnstyle2">Wijzig banner</button>
+            <div class="has-error">
+              <div *ngIf="responseError['ac3']">
+                <p [innerHTML]="responseError['ac3']">
+
+                </p>
               </div>
             </div>
+            <form [formGroup]="formAc3">
+              <div class="uploadGroup">
+                <div class="imgUpload">
+                  <app-image-uploader (fileload)="serviceLogoUploaded($event)" [id]="'serviceLogoUpLoad'" #serviceLogoUpload [disabled]="disallowUpload" [image]="selectedService.logo"
+                                      [options]="{width: '60px', height: '60px', 'border-radius': '50%'}"></app-image-uploader>
+                </div>
+                <div class="groupLast">
+                  <input [class.has-error]="!formAc3.controls['name'].valid && formAc3.controls['name'].touched"
+                         formControlName="name" class="editable disabled" readonly id="service_name" placeholder="Service naam"/>
+                  <button (click)="showMedia = true" class="fullWidth btnstyle2">Kies media</button>
+                </div>
+              </div>
+              <textarea [class.has-error]="!formAc3.controls['description'].valid && formAc3.controls['description'].touched"
+                        formControlName="description" spellcheck="false" class="editable disabled" readonly id="description"
+                        placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
+            </form>
 
-            <textarea spellcheck="false" class="editable disabled" readonly  id="description" placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac3')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac3')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac3')" class="button">Annuleer</button>
+                <button [disabled]="!formAc3.valid" (click)="saveService('ac3')" class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac4" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac4')">
             <span class="acIcon fas fa-address-book"></span><span>Service contact</span>
           </div>
           <div class="acBody" id="ac4">
-            <input class="editable disabled" readonly id="service_address" placeholder="Adres" />
+            <form [formGroup]="formAc4">
+            <input [class.has-error]="!formAc4.controls['address'].valid && formAc4.controls['address'].touched"
+                   formControlName="address"  class="editable disabled" readonly id="service_address" placeholder="Adres"/>
 
-            <div class="inputswrap address">
-              <input class="editable disabled" readonly id="service_zip" placeholder="Postcode" />
-              <input class="editable disabled" readonly id="service_place" placeholder="Plaats" />
-            </div>
+              <div [formGroupName]="'city'">
+                <app-autofill-cities [id]="'serviceCity'" [group]="formAc4.controls['city']"></app-autofill-cities>
+              </div>
 
-            <input class="editable disabled" readonly id="service_tel" placeholder="Telefoon" />
-            <input class="editable disabled" readonly type="number" id="service_experience" placeholder="Jaar ervaring" />
-            <input class="editable disabled" readonly id="service_website" placeholder="Website" />
+            <input [class.has-error]="!formAc4.controls['tel']?.valid && formAc4.controls['tel']?.touched"
+                   formControlName="tel" class="editable disabled" readonly id="service_tel" placeholder="Telefoon"/>
+            <input [class.has-error]="!formAc4.controls['experience']?.valid && formAc4.controls['experience']?.touched"
+                   formControlName="experience"  class="editable disabled" readonly type="number" id="service_experience"
+                   placeholder="Jaar ervaring"/>
+            <input [class.has-error]="!formAc4.controls['website']?.valid && formAc4.controls['website']?.touched"
+                   formControlName="website" class="editable disabled" readonly id="service_website" placeholder="Website"/>
+            </form>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac4')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac4')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac4')" class="button">Annuleer</button>
+                <button [disabled]="!formAc4.valid" (click)="saveService('ac4')" class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac5" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac5')">
             <span class="acIcon fas fas fa-clock"></span><span>Service werkdagen</span>
           </div>
           <div class="acBody" id="ac5">
-            <app-day-select></app-day-select>
+            <form [formGroup]="formAc5">
+            <app-day-select [daysSelected]="formAc5.controls['business_hours'].value" (selectedDaysTime)="changeBusinessHours($event)"></app-day-select>
+            </form>
             <div class="actions">
               <div class="edit">
-                <button (click)="cancelEditMode('ac5')" class="button">Annuleer</button> <button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac5')" class="button">Annuleer</button>
+                <button (click)="saveService('ac5')" class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac6" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac6')">
             <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
           </div>
           <div class="acBody" id="ac6">
-            <app-select [disabled]="!isEditMode" (selectedValueChange)="selectedRadiusChange($event)" class="userselect" [options]="maxkm"></app-select>
+            <app-select [disabled]="!isEditMode" (selectedValueChange)="selectedRadiusChange($event)" class="userselect"
+                        [options]="maxkm"></app-select>
             <app-map-area (mapLoaded)="mapLoaded($event)" #map></app-map-area>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac6')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac6')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac6')" class="button">Annuleer</button>
+                <button class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac7" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac7')">
             <span class="acIcon fas fa-dollar-sign"></span><span>Prijs instellingen</span>
           </div>
           <div class="acBody" id="ac7">
             <div class="inputswrap">
-              <input class="editable disabled" type="number" id="service_price" readonly placeholder="Prijs" /><input class="editable disabled" type="text" readonly id="rate" id="service_rate" placeholder="Tarief"/>
+              <input class="editable disabled" type="number" id="service_price" readonly placeholder="Prijs"/><input
+              class="editable disabled" type="text" readonly id="rate" id="service_rate" placeholder="Tarief"/>
             </div>
             <label>Prijs extra's</label>
             <div class="inputswrap price">
-              <input class="editable disabled" readonly placeholder="Beschrijving" />
-              <input class="editable disabled priceinput" readonly placeholder="Prijs" />
+              <input class="editable disabled" readonly placeholder="Beschrijving"/>
+              <input class="editable disabled priceinput" readonly placeholder="Prijs"/>
               <button class="btnstyle2"><span class="fas fa-plus"></span></button>
             </div>
             <div class="actions">
@@ -159,14 +238,15 @@
                 <button (click)="editMode('ac7')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac7')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac7')" class="button">Annuleer</button>
+                <button class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
-        <li *ngIf="user.role === 'service'">
+        <li id="liac8" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac8')">
-            <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
+            <span class="acIcon fas fa-search"></span><span>Keywoorden</span>
           </div>
           <div class="acBody" id="ac8">
             <p>Kies hier de keywoorden waarop je wilt gevonden worden. Let op je kan er maximuum 10 kiezen!</p>
@@ -176,7 +256,8 @@
                 <button (click)="editMode('ac8')" class="button">Wijzig</button>
               </div>
               <div class="editting">
-                <button (click)="cancelEditMode('ac8')"  class="button">Annuleer</button><button class="button">Opslaan</button>
+                <button (click)="cancelEditMode('ac8')" class="button">Annuleer</button>
+                <button class="button">Opslaan</button>
               </div>
             </div>
           </div>
@@ -187,5 +268,8 @@
   <div class="profilePreview">
     <app-profile [user]="user"></app-profile>
   </div>
+  <app-media-modal *ngIf="showMedia" (closePopup)="closeMediaPop()" [show]="showMedia"></app-media-modal>
 </div>
-
+<a *ngIf="!mapIsLoaded" class="loadingwrap">
+  <div class="mainLoadWrap"><div class="mainloader lds-ripple"><div></div><div></div></div></div>
+</a>

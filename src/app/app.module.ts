@@ -19,7 +19,8 @@ import {AuthService} from './services/auth.service';
 import {ServupService } from './services/servup.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import {searchZip, searchName} from './pipes/search';
+import { NumbermaskDirective } from './directives/numbermask.directive';
+import {searchZip, searchName, searchMultiplePipe} from './pipes/search';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { DaySelectComponent } from './components/day-select/day-select.component';
 import { TagInputComponent } from './components/tag-input/tag-input.component';
@@ -36,6 +37,10 @@ import { ReviewItemComponent } from './components/reviews/review-item/review-ite
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MapAreaComponent } from './components/map-area/map-area.component';
 import { ServiceSelectComponent } from './components/service-select/service-select.component';
+import { AutofillCitiesComponent } from './components/autofill-cities/autofill-cities.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { MediaModalComponent } from './components/media-modal/media-modal.component';
+import { ImageModalComponent } from './components/image-modal/image-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,7 @@ import { ServiceSelectComponent } from './components/service-select/service-sele
     MultipleImageUploaderComponent,
     searchZip,
     searchName,
+    searchMultiplePipe,
     StepperComponent,
     DaySelectComponent,
     TagInputComponent,
@@ -63,7 +69,12 @@ import { ServiceSelectComponent } from './components/service-select/service-sele
     ReviewItemComponent,
     UserProfileComponent,
     MapAreaComponent,
-    ServiceSelectComponent
+    ServiceSelectComponent,
+    AutofillCitiesComponent,
+    NumbermaskDirective,
+    LoaderComponent,
+    MediaModalComponent,
+    ImageModalComponent
   ],
   imports: [
     BrowserModule,

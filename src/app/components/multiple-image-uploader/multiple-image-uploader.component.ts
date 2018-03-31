@@ -13,13 +13,15 @@ export class MultipleImageUploaderComponent implements OnInit {
   @Output() fileload: EventEmitter<any> = new EventEmitter();
   @Output() removeFile: EventEmitter<any> = new EventEmitter();
   @Output() imageClicked: EventEmitter<any> = new EventEmitter();
-  @Input() images:any;
+  @Input() images = new Array(0);
   @Output() filesloading: EventEmitter<any> = new EventEmitter();
   @Input() options = {};
   loadCount = 0;
   constructor() { }
 
   ngOnInit() {
+    console.log(this.images.length);
+
   }
   handleDragEnter() {
     this.dragging = true;
@@ -73,7 +75,7 @@ export class MultipleImageUploaderComponent implements OnInit {
       this.loaded = false;
       console.log(this.loadCount);
       reader.onload = (e) => {
-        let document: any = null;
+        let document: any = [];
         document.filepath = reader.result;
         this.images.push(document);
         this.loadCount += 1;

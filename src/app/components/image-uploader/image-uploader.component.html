@@ -1,4 +1,4 @@
-<label class="uploader" ondragover="return false;"
+<label class="uploader {{disabled ? 'disabled' : ''}}" ondragover="return false;"
        [class.loaded]="loaded"
        [ngStyle]="options"
        (dragenter)="handleDragEnter()"

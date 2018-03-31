@@ -32,3 +32,18 @@ export class searchName implements PipeTransform {
       value;
   }
 }
+@Pipe({
+  name: 'searchMultiplePipe',
+  pure:false
+})
+export class searchMultiplePipe implements PipeTransform {
+  transform(value: City[], filter: string): City[] {
+    filter = filter ? filter.toLocaleLowerCase() : '';
+    return filter && value ?
+      value.filter(city =>
+        (city.name.toLocaleLowerCase().indexOf(filter) !== -1) ||
+        (city.zip.toString().toLocaleLowerCase().indexOf(filter) !== -1)
+      ) :
+      value;
+  }
+}

@@ -67,9 +67,14 @@ img.loaded {
     position:relative;
   }
 
-    .innerwrap:after{
-      content:'\e014';
-      font-family:'Glyphicons Halflings';
+    .innerwrap:before{
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 900;
+      font-family: 'Font Awesome 5 Free';
+      content:'\f00d';
       color:#fff;
       font-size:1.5em;
       position: absolute;

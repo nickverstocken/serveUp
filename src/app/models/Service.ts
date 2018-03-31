@@ -1,9 +1,12 @@
+import {City} from './City';
+
 export class Service {
   id: number;
   name: string;
   description: string;
   address: string;
   city_id: number;
+  city: City;
   country: string;
   tel: string;
   experience: number;

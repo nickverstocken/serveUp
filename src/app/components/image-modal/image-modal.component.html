@@ -1,0 +1,20 @@
+<a (click)="close($event)" class="overlay" [class.opened]="show"></a>
+<div [class.opened]="show" class="modalContainer">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="close($event)" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2><span>{{selectedMedia.filename}}</span></h2>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <div class="imagewrap">
+          <div class="currentImage card">
+            <img (click)="nextImage()" class="poster" src="{{ selectedMedia.filepath }}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

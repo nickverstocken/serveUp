@@ -9,9 +9,10 @@ import {User} from '../models/User';
 import {ApiService} from './api.service';
 import {tokenNotExpired} from 'angular2-jwt';
 import {Router} from '@angular/router';
+
 @Injectable()
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User>(new User());
+  public currentUserSubject = new BehaviorSubject<User>(new User());
   public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
@@ -20,17 +21,19 @@ export class AuthService {
   }
 
   populate() {
-
-    if(this.tokenExpiration()){
-      this.apiService.get('/login/user?include=service.faq')
-        .subscribe(data => {
-          this.setAuth(data.user);
+    this.isAuthenticated.subscribe(
+      result => {
+        if(!result){
+          this.apiService.get('/login/user?include=city,service.faq')
+            .subscribe(data => {
+              this.setAuth(data.user);
         });
-    }
+      }
+    });
   }
 
   login(fields) {
-    return this.apiService.post('/login?include=service.faq', fields);
+    return this.apiService.post('/login?include=city,service.faq', fields);
   }
 
   setAuth(user: User) {

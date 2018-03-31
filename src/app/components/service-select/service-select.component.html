@@ -1,4 +1,4 @@
-<div *ngIf="services" id="{{id}}" class="serviceSelect">
+<div *ngIf="services && services.length > 0" id="{{id}}" class="serviceSelect">
   <div (click)="toggleChooseContainer()" class="serviceItem">
     <div class="serviceLogo"><img *ngIf="services[0].logo" src="{{services[0].logo}}" alt="{{services[0].name}}"/>
       <div *ngIf="!services[0].logo" class="defaultLogo">

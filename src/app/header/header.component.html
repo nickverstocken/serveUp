@@ -67,8 +67,8 @@
       <app-service-select [services]="user.service"></app-service-select>
     </div>
     <div id="links">
-      <button *ngIf="user.role === 'service'">Service toevoegen</button>
-      <button (click)="logout()">Uitloggen</button>
+      <button class="btnstyle2" *ngIf="user.role === 'service'">Service toevoegen</button>
+      <button class="btnstyle2" (click)="logout()">Uitloggen</button>
     </div>
 
   </div>

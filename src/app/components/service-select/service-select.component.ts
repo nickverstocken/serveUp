@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Service} from '../../models/Service';
 import {ServupService} from '../../services/servup.service';
 
@@ -12,6 +12,7 @@ declare var $: any;
 export class ServiceSelectComponent implements OnInit {
   @Input() services: Service[];
   @Input() id =  'headerServiceSelect';
+  @Output() selectedService: EventEmitter<Service> = new EventEmitter();
   constructor(private serveUpService: ServupService) {
   }
 
@@ -21,12 +22,15 @@ export class ServiceSelectComponent implements OnInit {
         const serviceId = result;
         if(serviceId !== -1){
           const service = this.services.filter(item => item.id === parseInt(serviceId));
+          this.selectedService.emit(service[0]);
           if(service.length > 0){
             this.services =  this.services.filter(item => item.id !== parseInt(serviceId));
             this.services.unshift(service[0]);
           }else{
             localStorage.setItem('selectedService', '-1');
           }
+        }else{
+          this.selectedService.emit(this.services[0]);
         }
       }
     )

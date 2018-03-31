@@ -70,9 +70,6 @@
   background: $backgroundColor;
   border-top: 1px solid $borderColor;
   button{
-    background: 0;
-    color: $textColor;
-    border: 1px solid $borderColor;
     &:last-child{
       margin-left: auto;
     }

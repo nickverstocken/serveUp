@@ -29,6 +29,15 @@ export class ServupService {
     return this.api.get('/categories');
   }
   getCurrentUser(): Observable<any>{
-    return this.api.get('/login/user?include=service.faq');
+    return this.api.get('/login/user?include=city,service.faq');
+  }
+  updateUser(user): Observable<any>{
+    return this.api.post('/user/update', user);
+  }
+  changePass(form): Observable<any>{
+    return this.api.post('/user/changepassword', form);
+  }
+  updateService(id,form): Observable<any>{
+    return this.api.post(`/service/update/${id}`,form);
   }
 }

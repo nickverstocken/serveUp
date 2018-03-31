@@ -1,0 +1,46 @@
+@import "../../../color";
+.autoFillWrap{
+  position: relative;
+}
+.autoFill{
+  position: absolute;
+  background:#fff;
+  z-index:2;
+  min-width:250px;
+  max-height: 171px;
+  overflow-y: auto;
+  border-radius: $borderRadius;
+  @include boxShadowSmall;
+
+
+  ul{
+    margin:0;
+    padding:0;
+    display: block;
+    list-style: none;
+    li{
+      color:$textColor;
+      border-bottom: 1px solid $borderColor;
+      display: flex;
+      align-items: center;
+      .leftAutoFill, .rightAutoFill{
+        padding:8px 7px;
+      }
+      .leftAutoFill{
+        width:53px;
+        border-right: 1px solid $borderColor;
+
+      }
+      .rightAutoFill{
+        padding-left: 10px;
+      }
+      &:hover{
+        cursor:pointer;
+        color:$orange;
+      }
+      &:last-child{
+        border:0;
+      }
+    }
+  }
+}

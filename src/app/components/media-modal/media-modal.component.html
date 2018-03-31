@@ -1,0 +1,23 @@
+<a (click)="close($event)" class="overlay" [class.opened]="show"></a>
+<div class="modalContainer" [class.opened]="show">
+  <div class="modal">
+    <div class="modalHeader {{loading? 'busy' : '' }}">
+      <div (click)="close($event)" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2>Media</h2>
+    </div>
+
+    <div class="modalContent">
+      <a *ngIf="loading" class="loadingwrap">
+        <div class="mainLoadWrap"><div class="mainloader lds-ripple"><div></div><div></div></div></div>
+      </a>
+      <div class="contentContainer">
+        <div class="card">
+          <app-multiple-image-uploader (filesloading)="fileLoading()" (imageClicked)="openImageModal($event)" (removeFile)="deleteFile($event)" (fileload)="filesLoaded($event)" [images]="images"
+                                       [options]="uploaderOptions"></app-multiple-image-uploader>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

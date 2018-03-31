@@ -9,7 +9,7 @@
               [class.loaded]="imageLoaded"/>
     </div>
   </div>
-  <label *ngIf="!edit || images.length === 0" class="uploader" ondragover="return false;"
+  <label *ngIf="!edit || images.length <=0" class="uploader" ondragover="return false;"
          [class.loaded]="loaded"
          [ngStyle]="options"
          (mouseenter)="mouseEnter()"
@@ -18,12 +18,12 @@
          (dragleave)="handleDragLeave()"
          (drop)="handleDrop($event)">
 
-    <span [class]="dragging ? 'icon glyphicon glyphicon-plus-sign' : 'icon glyphicon glyphicon-picture'"></span>
+    <span [class]="dragging ? 'icon fas fa-plus' : 'icon fas fa-image'"></span>
 
     <input multiple id="fileInput" type="file" name="file" accept="image/x-png,image/jpeg"
            (change)="handleInputChange($event)">
   </label>
 </div>
-<div *ngIf="images.length > 0" class="actions">
+<div class="actions">
   <a (click)="editImages()" class="edit" translate>{{edit ? 'Done' : 'Edit'}}</a>
 </div>
