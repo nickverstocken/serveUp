@@ -1,9 +1,13 @@
 import {City} from './City';
+import {Category} from './Category';
+import {Tag} from './Tag';
 
 export class Service {
   id: number;
   name: string;
   description: string;
+  category_id: number;
+  category: Category;
   address: string;
   city_id: number;
   city: City;
@@ -28,6 +32,7 @@ export class Service {
   max_km: number;
   price_estimate: number;
   rate: string;
-  price_extras: object;
+  price_extras: object[];
   standard_response: string;
+  tags: object[];
 }

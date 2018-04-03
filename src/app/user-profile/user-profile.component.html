@@ -156,6 +156,13 @@
             <span class="acIcon fas fa-address-book"></span><span>Service contact</span>
           </div>
           <div class="acBody" id="ac4">
+            <div class="has-error">
+              <div *ngIf="responseError['ac4']">
+                <p [innerHTML]="responseError['ac4']">
+
+                </p>
+              </div>
+            </div>
             <form [formGroup]="formAc4">
             <input [class.has-error]="!formAc4.controls['address'].valid && formAc4.controls['address'].touched"
                    formControlName="address"  class="editable disabled" readonly id="service_address" placeholder="Adres"/>
@@ -188,6 +195,13 @@
             <span class="acIcon fas fas fa-clock"></span><span>Service werkdagen</span>
           </div>
           <div class="acBody" id="ac5">
+            <div class="has-error">
+              <div *ngIf="responseError['ac5']">
+                <p [innerHTML]="responseError['ac5']">
+
+                </p>
+              </div>
+            </div>
             <form [formGroup]="formAc5">
             <app-day-select [daysSelected]="formAc5.controls['business_hours'].value" (selectedDaysTime)="changeBusinessHours($event)"></app-day-select>
             </form>
@@ -204,7 +218,14 @@
             <span class="acIcon fas fa-road"></span><span>Reisvoorkeuren</span>
           </div>
           <div class="acBody" id="ac6">
-            <app-select [disabled]="!isEditMode" (selectedValueChange)="selectedRadiusChange($event)" class="userselect"
+            <div class="has-error">
+              <div *ngIf="responseError['ac6']">
+                <p [innerHTML]="responseError['ac6']">
+
+                </p>
+              </div>
+            </div>
+            <app-select [disabled]="!isEditMode" [selectedItemInit]="[formAc6.controls['max_km'].value + ' km', formAc6.controls['max_km'].value + ' km']" (selectedValueChange)="selectedRadiusChange($event)" class="userselect"
                         [options]="maxkm"></app-select>
             <app-map-area (mapLoaded)="mapLoaded($event)" #map></app-map-area>
             <div class="actions">
@@ -213,7 +234,7 @@
               </div>
               <div class="editting">
                 <button (click)="cancelEditMode('ac6')" class="button">Annuleer</button>
-                <button class="button">Opslaan</button>
+                <button (click)="saveService('ac6')"  class="button">Opslaan</button>
               </div>
             </div>
           </div>
@@ -223,41 +244,61 @@
             <span class="acIcon fas fa-dollar-sign"></span><span>Prijs instellingen</span>
           </div>
           <div class="acBody" id="ac7">
-            <div class="inputswrap">
-              <input class="editable disabled" type="number" id="service_price" readonly placeholder="Prijs"/><input
-              class="editable disabled" type="text" readonly id="rate" id="service_rate" placeholder="Tarief"/>
+            <div class="has-error">
+              <div *ngIf="responseError['ac7']">
+                <p [innerHTML]="responseError['ac7']">
+
+                </p>
+              </div>
             </div>
-            <label>Prijs extra's</label>
-            <div class="inputswrap price">
-              <input class="editable disabled" readonly placeholder="Beschrijving"/>
-              <input class="editable disabled priceinput" readonly placeholder="Prijs"/>
-              <button class="btnstyle2"><span class="fas fa-plus"></span></button>
+            <form [formGroup]="formAc7">
+            <div class="prices_extras" formArrayName="price_extras">
+              <div *ngFor="let price_extra of formAc7.controls.price_extras.controls; let i=index">
+                <div class="inputswrap price" [formGroupName]="i">
+                  <app-price-extras (onRemovePriceExtra)="removePriceExtra($event)" [index]="i" [group]="formAc7.controls.price_extras.controls[i]" [disabled]="!editting"></app-price-extras>
+                </div>
+
+              </div>
+
             </div>
+            <div>
+              <button [disabled]="!editting" [class.disabled]="!editting" (click)="addPriceExtra()" class="button fullWidth"><span class="fas fa-plus"></span> Nieuwe prijsextra</button>
+            </div>
+            </form>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac7')" class="button">Wijzig</button>
               </div>
               <div class="editting">
                 <button (click)="cancelEditMode('ac7')" class="button">Annuleer</button>
-                <button class="button">Opslaan</button>
+                <button (click)="saveService('ac7')"  [disabled]="!formAc7.valid" [class.disabled]="!formAc7.valid"  class="button">Opslaan</button>
               </div>
             </div>
           </div>
         </li>
         <li id="liac8" *ngIf="user.role === 'service' && user.service.length > 0">
           <div class="acHead" (click)="toggleAccOpened('ac8')">
-            <span class="acIcon fas fa-search"></span><span>Keywoorden</span>
+            <span class="acIcon fas fa-search"></span><span>Keywoorden & Categorie</span>
           </div>
           <div class="acBody" id="ac8">
+            <div class="has-error">
+              <div *ngIf="responseError['ac8']">
+                <p [innerHTML]="responseError['ac8']">
+
+                </p>
+              </div>
+            </div>
+            <p>Service categorie:</p>
+            <app-select *ngIf="categories" (selectedValueChange)="changeCategory_id($event)" [disabled]="!editting"  class="userselect" [selectedItemInit]="selectedService.category_id ? [selectedService.category.name, selectedService.category.name] : ['Kies een categorie', -1]"  [options]="categories"></app-select>
             <p>Kies hier de keywoorden waarop je wilt gevonden worden. Let op je kan er maximuum 10 kiezen!</p>
-            <app-tag-input></app-tag-input>
+            <app-tag-input (tagAdded)="addTagsToService($event)"></app-tag-input>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac8')" class="button">Wijzig</button>
               </div>
               <div class="editting">
                 <button (click)="cancelEditMode('ac8')" class="button">Annuleer</button>
-                <button class="button">Opslaan</button>
+                <button (click)="saveService('ac8')"  class="button">Opslaan</button>
               </div>
             </div>
           </div>
@@ -270,6 +311,3 @@
   </div>
   <app-media-modal *ngIf="showMedia" (closePopup)="closeMediaPop()" [show]="showMedia"></app-media-modal>
 </div>
-<a *ngIf="!mapIsLoaded" class="loadingwrap">
-  <div class="mainLoadWrap"><div class="mainloader lds-ripple"><div></div><div></div></div></div>
-</a>

@@ -15,6 +15,7 @@ export class SelectComponent implements OnInit {
   @Output() selectedValueChange: EventEmitter<any> = new EventEmitter();
   showOption = false;
   selectedItem;
+  valueKey = 'value';
   constructor() {
   }
   @HostListener('document:click', ['$event'])
@@ -24,10 +25,13 @@ export class SelectComponent implements OnInit {
     }
   }
   ngOnInit() {
+    if(Object.keys(this.options[0])[0] !== 'value'){
+      this.valueKey = Object.keys(this.options[0])[0];
+    }
     this.selectedItemInit ? this.selectedItem = this.selectedItemInit : this.selectedItem;
   }
-  selectValue(value, name){
-    this.selectedItem = [value, name];
+  selectValue(name, value){
+    this.selectedItem = [name, value];
     this.selectedValueChange.emit(this.selectedItem);
     this.showOption = false;
   }

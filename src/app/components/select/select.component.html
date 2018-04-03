@@ -1,13 +1,13 @@
 <div class="select">
   <select class="select-hidden">
     <option value="hide">Select</option>
-    <option *ngFor="let option of options"  value="{{option.value}}">{{option.name}}</option>
+    <option *ngFor="let option of options"  value="{{option[valueKey]}}">{{option.name}}</option>
   </select>
   <div (click)="showOptions($event)" class="select-styled {{disabled ? 'disabled' : showOption ? 'active' : ''}}">
     {{this.selectedItemInit ? this.selectedItemInit[0] : placeHolder}}
   </div>
   <ul class="select-options" *ngIf="showOption">
-    <li class="option" *ngFor="let option of options" data-value="{{option.value}}" (click)="selectValue(option.name, option.value)">
+    <li class="option" *ngFor="let option of options" data-value="{{option[valueKey]}}" (click)="selectValue(option.name, option[valueKey])">
       {{option.name}}
     </li>
   </ul>

@@ -1,5 +1,5 @@
 import {Component, OnInit, AfterViewInit, ViewChild, OnChanges, ChangeDetectorRef} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {MapAreaComponent} from '../components/map-area/map-area.component';
 import {ServupService} from '../services/servup.service';
@@ -9,6 +9,7 @@ import {ImageUploaderComponent} from '../components/image-uploader/image-uploade
 import {EmailValidator} from '../custom-validation/email.validator';
 import {EqualValueValidator} from '../custom-validation/equal-value.validator';
 import {Service} from '../models/Service';
+import {Category} from '../models/Category';
 
 declare var $: any;
 
@@ -34,6 +35,10 @@ export class UserProfileComponent implements OnInit {
   formAc4;
   formAc5;
   formAc6;
+  formAc7;
+  formAc8;
+  categories: Category[];
+  selectedCategory;
   maxkm = [
     {
       value: '5',
@@ -65,6 +70,7 @@ export class UserProfileComponent implements OnInit {
   private userimgupload: ImageUploaderComponent;
   @ViewChild('serviceLogoUpload')
   private serviceLogoUpload: ImageUploaderComponent;
+
   constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder) {
 
   }
@@ -78,26 +84,68 @@ export class UserProfileComponent implements OnInit {
           this.buildFormAc1();
           this.buildFormAc2();
           if(this.user.role === 'service'){
-            if(this.user.service.length > 0){
-
-            }
+            this.serveUpService.getCategories().subscribe(
+              resultcat => {
+                this.categories = resultcat.categories;
+              }
+            );
           }
         }
       }
     );
   }
-  setService(service: Service){
+
+  setService(service: Service) {
     const index = this.user.service.indexOf(service);
     this.selectedService = this.user.service[index];
     this.oldService = Object.assign({}, this.selectedService);
-    if(this.serviceLogoUpload){
+    if (this.serviceLogoUpload) {
       this.serviceLogoUpload.imageSrc = this.selectedService.logo;
     }
     this.buildFromAc3();
     this.buidFormAc4();
     this.buildFormAc5();
     this.buildFormAc6();
+    this.buildFormAc7();
+    this.buildFormAc8();
+
   }
+
+  saveUser(id) {
+    const frmData = this.assignFormData(this.formAc1.value);
+    frmData.append('city_id', this.formAc1.controls.city.controls.id.value);
+    this.serveUpService.updateUser(frmData).subscribe(
+      result => {
+        this.authService.setAuth(this.user);
+        Object.assign(this.user, result.user);
+        Object.assign(this.oldUser, result.user);
+        this.rebuildForm(this.formAc1, this.user);
+        this.resetEdit(id);
+        this.authService.setAuth(this.user);
+      },
+      (error) => {
+        this.handleErrors(id, error);
+      }
+    );
+  }
+
+  saveService(id) {
+    // ['form' + id]
+    const form = this['form' + id.charAt(0).toUpperCase() + id.slice(1)];
+    let frmData = this.assignFormData(form.value);
+    if (id === 'ac5' || id === 'ac7' || id === 'ac8') {
+      frmData = form.value;
+    }
+    this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
+      result => {
+        Object.assign(this.selectedService, result.service);
+        Object.assign(this.oldService, result.service);
+        this.rebuildForm(this.formAc3, this.selectedService);
+        this.resetEdit(id);
+      }
+    );
+  }
+
   rebuildForm(form, model) {
     form.reset(model);
   }
@@ -125,6 +173,7 @@ export class UserProfileComponent implements OnInit {
       new_password_confirmation: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
   buildFromAc3() {
     this.formAc3 = this.fb.group({
       name: [this.selectedService.name, Validators.required],
@@ -132,6 +181,7 @@ export class UserProfileComponent implements OnInit {
       logo: [this.selectedService.logo]
     });
   }
+
   buidFormAc4() {
     this.formAc4 = this.fb.group({
       address: [this.selectedService.address, Validators.required],
@@ -145,50 +195,59 @@ export class UserProfileComponent implements OnInit {
       website: [this.selectedService.website]
     });
   }
-  buildFormAc5(){
+
+  buildFormAc5() {
     this.formAc5 = this.fb.group({
       business_hours: [this.selectedService.business_hours]
     });
   }
-  buildFormAc6(){
+
+  buildFormAc6() {
     this.formAc6 = this.fb.group({
       max_km: [this.selectedService.max_km]
     });
   }
-  saveUser(id) {
-    const frmData = this.assignFormData(this.formAc1.value);
-    frmData.append('city_id', this.formAc1.controls.city.controls.id.value);
-    this.serveUpService.updateUser(frmData).subscribe(
-      result => {
-        this.authService.setAuth(this.user);
-        Object.assign(this.user, result.user);
-        Object.assign(this.oldUser, result.user);
-        this.rebuildForm(this.formAc1, this.user);
-        this.resetEdit(id);
-        this.authService.setAuth(this.user);
-      },
-      (error) => {
-        this.handleErrors(id, error);
-      }
-    );
-  }
-  saveService(id){
-    // ['form' + id]
-    const form = this['form' + id.charAt(0).toUpperCase() + id.slice(1)];
-    let frmData = this.assignFormData(form.value);
-    if(id === 'ac5'){
-      frmData = form.value;
-    }
-    this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
-      result => {
-        Object.assign(this.selectedService, result.service);
-        Object.assign(this.oldService, result.service);
-        this.rebuildForm(this.formAc3, this.selectedService);
-        this.resetEdit(id);
 
+  buildFormAc7() {
+    this.formAc7 = this.fb.group({
+      price_extras: this.fb.array([])
+    });
+    if (this.selectedService.price_extras) {
+      for (let price_extra of this.selectedService.price_extras) {
+        this.addPriceExtra(price_extra);
       }
-    )
+    }
+
   }
+  buildFormAc8() {
+    this.formAc8 = this.fb.group({
+      category_id: [this.selectedService.category_id],
+      tags: [this.selectedService.tags]
+    });
+
+  }
+
+  addPriceExtra(value = null) {
+    if (!value) {
+      value = {name: '', price: ''};
+    }
+    const control = <FormArray>this.formAc7.controls['price_extras'];
+    const addrCtrl = this.initPriceExtra(value);
+    control.push(addrCtrl);
+  }
+
+  initPriceExtra(value) {
+    return this.fb.group({
+      name: [value.name, Validators.required],
+      price: [value.price, Validators.required]
+    });
+  }
+
+  removePriceExtra(index) {
+    const control = <FormArray>this.formAc7.controls['price_extras'];
+    control.removeAt(index);
+  }
+
   changePassword(id) {
     const frmData = this.assignFormData(this.formAc2.value);
     this.serveUpService.changePass(frmData).subscribe(
@@ -224,22 +283,16 @@ export class UserProfileComponent implements OnInit {
     if (!this.editting) {
       if ($('.acBody').is(':visible')) {
         $('.acBody').slideUp(250, 'swing');
-     //   $('.profileEdit').scrollTop(0);
+        //   $('.profileEdit').scrollTop(0);
       }
       if ($('#' + id).is(':hidden')) {
         $('#' + id).slideDown(250, 'swing');
-       // $('.profileEdit').scrollTop($('.profileEdit').scrollTop() + $('#li' + id).position().top);
       }
       if (id === 'ac6' && this.mapIsLoaded) {
         this.mapcomp.map.resize();
       }
-
-/*      console.log($('#li' + id).offset().top);
-      $('.accordionWrap').animate({
-        scrollTop: $('#li' + id).offset().top
-      }, 0);*/
     } else {
-      alert('Wijzig of annuleer eerst je wijzigingen a.u.b.');
+      this.responseError[id] = 'Wijzig of annuleer eerst je wijzigingen a.u.b.' + '<br>';
     }
 
   }
@@ -253,7 +306,7 @@ export class UserProfileComponent implements OnInit {
     if (id === 'ac1') {
       this.disallowUpload = false;
     }
-    if(id === 'ac3') {
+    if (id === 'ac3') {
       this.disallowUpload = false;
     }
     $('#' + id + ' .edit').hide();
@@ -292,7 +345,6 @@ export class UserProfileComponent implements OnInit {
         break;
       }
       case 'ac5': {
-        console.log(this.oldService.business_hours);
         Object.assign(this.selectedService, this.oldService);
         console.log(this.selectedService.business_hours);
         this.formAc5.controls.business_hours.setValue(this.selectedService.business_hours);
@@ -303,14 +355,19 @@ export class UserProfileComponent implements OnInit {
       case 'ac6': {
         Object.assign(this.selectedService, this.oldService);
         this.rebuildForm(this.formAc6, this.selectedService);
-        this.isEditMode = false;
+        this.mapcomp.changeBounds(this.formAc6.controls['max_km'].value);
         break;
       }
       case 'ac7': {
-        //statements;
+        Object.assign(this.selectedService, this.oldService);
+        this.buildFormAc7();
         break;
       }
       case 'ac8': {
+        this.selectedService.category = this.categories.filter(item => item.id === this.oldService.category_id)[0];
+        this.selectedService.category_id = this.oldService.category_id;
+        this.buildFormAc8();
+      //  Object.assign(this.selectedService, this.oldService);
         //statements;
         break;
       }
@@ -326,6 +383,7 @@ export class UserProfileComponent implements OnInit {
   resetEdit(id) {
     this.disallowUpload = true;
     this.editting = false;
+    this.isEditMode = false;
     this.responseError[id] = '';
     $('#' + id + ' .edit').show();
     $('#' + id + ' .editting').hide();
@@ -334,26 +392,44 @@ export class UserProfileComponent implements OnInit {
   }
 
   selectedRadiusChange(radius) {
+    this.formAc6.controls['max_km'].setValue(radius[1]);
     this.mapcomp.changeBounds(radius[1]);
   }
 
   userPictureLoad(file) {
     this.formAc1.controls.picture.setValue(file.file);
   }
-  serviceLogoUploaded(file){
+
+  serviceLogoUploaded(file) {
     this.formAc3.controls.logo.setValue(file.file);
   }
-  changeBusinessHours(selectedDays){
-    //this.formAc5.controls.business_hours.setValue(selectedDays);
+
+  changeBusinessHours(selectedDays) {
+    this.formAc5.controls.business_hours.setValue(selectedDays);
   }
+
+  changeCategory_id(event){
+    this.selectedService.category = this.categories.filter(item => item.id === event[1])[0];
+    this.selectedService.category_id = event[1];
+     this.formAc8.controls.category_id.setValue(event[1]);
+  }
+
+  addTagsToService(tag){
+
+    this.selectedService.tags.push(tag);
+    console.log(this.selectedService.tags);
+    this.formAc8.controls.tags.setValue(this.selectedService.tags);
+  }
+
   mapLoaded(loaded) {
-    console.log(loaded);
     if (loaded) {
       this.mapIsLoaded = true;
       this.mapcomp.map.resize();
+      this.mapcomp.changeBounds(this.formAc6.controls['max_km'].value);
     }
   }
-  closeMediaPop(){
+
+  closeMediaPop() {
     this.showMedia = false;
   }
 }

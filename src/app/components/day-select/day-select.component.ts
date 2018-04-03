@@ -215,10 +215,12 @@ export class DaySelectComponent implements OnInit {
     }else{
       this.daysSelected.days.push(day);
     }
+    console.log(this.daysSelected);
     this.selectedDaysTime.emit(this.daysSelected);
   }
   assignTime(beginorend, event){
     this.daysSelected[beginorend] = event[0];
+    console.log(this.daysSelected);
     this.selectedDaysTime.emit(this.daysSelected);
   }
 }

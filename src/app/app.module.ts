@@ -41,6 +41,7 @@ import { AutofillCitiesComponent } from './components/autofill-cities/autofill-c
 import { LoaderComponent } from './components/loader/loader.component';
 import { MediaModalComponent } from './components/media-modal/media-modal.component';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { PriceExtrasComponent } from './components/price-extras/price-extras.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     NumbermaskDirective,
     LoaderComponent,
     MediaModalComponent,
-    ImageModalComponent
+    ImageModalComponent,
+    PriceExtrasComponent
   ],
   imports: [
     BrowserModule,

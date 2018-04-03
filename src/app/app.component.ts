@@ -16,11 +16,8 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    console.log('populate');
     this.auth.populate();
     if (localStorage.getItem('selectedService')) {
-      // this.partsOrderApi.setOrderPerPage(localStorage.getItem('ordersperpage'))
-
       const currService = localStorage.getItem('selectedService');
       this.serveUpService.setSelectedService(currService);
     }
