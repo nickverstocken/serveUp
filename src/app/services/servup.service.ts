@@ -37,7 +37,10 @@ export class ServupService {
   changePass(form): Observable<any>{
     return this.api.post('/user/changepassword', form);
   }
-  updateService(id,form): Observable<any>{
+  updateService(id, form): Observable<any>{
     return this.api.post(`/service/update/${id}`,form);
+  }
+  removeTag(serviceId, tagId): Observable<any>{
+    return this.api.delete(`/service/${serviceId}/tag/${tagId}`);
   }
 }

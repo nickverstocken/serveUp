@@ -34,5 +34,5 @@ export class Service {
   rate: string;
   price_extras: object[];
   standard_response: string;
-  tags: object[];
+  tags;
 }

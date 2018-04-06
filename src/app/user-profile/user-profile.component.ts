@@ -37,6 +37,7 @@ export class UserProfileComponent implements OnInit {
   formAc6;
   formAc7;
   formAc8;
+  servicePreview;
   categories: Category[];
   selectedCategory;
   maxkm = [
@@ -415,12 +416,20 @@ export class UserProfileComponent implements OnInit {
   }
 
   addTagsToService(tag){
-
-    this.selectedService.tags.push(tag);
-    console.log(this.selectedService.tags);
     this.formAc8.controls.tags.setValue(this.selectedService.tags);
   }
+  removeTagsFromService(tag){
+    this.serveUpService.removeTag(this.selectedService.id, tag).subscribe(
+      result => {
+        if(result.success){
+          //console.log(this.selectedService.tags);
+          this.selectedService.tags = this.selectedService.tags.filter(t => t.name !== tag);
+          this.formAc8.controls.tags.setValue(this.selectedService.tags);
+        }
+      }
+    );
 
+  }
   mapLoaded(loaded) {
     if (loaded) {
       this.mapIsLoaded = true;

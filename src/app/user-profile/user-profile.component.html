@@ -291,7 +291,7 @@
             <p>Service categorie:</p>
             <app-select *ngIf="categories" (selectedValueChange)="changeCategory_id($event)" [disabled]="!editting"  class="userselect" [selectedItemInit]="selectedService.category_id ? [selectedService.category.name, selectedService.category.name] : ['Kies een categorie', -1]"  [options]="categories"></app-select>
             <p>Kies hier de keywoorden waarop je wilt gevonden worden. Let op je kan er maximuum 10 kiezen!</p>
-            <app-tag-input (tagAdded)="addTagsToService($event)"></app-tag-input>
+            <app-tag-input [disabled]="!editting" [tagsin]="selectedService.tags" (tagRemoved)="removeTagsFromService($event)" (tagAdded)="addTagsToService($event)"></app-tag-input>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac8')" class="button">Wijzig</button>
