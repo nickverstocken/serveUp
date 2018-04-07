@@ -6,7 +6,10 @@
 <div *ngIf="cities" class="autoFillWrap {{showAutoFill ? '' : 'hidden'}}">
   <div id="autoFill" class="autoFill fullWidth">
     <ul>
-      <li *ngFor="let city of cities | searchZip: this.adressForm.controls.zip.value.toString() |slice:0:5" (click)="fillIn(city)" class="autofillitem"><span class="cityid hidden">{{city.id}}</span> <div class="leftAutoFill"><span>{{city.zip}}</span> </div><div class="rightAutoFill"><span>{{city.name}}</span></div></li>
+      <li *ngFor="let city of cities | searchZip: this.adressForm.controls.zip.value.toString() |slice:0:5" (click)="fillIn(city)" class="autofillitem">
+        <span class="cityid hidden">{{city.id}}</span>
+        <div class="leftAutoFill"><span>{{city.zip}}</span> </div>
+        <div class="rightAutoFill"><span>{{city.name}}</span></div></li>
     </ul>
   </div>
 </div>

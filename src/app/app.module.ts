@@ -42,6 +42,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { MediaModalComponent } from './components/media-modal/media-modal.component';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { PriceExtrasComponent } from './components/price-extras/price-extras.component';
+import { SearchDetailComponent } from './search-service/search-detail/search-detail.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { PriceExtrasComponent } from './components/price-extras/price-extras.com
     LoaderComponent,
     MediaModalComponent,
     ImageModalComponent,
-    PriceExtrasComponent
+    PriceExtrasComponent,
+    SearchDetailComponent
   ],
   imports: [
     BrowserModule,

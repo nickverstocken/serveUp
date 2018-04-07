@@ -43,4 +43,10 @@ export class ServupService {
   removeTag(serviceId, tagId): Observable<any>{
     return this.api.delete(`/service/${serviceId}/tag/${tagId}`);
   }
+  searchCategories(searchTerm): Observable<any>{
+    return this.api.get(`/subcategories?search=${searchTerm}`);
+  }
+  getSubCategory(id): Observable<any>{
+    return this.api.get(`/subcategory/${id}`);
+  }
 }

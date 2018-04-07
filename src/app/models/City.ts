@@ -3,4 +3,7 @@ export class City {
   name: string;
   zip: string;
   province: string;
+  lat: number;
+  lng: number;
+  mapsurl: string;
 }

@@ -1,3 +1,4 @@
+@import '../../color';
 .searchbtn{
   display: flex;
   input{
@@ -31,6 +32,21 @@
     cursor: pointer;
   }
 }
+.form-group{
+  margin-bottom: 0;
+}
 .content{
   padding-top: 25px;
+}
+.autoFill{
+  max-height:initial;
+  ul li{
+    .rightAutoFill, .endAutofill{
+      padding:10px 20px;
+    }
+  }
+}
+
+.autoFillWrap{
+
 }

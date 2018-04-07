@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import {ServupService} from '../services/servup.service';
 import {Category} from '../models/Category';
+import {Subject} from 'rxjs/Subject';
+import {SubCategory} from '../models/SubCategory';
 
 @Component({
   selector: 'app-search-service',
@@ -10,7 +12,26 @@ import {Category} from '../models/Category';
 })
 export class SearchServiceComponent implements OnInit {
   categories: Category[];
-  constructor(private auth: AuthService, private serveUpService: ServupService) { }
+  searchTerm = new Subject<string>();
+  searchResult: SubCategory[];
+  constructor(private auth: AuthService, private serveUpService: ServupService) {
+    this.searchTerm.distinctUntilChanged().subscribe(
+      searchtrm => {
+        if(searchtrm){
+          this.serveUpService.searchCategories(searchtrm).subscribe(
+            result => {
+              if(result.success){
+                this.searchResult = result.subcategories;
+              }
+            }
+          );
+        }else{
+          this.searchResult = [];
+        }
+
+      }
+    );
+  }
 
   ngOnInit() {
 
@@ -20,5 +41,8 @@ export class SearchServiceComponent implements OnInit {
       }
     );
   }
-
+  search(event){
+    const val = event.target.value;
+   this.searchTerm.next(val);
+  }
 }

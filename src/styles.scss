@@ -769,7 +769,57 @@ display:flex;
   box-shadow: 3px 3px 10px #888;
   border-radius: 50%;
 }
+/* autofill */
+.autoFillWrap{
+  position: relative;
+}
+.autoFill{
+  position: absolute;
+  background:#fff;
+  z-index:2;
+  min-width:250px;
+  max-height: 171px;
+  overflow-y: auto;
+  border-radius: $borderRadius;
+  @include boxShadowSmall;
 
+
+  ul{
+    margin:0;
+    padding:0;
+    display: block;
+    list-style: none;
+    li{
+      color:$textColor;
+      border-bottom: 1px solid $borderColor;
+      display: flex;
+      align-items: center;
+      .leftAutoFill, .rightAutoFill, .endAutofill{
+        padding:8px 7px;
+      }
+      .leftAutoFill{
+        width:53px;
+        border-right: 1px solid $borderColor;
+
+      }
+      .rightAutoFill{
+        padding-left: 10px;
+      }
+      .endAutofill{
+        margin-left: auto;
+        color:lighten($textColor,30%);
+      }
+      &:hover{
+        cursor:pointer;
+        color:$orange;
+      }
+      &:last-child{
+        border:0;
+      }
+    }
+  }
+}
+/* end autofill */
 /* modals */
 .modalContainer{
   position: fixed;
@@ -863,11 +913,31 @@ display:flex;
 /* end modals */
 @media all and (max-width: 1024px) {}
 @media all and (max-width: 800px) {
+  .banner{
+    .bannerContent{
+      .left{
+        padding:0;
+        width:100%;
+      }
+        h1{
+          font-size: 50px;
+          text-align: center;
+          margin-bottom: 35px;
+        }
+
+      .right{
+        margin:0 auto;
+        max-width: 400px;
+        width:100%;
+
+      }
+    }
+  }
   .splitScreenContent{
     display: block;
     padding-top: 160px;
     position: relative;
-    margin-top: 50px;
+    margin-top: 50px !important;
     &:first-child{
       margin-top: 35px;
     }
@@ -957,7 +1027,15 @@ display:flex;
     }
   }
 }
-
+@media all and (max-width: 400px) {
+  .banner{
+    .bannerContent{
+        h1{
+          font-size: 40px !important;
+        }
+    }
+  }
+}
 /* loader */
 app-root{
 

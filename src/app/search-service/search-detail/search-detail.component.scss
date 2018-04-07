@@ -1,0 +1,20 @@
+#searchDetailWrap{
+  display: flex;
+  height:calc(100vh - 60px);
+  background-size: cover;
+  margin-bottom: -50px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  &:before{
+    content: '';
+    position: absolute;
+    width:100%;
+    height:100%;
+    background: #000;
+    opacity: 0.2;
+  }
+}
+.contentModal{
+
+}
