@@ -3,6 +3,7 @@
 @import "bootstrap";
 @import "color";
 @import "linearcons";
+@import "datepicker";
 ::-webkit-scrollbar-track
 {
   background-color: #F5F5F5;
@@ -36,7 +37,9 @@ button{
   font-weight: 700;
   text-align: center;
   transition:all 0.2s ease;
-
+  &.buttonbig{
+    padding:10px 15px;
+  }
   &.btnWithIcon{
     span{
       margin-right: 10px;
@@ -51,10 +54,13 @@ button{
     &:hover{
       cursor:not-allowed;
       box-shadow: none;
+      background:$backgroundColor;
+      border:1px solid $borderColor;
+      color:$borderColor;
     }
   }
   &:hover{
-    @include boxShadowSmall;
+    background: darken($blue, 5%);
   }
   &.confirm{
     background: $green;
@@ -255,6 +261,17 @@ input.has-error{
     position: absolute;
     right:10px;
     bottom:10px;
+  }
+  &.withbutton{
+    display: flex;
+    input{
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    button{
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
   }
 }
 .checkContainer {
@@ -509,6 +526,28 @@ input.has-error{
     input:last-child{
       margin-right: 5px;
     }
+  }
+}
+#searchDetailWrap{
+  .autoFill{
+    max-height: 185px;
+  }
+  .leftAutoFill{
+    width:73px;
+    border-right: 1px solid $borderColor;
+  }
+  .leftAutoFill, .rightAutoFill{
+    padding:10px 15px;
+  }
+  .inputswrap{
+    &.address{
+      input:first-child{
+        width:70px;
+      }
+    }
+  }
+  input{
+    padding:10px 15px;
   }
 }
 .inputs{

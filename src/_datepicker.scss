@@ -1,0 +1,180 @@
+@import "color";
+/*calendar style */
+.ngxmdp * {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.ngxmdp .selector {
+  height: auto !important;
+  top: 50px !important;
+  left: auto !important;
+  right: 0 !important;
+  border: none !important;
+  @include boxShadowMedium;
+}
+
+.ngxmdp .selectorarrowleft:after, .ngxmdp .selectorarrowleft:before {
+  left: auto !important;
+  right: 10px !important;
+
+}
+
+.ngxmdp .selectorarrow:before {
+  border-width: 0px !important;
+}
+
+.ngxmdp .selectorarrow, .ngxmdp .monthcell {
+  background: #fff !important;
+}
+
+.ngxmdp .header, .monthtable, .yeartable {
+  width: calc(100% - 20px) !important;
+  margin:0 auto !important;
+  margin-top:10px !important;
+  background-color: #fff !important;
+}
+.yeartable{
+  margin-bottom: 10px !important;
+}
+.monthtable{
+  margin-bottom:10px !important;
+}
+.ngxmdp .header tbody tr td {
+
+}
+
+.ngxmdp .header .headerlabelbtn, .ngxmdp .headerbtn, .ngxmdp .headerbtncell {
+  color: $titleColor !important;
+  background: none !important;
+}
+.ngxmdp .headerbtncell {
+  vertical-align: top !important;
+}
+.ngxmdp .selectorarrow:after {
+  border-bottom-color: #fff !important;
+}
+
+.ngxmdp .icon-ngxmydpdown, .ngxmdp .icon-ngxmydpleft, .ngxmdp .icon-ngxmydpright, .ngxmdp .icon-ngxmydpup {
+  color: $textColor !important;
+  font-size: 20px;
+}
+
+.ngxmdp .weekdaytitle {
+  background: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 7px 5px !important;
+  max-width: 36px;
+}
+
+.ngxmdp .caltable, .ngxmdp .daycell, .ngxmdp .monthcell, .ngxmdp .monthtable, .ngxmdp .weekdaytitle, .ngxmdp .yearcell, .ngxmdp .yeartable {
+  border-collapse: collapse;
+  color: $titleColor !important;
+  line-height: 1.1;
+}
+.ngxmdp .caltable span{
+  background:none !important;
+}
+.ngxmdp .daycell, .ngxmdp .yearcell, .ngxmdp .yearchangebtncell, .ngxmdp .headerbtn, .ngxmdp .headerlabelbtn, .ngxmdp .yearchangebtn{
+  background:none !important;
+  color:$textColor !important;
+}
+.ngxmdp .daycell, .ngxmdp .monthcell, .ngxmdp .weekdaytitle, .ngxmdp .yearcell {
+  width: 32px !important;
+  height: 35px !important;
+  border-radius:2px;
+  text-align: center;
+  font-size:12px !important;
+}
+
+.ngxmdp .icon-ngxmydpright:before {
+  font-size: 12px;
+  font-family: Linearicons-Free;
+  content: '\e876' !important;
+}
+
+.ngxmdp .icon-ngxmydpleft:before {
+  font-size: 12px;
+  font-family: Linearicons-Free;
+  content: '\e875' !important;
+}
+.ngxmdp .icon-ngxmydpup:before{
+  font-size: 12px;
+  font-family: Linearicons-Free;
+  content: '\e873' !important;
+}
+.ngxmdp .icon-ngxmydpdown:before{
+  font-size: 12px;
+  font-family: Linearicons-Free;
+  content: '\e874' !important;
+}
+.ngxmdp .headermonthtxt, .ngxmdp .headeryeartxt {
+  padding: 0px 15px;
+  max-width: inherit !important;
+}
+.ngxmdp .caltable{
+  margin-left:3px;
+  margin-right:3px;
+  margin-bottom:12px;
+}
+.ngxmdp .caltable, .ngxmdp .monthtable, .ngxmdp .yeartable {
+  background: none !important;
+  font-size: 14px;
+}
+
+.ngxmdp .currmonth {
+  background:none !important;
+}
+
+.ngxmdp .daycell .datevalue {
+  background-color: inherit;
+  font-weight: 400 !important;
+  vertical-align: middle;
+}
+.markcurrday, .markcurrmonth, .markcurryear{
+  color:$green;
+  font-weight: 700;
+  background:none !important;
+  text-decoration: none !important;
+}
+.ngxmdp .daycell:hover,.selectedyear .yearvalue, .monthcell.selectedmonth .monthvalue, .monthcell.selectedmonth , .ngxmdp .monthcell:hover, .monthcell:hover .markcurrmonth, .ngxmdp .yearcell:hover, .daycell.selectedday, .daycell.selectedday span,  .daycell:hover .prevmonth,.daycell:hover .nextmonth, .daycell:hover .markcurrday, .yearcell.selectedyear {
+  background-color: $orange !important;
+  opacity: 1;
+  color:#fff !important;
+}
+.highlight{
+  color:$textColor !important;
+}
+.datevalue.prevmonth, .datevalue.nextmonth{
+  opacity: 0.3;
+}
+.ngxmdp .caltable{
+  width: calc(100% - 20px) !important;
+  margin:0 auto;
+  margin-bottom:10px;
+  height: calc(100% - 30px);
+}
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #fff;
+}
+.leaflet-top{
+  z-index: 500 !important;
+}
+.dateTime .ngxmdp .selector {
+  width: 180% !important;
+}
+.dateTime .ngxmdp .selectorarrowleft:after, .ngxmdp .selectorarrowleft:before {
+  right:auto;
+  left: 130px !important;
+}
+.ngxmdp td.disabled{
+  background-color: $backgroundColor !important;
+}
+.ngxmdp td.disabled:hover ,.ngxmdp td.disabled:hover  .prevmonth{
+  color:#ccc !important;
+  background-color: $backgroundColor !important;
+}

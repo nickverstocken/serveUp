@@ -1,3 +1,4 @@
+@import '../../../color';
 #searchDetailWrap{
   display: flex;
   height:calc(100vh - 60px);
@@ -6,15 +7,56 @@
   background-repeat: no-repeat;
   background-position: center center;
   position: relative;
+  align-items: center;
+  justify-content: center;
   &:before{
     content: '';
     position: absolute;
     width:100%;
     height:100%;
-    background: #000;
-    opacity: 0.2;
+    background: rgba(#2f3033,0.3);
+
   }
 }
+.form-group{
+  position: relative;
+  margin-top: 10px;
+  textarea{
+    padding:15px;
+    min-height: 150px;
+  }
+}
+.icon{
+  font-size: 20px;
+}
+.currentLocation{
+  margin-bottom: 5px;
+  text-align: right;
+}
 .contentModal{
+  position: relative;
+  width:100%;
+  max-width: 600px;
+  z-index:4;
+  margin: 10px;
+  h1{
+    color:#fff;
+    text-align: center;
+  }
+  h2{
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  .modalcenterfixed{
+    min-width: 250px;
+    background: $backgroundColor;
+    padding: 35px;
+    border-radius: 4px;
+    @include boxShadowSmall;
+  }
+}
 
+#go{
+  margin-top: 15px;
+  text-align: right;
 }

@@ -13,10 +13,12 @@
       <i class="fas fa-bars"></i>
     </a>
     <div class="logo"><a href="">Serve Up!</a></div>
+    <a class="notification" *ngIf="mobile"><span class="fas fa-bell"></span></a>
     <ul *ngIf="!mobile">
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="/">Berichten</a></li>
+      <li id="notification"><a class="notification"><span class="fas fa-bell"></span></a></li>
       <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
         <span class="userImageThumb" *ngIf="!user.picture_thumb"><div class="defaultProfile">{{user.fname.charAt(0)}}</div></span>

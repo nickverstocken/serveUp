@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
@@ -10,6 +10,7 @@ import * as turf from '@turf/turf';
 })
 export class MapAreaComponent implements OnInit {
   @Output() mapLoaded: EventEmitter<any> = new EventEmitter();
+  @Input() lnglat = [4.067046, 51.171785];
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/bright-v9';
   lat = 0;
@@ -23,18 +24,15 @@ export class MapAreaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lng = 4.067046;
-    this.lat = 51.171785;
-    let lnglat = [this.lng, this.lat];
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
       zoom: 8,
       maxZoom: 12,
-      center: lnglat
+      center: this.lnglat
     });
-    new mapboxgl.Marker(this.createMarker('', lnglat))
-      .setLngLat(lnglat)
+    new mapboxgl.Marker(this.createMarker('', this.lnglat))
+      .setLngLat(this.lnglat)
       .addTo(this.map);
 
 //addToMap
@@ -62,7 +60,7 @@ export class MapAreaComponent implements OnInit {
       'type': 'Feature',
       'geometry': {}
     };
-    this.radiusCircle = turf.buffer(turf.point([this.lng, this.lat]), radius, {steps: 100, units: 'kilometers'});
+    this.radiusCircle = turf.buffer(turf.point(this.lnglat), radius, {steps: 100, units: 'kilometers'});
     const coordinates = this.radiusCircle.geometry.coordinates[0];
     this.bounds = coordinates.reduce(function (bounds, coord) {
       return bounds.extend(coord);

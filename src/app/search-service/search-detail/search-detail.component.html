@@ -1,6 +1,26 @@
 <div *ngIf="subcat" id="searchDetailWrap" [style.backgroundImage]="'url(' + subcat.category.picture + '_bg.jpg)'">
 <div class="contentModal">
-  <p>hey</p>
+  <h1>{{nearbyCount}} {{subcat.plural}} in jouw buurt</h1>
+  <div class="modalcenterfixed">
+    <h2>Waar, wanneer en wat voor {{subcat.plural}} zoek je?</h2>
+    <form [formGroup]="formRequest">
+      <div class="currentLocation">
+        <a class="currentLocation">Huidige locatie</a>
+      </div>
+      <app-autofill-cities [id]="'searchCity'" [readonly]="false" [group]="formRequest.controls['city']"></app-autofill-cities>
+      <div class="form-group withbutton">
+        <input formControlName="due_date" autocomplete="off"  #dp="ngx-mydatepicker" placeholder="Datum" type="text" [options]="dateOptions" ngx-mydatepicker (click)="dp.openCalendar()">
+        <button><span (click)="dp.toggleCalendar()" class="icon far fa-calendar-alt"></span></button>
+      </div>
+      <div class="form-group">
+        <textarea formControlName="description" [placeholder]="'Geef een zo nauwkeurig mogelijke beschrijving over wat je juist zoekt.'"></textarea>
+      </div>
+    </form>
+    <div id="go">
+      <button [disabled]="!formRequest.valid" [class.disabled]="!formRequest.valid" (click)="sendRequest()" class="buttonbig">Volgende</button>
+    </div>
+
+  </div>
 </div>
 
 </div>

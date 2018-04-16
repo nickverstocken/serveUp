@@ -14,6 +14,7 @@ export class AutofillCitiesComponent implements OnInit {
   @Input() citySearch = '';
   @Input('group')
   public adressForm: FormGroup;
+  @Input() readonly = true;
   cities;
   showAutoFill = false;
   constructor(private serveUpService: ServupService) {
@@ -28,7 +29,7 @@ export class AutofillCitiesComponent implements OnInit {
   ngOnInit() {
     this.serveUpService.getCities().subscribe(
       res => {
-        this.cities = res.city.data;
+        this.cities = res.city;
         this.cities.sort();
       });
   }

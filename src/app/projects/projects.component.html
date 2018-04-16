@@ -1,45 +1,28 @@
-<div id="projectsWrap">
+<div id="projectsWrap" *ngIf="requests">
   <div class="heading">
     <h1>Jouw projecten</h1>
     <div class="seperator"></div>
   </div>
-  <div class="cardsWrap row">
-    <div class="card">
+  <div class="cardsWrap">
+    <div *ngFor="let request of requests" class="card">
       <div class="cardHead">
-        <h2 class="carTitle">DJ</h2>
-        <span class="date cardSubtitle">4 Maart 2018</span>
+        <h2 class="carTitle">{{request.title}}</h2>
+        <span class="date cardSubtitle">{{request.due_date | date:'longDate'}}</span>
       </div>
       <div class="cardBody">
         <p>
-         10 professionals beschikbaar voor uw project.
+         {{request.offers_count}} professional{{request.offers_count === 1 ? '' : 's'}} beschikbaar voor uw project.
         </p>
         <div class="userswrap">
-          <div class="user">
+          <div *ngFor="let offer of request.offers" class="user">
             <img src="http://www.designskilz.com/random-users/images/imageF48.jpg"/>
             <span class="notiBadge">1</span>
-          </div>
-          <div class="user">
-            <img
-              src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
-            <span class="notiBadge">1</span>
-          </div>
-          <div class="user">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk4cRIpbXBOSNXp_oMhRftcyEcBJhQm8Gm8q2BSogzXrwjE-67"/>
-            <span class="notiBadge">1</span>
-          </div>
-          <div class="user">
-            <img src="http://www.designskilz.com/random-users/images/imageF48.jpg"/>
-            <span class="notiBadge">1</span>
-          </div>
-          <div class="user">
-            <img src="http://www.simon-li.com/projects/mongkok/cs2/images/gallery/small/random-user-13.jpg"/>
           </div>
         </div>
       </div>
       <div class="cardActions">
         <a>Wijzig</a>
-        <a routerLink="/project/1">Bekijk</a>
+        <a routerLink="/project/{{request.id}}">Bekijk</a>
       </div>
     </div>
   </div>

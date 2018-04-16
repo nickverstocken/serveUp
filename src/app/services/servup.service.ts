@@ -49,4 +49,13 @@ export class ServupService {
   getSubCategory(id): Observable<any>{
     return this.api.get(`/subcategory/${id}`);
   }
+  getServicesNearbyCount(subcatId, cityName): Observable<any>{
+    return this.api.get(`/service/${subcatId}/nearby/${cityName}/count`);
+  }
+  saveRequest(form): Observable<any>{
+    return this.api.post(`/request/save`, form);
+  }
+  getAllRequests(): Observable<any>{
+    return this.api.get(`/request/all`);
+  }
 }

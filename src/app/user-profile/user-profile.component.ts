@@ -54,8 +54,24 @@ export class UserProfileComponent implements OnInit {
       name: '20 km'
     },
     {
+      value: '30',
+      name: '30 km'
+    },
+    {
+      value: '40',
+      name: '40 km'
+    },
+    {
       value: '50',
       name: '50 km'
+    },
+    {
+      value: '60',
+      name: '60 km'
+    },
+    {
+      value: '70',
+      name: '70 km'
     },
     {
       value: '100',
@@ -133,10 +149,13 @@ export class UserProfileComponent implements OnInit {
   saveService(id) {
     // ['form' + id]
     const form = this['form' + id.charAt(0).toUpperCase() + id.slice(1)];
+    console.log(form.value);
     let frmData = this.assignFormData(form.value);
+    frmData.append('city_id', this.formAc4.controls.city.controls.id.value);
     if (id === 'ac5' || id === 'ac7' || id === 'ac8') {
       frmData = form.value;
     }
+
     this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
       result => {
         Object.assign(this.selectedService, result.service);
@@ -207,6 +226,10 @@ export class UserProfileComponent implements OnInit {
     this.formAc6 = this.fb.group({
       max_km: [this.selectedService.max_km]
     });
+    if(this.mapIsLoaded){
+      this.mapcomp.lnglat = [this.selectedService.city.lng, this.selectedService.city.lat];
+    }
+
   }
 
   buildFormAc7() {
@@ -432,9 +455,9 @@ export class UserProfileComponent implements OnInit {
   }
   mapLoaded(loaded) {
     if (loaded) {
-      this.mapIsLoaded = true;
       this.mapcomp.map.resize();
-      this.mapcomp.changeBounds(this.formAc6.controls['max_km'].value);
+      this.mapcomp.changeBounds(this.selectedService.max_km);
+      this.mapIsLoaded = true;
     }
   }
 

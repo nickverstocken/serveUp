@@ -115,7 +115,6 @@
       flex-direction: row;
       li{
         &#user{
-          margin-left:auto;
           a:hover{
             text-shadow: none;
           }
@@ -124,6 +123,9 @@
             font-size: 20px;
 
           }
+        }
+        &#notification{
+          margin-left: auto;
         }
       }
     }
@@ -161,6 +163,22 @@
         }
       }
     }
+  }
+}
+.notification{
+  &:hover{
+    text-shadow: none !important;
+    text-decoration: none;
+  }
+  span{
+    width:25px;
+    height:25px;
+    font-size: 20px;
+    color:$textColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 .loggedIn{
@@ -221,14 +239,18 @@
   .loggedIn{
     .logo{
       position: relative;
-      left:100%;
-      transform: translateX(calc(-100% - 54px));
+      left:50%;
+      transform: translateX(calc(-50% - 54px));
       a{
         justify-content: center;
       }
     }
   }
-
+  .notification{
+    padding:20px;
+    position: relative;
+    margin-left: auto;
+  }
 
 }
 @media all and (max-width: 400px) {
