@@ -1,6 +1,7 @@
 import {City} from './City';
 import {Category} from './Category';
 import {Tag} from './Tag';
+import {User} from './User';
 
 export class Service {
   id: number;
@@ -35,4 +36,5 @@ export class Service {
   price_extras: object[];
   standard_response: string;
   tags;
+  user?: User;
 }

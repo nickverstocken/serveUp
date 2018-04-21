@@ -1,4 +1,4 @@
-<div id="userProfile">
+<div id="userProfile" *ngIf="user && service">
   <div id="topPart">
     <div class="profileBanner">
       <img src="../../../assets/images/bannertest.jpg"/>
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="namereview">
-      <h2>Dj Nick Verstocken</h2>
+      <h2>{{service.name}}</h2>
       <div class="reviewScore">
         <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
         class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
@@ -22,30 +22,20 @@
     <div id="about">
       <h2>Over</h2>
       <p id="abouttext">
-        In tegenstelling tot wat algemeen aangenomen wordt is Lorem Ipsum niet zomaar willekeurige tekst. het heeft zijn
-        wortels in een stuk klassieke latijnse literatuur uit 45 v.Chr. en is dus meer dan 2000 jaar oud. Richard
-        McClintock, een professor latijn aan de Hampden-Sydney College in Virginia, heeft één van de meer obscure
-        latijnse woorden, consectetur, uit een Lorem Ipsum passage opgezocht, en heeft tijdens het zoeken naar het woord
-        in de klassieke literatuur de onverdachte bron ontdekt. Lorem Ipsum komt uit de secties 1.10.32 en 1.10.33 van
-        "de Finibus Bonorum et Malorum" (De uitersten van goed en kwaad) door Cicero, geschreven in 45 v.Chr. Dit boek
-        is een verhandeling over de theorie der ethiek, erg populair tijdens de renaissance. De eerste regel van Lorem
-        Ipsum, "Lorem ipsum dolor sit amet..", komt uit een zin in sectie 1.10.32.
+        {{service.description}}
       </p>
-      <div class="viewMore">
-        <button class="button" (click)="showAllText($event)">Toon meer</button>
-      </div>
     </div>
   </div>
   <div id="contactDetails" class="details">
     <h2>Contact</h2>
     <div class="listContact">
       <ul >
-        <li><span class="fas fa-map-pin"></span><span class="label">Adres </span><span class="text">Kruisstraat 60, 9111 Belsele</span>
+        <li><span class="fas fa-map-pin"></span><span class="label">Adres </span><span class="text">{{service.address}}, {{service.city.zip}} {{service.city.name}}</span>
         </li>
-        <li><span class="fas fa-phone-volume"></span><span class="label">Telefoon </span><span class="text">+324 73 67 02 14</span>
+        <li *ngIf="service.tel"><span class="fas fa-phone-volume"></span><span class="label">Telefoon </span><span class="text">{{service.tel}}</span>
         </li>
-        <li><span class="fas fa-trophy"></span><span class="label">Jaar ervaring </span><span class="text">3</span></li>
-        <li><span class="fas fa-link"></span><span class="label">Website </span><span class="text"><a>www.nickverstocken.be</a></span>
+        <li><span class="fas fa-trophy"></span><span class="label">Jaar ervaring </span><span class="text">{{service.experience}}</span></li>
+        <li *ngIf="service.website"><span class="fas fa-link"></span><span class="label">Website </span><span class="text"><a>{{service.website}}</a></span>
         </li>
         <li><span class="fas fa-share-alt"></span><span class="label">Social media</span><span class="text">
           <a class="social facebook"><span class="fab fa-facebook-f"></span></a>
@@ -55,7 +45,7 @@
       </ul>
     </div>
   </div>
-  <div   id="qandaDetails" class="details">
+  <div id="qandaDetails" class="details">
     <h2>Q&A</h2>
     <div id="qanda">
       <div class="qandaItem">
@@ -63,8 +53,7 @@
         <span> A. </span>
         <p> Ik probeer van elk evenement een persoonlijke missie te maken zodat iedereen tevreden is!</p>
       </div>
-
-      <div *ngIf="qAndAIsFull">
+      <div>
         <div class="qandaItem">
           <h3><span>Q.</span> Wat zit er allemaal in de prijs en wat niet?</h3>
           <span> A. </span>
@@ -78,7 +67,7 @@
         </div>
       </div>
       <div class="viewMore">
-        <button class="button" (click)="showAllQAndA($event)">Toon meer</button>
+        <button class="button">Toon meer</button>
       </div>
     </div>
   </div>
@@ -86,4 +75,7 @@
     <h2>Reviews</h2>
     <app-reviews></app-reviews>
   </div>
+</div>
+<div *ngIf="user && !service">
+  <h1>Gebruikers profiel</h1>
 </div>

@@ -1,12 +1,14 @@
-<ul>
-  <li>
-    <a class="selected">
+<ul *ngIf="offerList">
+  <li *ngFor="let offer of offerList">
+    <a (click)="changeSelected(offer)" [class.selected]="currentSelected == offer.id">
       <div class="userPicture">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        <img *ngIf="offer.service.logo" src="{{offer.service.logo}}"/>
+        <div *ngIf="!offer.service.logo" class="defaultLogo">
+          <span class="far fa-image"></span>
+        </div>
       </div>
       <div class="userInfo">
-        <h3>Dj Nick Verstocken</h3>
+        <h3>{{offer.service.name}}</h3>
         <div class="reviewScore">
           <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
           <span class="reviewCount">7</span>
@@ -14,79 +16,10 @@
       </div>
       <div class="userPrice">
         <div class="price">
-          <span class="valuta">€</span><span class="number">500</span>
+          <span class="valuta">€</span><span class="number">{{offer.service.price_estimate}}</span>
         </div>
         <div class="rate">
-          <span>Per dag</span>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li>
-    <a>
-      <div class="userPicture">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
-      </div>
-      <div class="userInfo">
-        <h3>Dj Nick Verstocken</h3>
-        <div class="reviewScore">
-          <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-          <span class="reviewCount">7</span>
-        </div>
-      </div>
-      <div class="userPrice">
-        <div class="price">
-          <span class="valuta">€</span><span class="number">500</span>
-        </div>
-        <div class="rate">
-          <span>Per dag</span>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li>
-    <a>
-      <div class="userPicture">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
-      </div>
-      <div class="userInfo">
-        <h3>Dj Nick Verstocken</h3>
-        <div class="reviewScore">
-          <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-          <span class="reviewCount">7</span>
-        </div>
-      </div>
-      <div class="userPrice">
-        <div class="price">
-          <span class="valuta">€</span><span class="number">500</span>
-        </div>
-        <div class="rate">
-          <span>Per dag</span>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li>
-    <a>
-      <div class="userPicture">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
-      </div>
-      <div class="userInfo">
-        <h3>Dj Nick Verstocken</h3>
-        <div class="reviewScore">
-          <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-          <span class="reviewCount">7</span>
-        </div>
-      </div>
-      <div class="userPrice">
-        <div class="price">
-          <span class="valuta">€</span><span class="number">500</span>
-        </div>
-        <div class="rate">
-          <span>Per dag</span>
+          <span>{{offer.service.rate}}</span>
         </div>
       </div>
     </a>

@@ -62,4 +62,14 @@ export class HeaderComponent implements OnInit {
       this.mobileMenu = 'opened';
     }
   }
+  toggleSubNav(){
+    if(this.showSubnav === 'hideSubnav'){
+       this.showSubnav = '';
+    }else{
+      this.showSubnav ='hideSubnav';
+      $('.chooseContainer').slideUp({'duration': 200});
+      $('.fa-caret-down').removeClass('rotate');
+    }
+
+  }
 }

@@ -1,67 +1,102 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Service} from '../models/Service';
+
 @Injectable()
 export class ServupService {
   private selectedServiceSubject = new BehaviorSubject<any>(-1);
   public selectedService = this.selectedServiceSubject.asObservable().distinctUntilChanged();
-  constructor(private api: ApiService) { }
+
+  constructor(private api: ApiService) {
+  }
 
   setSelectedService(serviceId) {
     localStorage.setItem('selectedService', serviceId);
     this.selectedServiceSubject.next(serviceId);
   }
-  getCities(): Observable<any>{
+
+  getCities(): Observable<any> {
     return this.api.getLocal('./assets/BE_cities.json');
   }
-  checkEmail(emailAdress): Observable<any>{
+
+  checkEmail(emailAdress): Observable<any> {
     return this.api.post('/checkEmail', emailAdress);
   }
-  registerUser(frmData): Observable<any>{
+
+  registerUser(frmData): Observable<any> {
     return this.api.post('/register', frmData);
   }
-  sendRegistrationMail(data): Observable<any>{
+
+  sendRegistrationMail(data): Observable<any> {
     return this.api.post('/sendMail', data);
   }
-  getCategories(): Observable<any>{
+
+  getCategories(): Observable<any> {
     return this.api.get('/categories');
   }
-  getCurrentUser(): Observable<any>{
+
+  getCurrentUser(): Observable<any> {
     return this.api.get('/login/user?include=city,service.faq');
   }
-  updateUser(user): Observable<any>{
+
+  updateUser(user): Observable<any> {
     return this.api.post('/user/update', user);
   }
-  changePass(form): Observable<any>{
+
+  changePass(form): Observable<any> {
     return this.api.post('/user/changepassword', form);
   }
-  updateService(id, form): Observable<any>{
-    return this.api.post(`/service/update/${id}`,form);
+
+  updateService(id, form): Observable<any> {
+    return this.api.post(`/service/update/${id}`, form);
   }
-  removeTag(serviceId, tagId): Observable<any>{
+
+  removeTag(serviceId, tagId): Observable<any> {
     return this.api.delete(`/service/${serviceId}/tag/${tagId}`);
   }
-  searchCategories(searchTerm): Observable<any>{
+
+  searchCategories(searchTerm): Observable<any> {
     return this.api.get(`/subcategories?search=${searchTerm}`);
   }
-  getSubCategory(id): Observable<any>{
+
+  getSubCategory(id): Observable<any> {
     return this.api.get(`/subcategory/${id}`);
   }
-  getServicesNearbyCount(subcatId, cityName): Observable<any>{
+
+  getServicesNearbyCount(subcatId, cityName): Observable<any> {
     return this.api.get(`/service/${subcatId}/nearby/${cityName}/count`);
   }
-  saveRequest(form): Observable<any>{
+
+  saveRequest(form): Observable<any> {
     return this.api.post(`/request/save`, form);
   }
-  getAllRequests(): Observable<any>{
+
+  getAllRequests(): Observable<any> {
     return this.api.get(`/request/all`);
   }
-  updateRequest(request): Observable<any>{
+
+  getRequest(id): Observable<any> {
+    return this.api.get(`/request/${id}`);
+  }
+
+  updateRequest(request): Observable<any> {
     return this.api.put(`/request/${request.id}/update`, request);
   }
-  deleteRequest(id): Observable<any>{
+
+  deleteRequest(id): Observable<any> {
     return this.api.delete(`/request/${id}/delete`);
+  }
+
+  getOffer(reqid, id): Observable<any> {
+    //request/{reqid}/offer/{id}
+    return this.api.get(`/request/${reqid}/offer/${id}`);
+  }
+  getOfferMessages(id): Observable<any> {
+    return this.api.get(`/offer/${id}/messages`);
+  }
+  sendOfferMessage(id, message): Observable<any> {
+    return this.api.post(`/offer/${id}/message`, message);
   }
 }

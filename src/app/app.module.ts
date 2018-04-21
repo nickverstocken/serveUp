@@ -24,6 +24,7 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {NumbermaskDirective} from './directives/numbermask.directive';
 import {searchZip, searchName, searchMultiplePipe} from './pipes/search';
+import { TimeAgoPipe } from './pipes/timeago';
 import {StepperComponent} from './components/stepper/stepper.component';
 import {DaySelectComponent} from './components/day-select/day-select.component';
 import {TagInputComponent} from './components/tag-input/tag-input.component';
@@ -66,6 +67,7 @@ import { RequestCardComponent } from './components/request-card/request-card.com
     searchZip,
     searchName,
     searchMultiplePipe,
+    TimeAgoPipe,
     StepperComponent,
     DaySelectComponent,
     TagInputComponent,

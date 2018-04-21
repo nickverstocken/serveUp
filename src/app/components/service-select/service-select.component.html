@@ -2,7 +2,7 @@
   <div (click)="toggleChooseContainer()" class="serviceItem">
     <div class="serviceLogo"><img *ngIf="services[0].logo" src="{{services[0].logo}}" alt="{{services[0].name}}"/>
       <div *ngIf="!services[0].logo" class="defaultLogo">
-        <span>Logo</span>
+        <span class="far fa-image"></span>
       </div>
     </div><div class="serviceName">{{services[0].name}}</div><div *ngIf="services.length > 1" class="caret"><span class="fas fa-caret-down"></span></div>
   </div>
@@ -11,7 +11,7 @@
       <div class="serviceLogo">
         <img *ngIf="service.logo" src="{{service.logo}}" alt="{{service.name}}"/>
         <div *ngIf="!service.logo" class="defaultLogo">
-          <span>Logo</span>
+          <span class="far fa-image"></span>
         </div>
       </div><div class="serviceName">{{service.name}}</div>
     </div>

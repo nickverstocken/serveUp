@@ -19,7 +19,7 @@
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="/">Berichten</a></li>
       <li id="notification"><a class="notification"><span class="fas fa-bell"></span></a></li>
-      <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a>
+      <li (click)="toggleSubNav()" id="user"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
         <span class="userImageThumb" *ngIf="!user.picture_thumb"><div class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
       </a>
@@ -28,8 +28,8 @@
 
     <ul *ngIf="mobile" class="mobileMenu {{mobileMenu}}">
       <a (click)="openMobileMenu()" class="close"><span class="lnr lnr-cross"></span></a>
-      <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user"><a
-        routerLink="/">
+      <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user">
+        <a routerLink="/">
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
         <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
           class="defaultProfile">{{user.fname.charAt(0)}}</div></span>

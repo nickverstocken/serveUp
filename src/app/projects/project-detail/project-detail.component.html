@@ -1,23 +1,23 @@
 <div class="fixedWrap">
   <div class="leftSubNav">
     <h2>Jouw Dj's</h2>
-    <app-user-price-list></app-user-price-list>
+    <app-user-price-list (changeSelectedOffer)="changeSelected($event)" [currentSelected]="currentSelected" [offerList]="offerlist"></app-user-price-list>
 
   </div>
   <button id="overview" (click)="toggleUserPriceList()"><span class="fas fa-arrow-right"></span></button>
   <a (click)="closeOverview()" id="overlayProjectDetails" class="overlay"></a>
-  <div class="middleFixed">
-    <app-profile class="profile"></app-profile>
+  <div class="middleFixed" *ngIf="currentService">
+    <app-profile [service]="currentService" [user]="currentService.user" class="profile"></app-profile>
   </div>
   <div class="rightAsside">
-    <div class="priceBlock">
+    <div class="priceBlock" *ngIf="currentService">
       <div class="priceBigWrap">
         <div class="priceBig">
           <div class="price">
-            <span class="valuta">€</span><span class="number">500</span>
+            <span class="valuta">€</span><span class="number">{{currentService.price_estimate}}</span>
           </div>
           <div class="rate">
-            <span>Per dag</span>
+            <span>{{currentService.rate}}</span>
           </div>
         </div>
         <div class="available">
@@ -28,9 +28,9 @@
         <button class="button buttonbig fullWidth">Huur in</button>
       </div>
     </div>
-    <div class="chatBlock">
-      <h2>Chat met Nick</h2>
-      <app-chat class="chatter"></app-chat>
+    <div class="chatBlock" *ngIf="currentService">
+      <h2>Chat met {{currentService.user.fname}}</h2>
+      <app-chat (messageSend)="sendMessage($event)" [receiver]="currentService.user" [messages]="messages" class="chatter"></app-chat>
     </div>
   </div>
 </div>
