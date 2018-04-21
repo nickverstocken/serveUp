@@ -14,9 +14,9 @@ const appRoutes: Routes = [
   { path: '', component: SearchServiceComponent},
   { path: 'search/:id', component: SearchDetailComponent},
   { path: 'projects', component: ProjectsComponent},
-  { path: 'project/:id', component: ProjectDetailComponent},
+  { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
   { path: 'profile', component: UserProfileComponent},
-  { path: '**', redirectTo: '/home'}
+  { path: '**', redirectTo: ''}
 ];
 
 export const Routing = RouterModule.forRoot(appRoutes);

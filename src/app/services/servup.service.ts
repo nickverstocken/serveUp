@@ -58,4 +58,10 @@ export class ServupService {
   getAllRequests(): Observable<any>{
     return this.api.get(`/request/all`);
   }
+  updateRequest(request): Observable<any>{
+    return this.api.put(`/request/${request.id}/update`, request);
+  }
+  deleteRequest(id): Observable<any>{
+    return this.api.delete(`/request/${id}/delete`);
+  }
 }

@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit, AfterViewInit} from '@angular/core';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 declare var $: any;
 
@@ -8,16 +8,10 @@ declare var $: any;
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, AfterViewInit {
   mobile = false;
   innerWidth;
-  constructor(private router: Router) {
-    this.router.events
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          console.log('NavigationEnd:', event.url);
-        }
-      });
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -35,8 +29,11 @@ export class ProjectDetailComponent implements OnInit {
     if (this.innerWidth <= 960) {
       this.mobile = true;
     }
-    if (!this.mobile) {
-    }
+    this.route.params.subscribe(
+      params => {
+        console.log(params['id']);
+        console.log(params['offerid']);
+      });
   }
 
   ngAfterViewInit() {

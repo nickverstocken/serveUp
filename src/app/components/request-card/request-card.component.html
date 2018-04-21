@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="cardHead">
+    <h2 id="reqtitle{{request.id}}" (keydown)="keyPress($event)" [contentEditable]="editmode" class="carTitle" >{{request.title}}</h2>
+    <span class="date cardSubtitle">{{request.due_date | date:'longDate'}}</span>
+  </div>
+  <div class="cardBody">
+    <p>
+      {{request.offers_count}} professional{{request.offers_count === 1 ? '' : 's'}} beschikbaar voor uw project.
+    </p>
+    <div class="userswrap">
+      <div *ngFor="let offer of request.offers" class="user">
+        <img *ngIf="offer.service.logo" src="{{offer.service.logo}}"/>
+        <div *ngIf="!offer.service.logo" class="defaultLogo">
+          <span class="far fa-image"></span>
+        </div>
+        <span class="notiBadge">1</span>
+      </div>
+    </div>
+  </div>
+  <div class="cardActions">
+    <a *ngIf="!editmode" (click)="editMode()">Wijzig</a>
+    <a *ngIf="!editmode" routerLink="/project/{{request.id}}/offer/{{request.offers[0] ? request.offers[0].service.id : 'nope'}}">Bekijk</a>
+    <a *ngIf="editmode" (click)="deleteRequest()" class="red">Verwijder</a>
+    <a *ngIf="editmode" (click)="editRequest()">Ok</a>
+  </div>
+</div>

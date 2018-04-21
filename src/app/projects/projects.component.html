@@ -4,27 +4,7 @@
     <div class="seperator"></div>
   </div>
   <div class="cardsWrap">
-    <div *ngFor="let request of requests" class="card">
-      <div class="cardHead">
-        <h2 class="carTitle">{{request.title}}</h2>
-        <span class="date cardSubtitle">{{request.due_date | date:'longDate'}}</span>
-      </div>
-      <div class="cardBody">
-        <p>
-         {{request.offers_count}} professional{{request.offers_count === 1 ? '' : 's'}} beschikbaar voor uw project.
-        </p>
-        <div class="userswrap">
-          <div *ngFor="let offer of request.offers" class="user">
-            <img src="http://www.designskilz.com/random-users/images/imageF48.jpg"/>
-            <span class="notiBadge">1</span>
-          </div>
-        </div>
-      </div>
-      <div class="cardActions">
-        <a>Wijzig</a>
-        <a routerLink="/project/{{request.id}}">Bekijk</a>
-      </div>
-    </div>
+      <app-request-card *ngFor="let request of requests" [request]="request" (onDeleted)="deletedReq($event)"></app-request-card>
   </div>
 </div>
 <div class="footer">

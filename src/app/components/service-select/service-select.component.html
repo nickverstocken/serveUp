@@ -8,7 +8,8 @@
   </div>
   <div class="chooseContainer" *ngIf="services.length > 1">
     <div  (click)="poptotop(service)" class="serviceItem" *ngFor="let service of services | slice:1">
-      <div class="serviceLogo"><img *ngIf="service.logo" src="{{service.logo}}" alt="{{service.name}}"/>
+      <div class="serviceLogo">
+        <img *ngIf="service.logo" src="{{service.logo}}" alt="{{service.name}}"/>
         <div *ngIf="!service.logo" class="defaultLogo">
           <span>Logo</span>
         </div>

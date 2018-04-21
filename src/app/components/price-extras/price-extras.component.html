@@ -1,5 +1,5 @@
 <div [formGroup]="priceExtra" class="inputswrap price">
   <input formControlName="name" [class.disabled]="disabled" [readonly]="disabled"  class="editable"  placeholder="Beschrijving"/>
   <input formControlName="price"  [class.disabled]="disabled" [readonly]="disabled"  class="editable priceinput" type="text" placeholder="Prijs"/>
-  <button [disabled]="disabled" [class.disabled]="disabled" (click)="removePriceExtra()" class="btnstyle2"><span class="fas fa-times"></span></button>
+  <button [disabled]="disabled" [class.disabled]="disabled" (click)="removePriceExtra()" class="button btnstyle2"><span class="fas fa-times"></span></button>
 </div>

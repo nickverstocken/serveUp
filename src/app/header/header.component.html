@@ -9,7 +9,7 @@
 </header>
 <header class="loggedIn" *ngIf="authenticated">
   <nav class="navigation">
-    <a (click)="openMobileMenu()" *ngIf="mobile" class="menumobile">
+    <a  (click)="openMobileMenu()" *ngIf="mobile" class="menumobile">
       <i class="fas fa-bars"></i>
     </a>
     <div class="logo"><a href="">Serve Up!</a></div>
@@ -61,7 +61,7 @@
         <div class="userInfotext">
           <div class="username">{{user.fname}} {{user.name}}</div>
           <div class="email">{{user.email}}</div>
-          <div><button routerLink="profile">Mijn account</button></div>
+          <div><button class="button" routerLink="profile">Mijn account</button></div>
         </div>
       </div>
     </div>
@@ -69,8 +69,8 @@
       <app-service-select [services]="user.service"></app-service-select>
     </div>
     <div id="links">
-      <button class="btnstyle2" *ngIf="user.role === 'service'">Service toevoegen</button>
-      <button class="btnstyle2" (click)="logout()">Uitloggen</button>
+      <button class="button btnstyle2" *ngIf="user.role === 'service'">Service toevoegen</button>
+      <button class="button btnstyle2" (click)="logout()">Uitloggen</button>
     </div>
 
   </div>

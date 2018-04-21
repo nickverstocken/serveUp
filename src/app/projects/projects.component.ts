@@ -8,14 +8,16 @@ import { LOCALE_ID } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
   requests: any[];
+  editmode = false;
   constructor(private serveUpService: ServupService) { }
 
   ngOnInit() {
     this.serveUpService.getAllRequests().subscribe(
       result => {
-        console.log(result);
         this.requests = result.requests;
       });
   }
-
+  deletedReq(request){
+    this.requests = this.requests.filter(req => req !== request);
+  }
 }

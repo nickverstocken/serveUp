@@ -6,6 +6,18 @@
 .heading{
   margin-bottom: 25px;
   h1{
+    margin-top:0;
+    line-height: 1;
     text-align: center;
+  }
+}
+app-request-card{
+  display: flex;
+  height:100%;
+  width:100% !important;
+}
+@media all and (max-width: 502px) {
+  app-request-card{
+    display: block;
   }
 }

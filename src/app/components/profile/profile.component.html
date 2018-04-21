@@ -32,11 +32,11 @@
         Ipsum, "Lorem ipsum dolor sit amet..", komt uit een zin in sectie 1.10.32.
       </p>
       <div class="viewMore">
-        <button (click)="showAllText($event)">Toon meer</button>
+        <button class="button" (click)="showAllText($event)">Toon meer</button>
       </div>
     </div>
   </div>
-  <div *ngIf="service" id="contactDetails" class="details">
+  <div id="contactDetails" class="details">
     <h2>Contact</h2>
     <div class="listContact">
       <ul >
@@ -55,7 +55,7 @@
       </ul>
     </div>
   </div>
-  <div  *ngIf="services"  id="qandaDetails" class="details">
+  <div   id="qandaDetails" class="details">
     <h2>Q&A</h2>
     <div id="qanda">
       <div class="qandaItem">
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="viewMore">
-        <button (click)="showAllQAndA($event)">Toon meer</button>
+        <button class="button" (click)="showAllQAndA($event)">Toon meer</button>
       </div>
     </div>
   </div>

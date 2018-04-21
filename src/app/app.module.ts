@@ -46,7 +46,13 @@ import {MediaModalComponent} from './components/media-modal/media-modal.componen
 import {ImageModalComponent} from './components/image-modal/image-modal.component';
 import {PriceExtrasComponent} from './components/price-extras/price-extras.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
-import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
+import { ClickOutsideModule } from 'ng-click-outside';
+// angular material components
+import {
+  MatDatepickerModule,
+  MatNativeDateModule,
+} from '@angular/material';
+import { RequestCardComponent } from './components/request-card/request-card.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +89,7 @@ import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
     ImageModalComponent,
     PriceExtrasComponent,
     SearchDetailComponent,
+    RequestCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +98,9 @@ import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
     ReactiveFormsModule,
     Routing,
     HttpClientModule,
-    NgxMyDatePickerModule.forRoot()
+    ClickOutsideModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [
     {

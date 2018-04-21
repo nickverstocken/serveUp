@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/User';
 import {ServupService} from '../../services/servup.service';
 import {SubCategory} from '../../models/SubCategory';
 import {FormBuilder,  Validators} from '@angular/forms';
-import {INgxMyDpOptions} from 'ngx-mydatepicker';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-search-detail',
@@ -17,21 +16,28 @@ export class SearchDetailComponent implements OnInit {
   user: User;
   subcat: SubCategory;
   formRequest;
-  frmCity;
   nearbyCount = 0;
   nearbyIds = [];
-  yesterday = ( d => new Date(d.setDate(d.getDate() - 1)) )(new Date)
-  dateOptions: INgxMyDpOptions = {
-    dateFormat: 'dd/mm/yyyy',
-    showTodayBtn: false,
-    sunHighlight: false,
-    disableUntil : {year: this.yesterday.getFullYear(), month: this.yesterday.getMonth() + 1, day: this.yesterday.getDate()}
-  };
+  today = new Date();
+  mobile = false;
+  innerWidth;
   constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService, private serveUpService: ServupService,  private fb: FormBuilder, private datePipe: DatePipe) {
 
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 800) {
+      this.mobile = true;
+    }else{
+      this.mobile = false;
+    }
+  }
   ngOnInit() {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 800) {
+      this.mobile = true;
+    }
     this.auth.currentUser.subscribe(
       user => {
         if(user.id){
@@ -82,7 +88,7 @@ export class SearchDetailComponent implements OnInit {
     const frmData = this.assignFormData(this.formRequest.value);
     frmData.append('ids', JSON.stringify(this.nearbyIds));
     frmData.append('city_id', this.formRequest.controls.city.controls.id.value);
-    frmData.append('due_date',  this.datePipe.transform(this.formRequest.controls.due_date.value.jsdate, 'yyyy-MM-dd'));
+    frmData.append('due_date',  this.datePipe.transform(this.formRequest.controls.due_date.value, 'yyyy-MM-dd'));
     frmData.append('title', this.subcat.name);
     this.serveUpService.saveRequest(frmData).subscribe(
       result => {
