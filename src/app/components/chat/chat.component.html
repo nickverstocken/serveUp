@@ -4,9 +4,9 @@
       <div *ngIf="message.receiver_id=== user.id"  class="message">
         <div class="userwrap">
           <div class="userPicture">
-            <img *ngIf="message.receiver.picture_thumb" src="{{message.receiver.picture_thumb}}"/>
-            <div *ngIf="!message.receiver.picture_thumb" class="defaultLogo">
-              <span>{{message.receiver.fname.charAt(0)}}</span>
+            <img *ngIf="message.sender.picture_thumb" src="{{message.sender.picture_thumb}}"/>
+            <div *ngIf="!message.sender.picture_thumb" class="defaultLogo">
+              <span>{{message.sender.fname.charAt(0)}}</span>
             </div>
           </div>
 

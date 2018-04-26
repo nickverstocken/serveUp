@@ -90,13 +90,18 @@ export class ServupService {
   }
 
   getOffer(reqid, id): Observable<any> {
-    //request/{reqid}/offer/{id}
     return this.api.get(`/request/${reqid}/offer/${id}`);
   }
+
   getOfferMessages(id): Observable<any> {
     return this.api.get(`/offer/${id}/messages`);
   }
+
   sendOfferMessage(id, message): Observable<any> {
     return this.api.post(`/offer/${id}/message`, message);
+  }
+
+  getServiceRequestList(serviceid, filter): Observable<any> {
+    return this.api.get(`/service/${serviceid}/requests?filter=${filter}`);
   }
 }

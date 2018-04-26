@@ -1,0 +1,42 @@
+<div class="inboxWrap">
+  <app-tabs [current]="filter" (tabClicked)="filterRequests($event)">
+    <app-tab name="Verzoeken" icon="fas fa-rocket" value="requests" [templateRef]="firstRef"></app-tab>
+    <app-tab name="Aanvaard" icon="fas fa-star" value="accepted" [templateRef]="firstRef"></app-tab>
+    <app-tab name="Ingehuurd" icon="fas fa-check-circle" value="hired"  [templateRef]="firstRef"></app-tab>
+    <app-tab name="Archief" icon="fas fa-archive" value="archived" [templateRef]="firstRef"></app-tab>
+  </app-tabs>
+  <ng-template #firstRef>
+    <div class="requestWrap">
+      <div class="requestNavigation">
+        <ul *ngIf="offerList">
+          <li *ngFor="let offer of offerList">
+            <a (click)="changeSelected(offer)" [class.selected]="currentSelected == offer.id">
+              <div class="userPicture">
+                <img *ngIf="offer.request.user.picture_thumb" src="{{offer.request.user.picture_thumb}}"/>
+                <div *ngIf="!offer.request.user.picture_thumb" class="defaultLogo">
+                  <span>{{offer.request.user.fname.charAt(0)}}</span>
+                </div>
+              </div>
+              <div class="userInfo">
+                <div class="namedate">
+                  <div><h3>{{offer.request.user.fname}} {{offer.request.user.name}}</h3></div>
+                  <div class="created"><span>{{offer.created_at | timeAgo}}</span></div>
+                </div>
+
+                <div class="reqdescription">
+                  <p>
+                    {{offer.request.description}}
+                  </p>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="chatter">
+        <app-chat *ngIf="selectedOffer" [receiver]="selectedOffer.request.user"></app-chat>
+      </div>
+    </div>
+  </ng-template>
+</div>
+

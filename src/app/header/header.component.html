@@ -18,6 +18,7 @@
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="/">Berichten</a></li>
+      <li *ngIf="user.role === 'service'"><a routerLink="/inbox">Inbox</a></li>
       <li id="notification"><a class="notification"><span class="fas fa-bell"></span></a></li>
       <li (click)="toggleSubNav()" id="user"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
@@ -44,6 +45,7 @@
       <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
       <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
       <li><a routerLink="/"><span class="lnr lnr-bubble"></span>Berichten</a></li>
+      <li *ngIf="user.role === 'service'"><a routerLink="/inbox">Inbox</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
   </nav>

@@ -54,6 +54,9 @@ import {
   MatNativeDateModule,
 } from '@angular/material';
 import { RequestCardComponent } from './components/request-card/request-card.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabComponent } from './components/tabs/tab/tab.component';
+import { InboxComponent } from './inbox/inbox.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +95,9 @@ import { RequestCardComponent } from './components/request-card/request-card.com
     PriceExtrasComponent,
     SearchDetailComponent,
     RequestCardComponent,
+    TabsComponent,
+    TabComponent,
+    InboxComponent,
   ],
   imports: [
     BrowserModule,

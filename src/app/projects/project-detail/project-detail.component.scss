@@ -19,6 +19,8 @@ h2,h3{
   border-left:1px solid $borderColor;
   border-right:1px solid $borderColor;
   top:60px;
+  display: flex;
+  flex-direction: column;
 }
 .middleFixed{
   position: relative;
@@ -80,11 +82,12 @@ h2{
   }
   .chatBlock{
     display: flex;
-    min-height: 100%;
+    flex: 1 auto;
     flex-direction: column;
     .chatter{
-      display: block;
+      display: flex;
       flex:1 auto;
+      flex-direction: column;
       position: relative;
     }
     h2{

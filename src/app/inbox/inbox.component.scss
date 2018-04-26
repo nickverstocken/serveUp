@@ -1,0 +1,86 @@
+@import '../../color';
+.inboxWrap{
+  padding-top: 10px;
+  margin-bottom: -50px;
+  height:calc(100vh - 60px);
+}
+ul{
+  list-style: none;
+  padding:0;
+  margin: 0;
+  li{
+    display: block;
+    a{
+      color:$textColor;
+      padding:10px;
+      display: flex;
+      align-items: center;
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      &:hover, &.selected, &:focus{
+        border-top: 2px solid lighten($borderColor,5%);
+        border-bottom: 2px solid lighten($borderColor,5%);
+        text-decoration: none;
+        background:lighten($borderColor,8%);
+      }
+    }
+  }
+}
+.reqdescription p{
+  white-space: nowrap;
+  max-width: 100%;
+  padding-right: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+.userPicture{
+  img{
+    width:50px;
+    height:50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .defaultLogo{
+    width:50px;
+    height:50px;
+    font-size: 20px;
+  }
+}
+.userInfo{
+  padding-left: 10px;
+  flex:1 auto;
+  overflow: hidden;
+  .namedate{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    .created{
+      font-size: 12px;
+      margin-left: auto;
+    }
+  }
+  h3{
+    margin: 0;
+    font-weight: 400;
+    margin-top: 0px;
+    font-size: 16px;
+  }
+}
+.requestWrap{
+  display: flex;
+  height:100%;
+}
+.requestNavigation{
+  flex: 0 0 25%;
+  min-width: 240px;
+  max-width: 420px;
+  height:100%;
+  border-left:1px solid $borderColor;
+}
+.chatter{
+  flex:1 auto;
+  height:100%;
+  border-left:1px solid $borderColor;
+  border-right: 1px solid $borderColor;
+}

@@ -1,22 +1,18 @@
 @import '../../../color';
 .chatwrap{
-  position: absolute;
   width:100%;
   display: flex;
   max-height: 100%;
-
+  flex:1 auto;
   flex-direction: column;
-  height:calc(100% - 230px);
+  height:100%;
   .messageInput{
     position: relative;
     width:100%;
     line-height: 1;
-    bottom:-4px;
     #sendMessage{
       position: absolute;
-
-      bottom:2px;
-      height:43px;
+      height:100%;
       width:42px;
       border-radius: 0;
       right:0;

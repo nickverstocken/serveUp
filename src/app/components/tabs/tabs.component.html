@@ -1,0 +1,10 @@
+<div class="tabs">
+<nav>
+  <ul class="tabsnav">
+    <li *ngFor="let tab of tabList" [class.active]="isSelected(tab)" (click)="onTabClick(tab)"><a><span [class]="tab.icon"></span>{{tab.name}}</a></li>
+  </ul>
+</nav>
+  <div class="tabsbody">
+    <ng-template [ngTemplateOutlet]="currentTab.templateRef"></ng-template>
+  </div>
+</div>
