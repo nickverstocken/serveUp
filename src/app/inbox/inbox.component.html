@@ -10,7 +10,7 @@
       <div class="requestNavigation">
         <ul *ngIf="offerList">
           <li *ngFor="let offer of offerList">
-            <a (click)="changeSelected(offer)" [class.selected]="currentSelected == offer.id">
+            <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id">
               <div class="userPicture">
                 <img *ngIf="offer.request.user.picture_thumb" src="{{offer.request.user.picture_thumb}}"/>
                 <div *ngIf="!offer.request.user.picture_thumb" class="defaultLogo">
@@ -27,6 +27,10 @@
                   <p>
                     {{offer.request.description}}
                   </p>
+                  <div *ngIf="offer.accepted == 0">
+                    <a><span class="fas fa-check"></span>Accepteer</a>
+                    <a><span class="fas fa-times"></span>Wijs af</a>
+                  </div>
                 </div>
               </div>
             </a>
@@ -34,7 +38,7 @@
         </ul>
       </div>
       <div class="chatter">
-        <app-chat *ngIf="selectedOffer" [receiver]="selectedOffer.request.user"></app-chat>
+        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user"></app-chat>
       </div>
     </div>
   </ng-template>

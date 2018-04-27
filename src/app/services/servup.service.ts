@@ -104,4 +104,7 @@ export class ServupService {
   getServiceRequestList(serviceid, filter): Observable<any> {
     return this.api.get(`/service/${serviceid}/requests?filter=${filter}`);
   }
+  getServiceRequestMessages(serviceid, offerid): Observable<any> {
+    return this.api.get(`/service/${serviceid}/offer/${offerid}/messages`);
+  }
 }

@@ -3,6 +3,7 @@
   padding-top: 10px;
   margin-bottom: -50px;
   height:calc(100vh - 60px);
+  overflow: hidden;
 }
 ul{
   list-style: none;
@@ -10,7 +11,7 @@ ul{
   margin: 0;
   li{
     display: block;
-    a{
+    > a{
       color:$textColor;
       padding:10px;
       display: flex;
@@ -58,6 +59,7 @@ ul{
     .created{
       font-size: 12px;
       margin-left: auto;
+      white-space: nowrap;
     }
   }
   h3{
@@ -65,6 +67,11 @@ ul{
     font-weight: 400;
     margin-top: 0px;
     font-size: 16px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    padding-right: 15px;
+    text-overflow: ellipsis;
   }
 }
 .requestWrap{

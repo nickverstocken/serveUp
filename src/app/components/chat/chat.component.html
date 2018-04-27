@@ -13,9 +13,12 @@
         </div>
         <div class="messageText reveived">
           <div class="timeAgo"><span>{{message.created_at | timeAgo}}</span></div>
-          <p>
-            {{message.message}}
-          </p>
+          <div class="messageBody">
+            <p>
+              {{message.message}}
+            </p>
+          </div>
+
         </div>
       </div>
     <div *ngIf="message.sender_id === user.id" class="message">
@@ -24,9 +27,12 @@
           <span *ngIf="!message.updated_at" class="status far fa-clock"></span>
           <span *ngIf="message.updated_at" class="status far fa-check-circle"></span>
           <span>{{message.created_at | timeAgo}}</span></div>
-        <p>
-          {{message.message}}
-        </p>
+        <div class="messageBody">
+          <p>
+            {{message.message}}
+          </p>
+
+        </div>
       </div>
       <div class="userwrap">
         <div class="userPicture">

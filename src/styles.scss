@@ -338,31 +338,49 @@ input.has-error{
   color:$red !important;
 }
 .redbg{
-  background:$red;
+  background:$red !important;
+}
+.redHover{
+  &:hover{
+    background:$red !important;
+    color:#fff !important;
+  }
+}
+.button.green{
+  border:1px solid $green !important;
+}
+.button.red{
+  border:1px solid $red !important;
 }
 .success, .green{
-  color:$green;
+  color:$green !important;
 }
 .greenbg{
-  background:$green;
+  background:$green !important;
+}
+.greenHover{
+  &:hover{
+    background:$green !important;
+    color:#fff !important;
+  }
 }
 .orange{
-  color:$orange;
+  color:$orange !important;
 }
 .orangebg{
-  background:$orange;
+  background:$orange !important;
 }
 .yellow{
-  color:$yellow;
+  color:$yellow !important;
 }
 .yellowbg{
-  background:$yellow;
+  background:$yellow !important;
 }
 .blue{
-  color:$blue;
+  color:$blue !important;
 }
 .bluebg{
-  background:$blue;
+  background:$blue !important;
 }
 .smallInfo{
   text-align: center;
