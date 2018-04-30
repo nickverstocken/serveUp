@@ -6,6 +6,10 @@
   flex:1 auto;
   flex-direction: column;
   height:100%;
+  background-image: url("/assets/images/chatbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
   .messageInput{
     position: relative;
     width:100%;
@@ -29,6 +33,7 @@
       height:42px;
       min-height:42px;
       max-height: 100px;
+      padding-right: 43px;
       transition: none;
       &:focus{
         border-color:$borderColor;
@@ -43,7 +48,6 @@
   .message{
     display:flex;
     padding:15px;
-    max-width: 800px;
     .timeAgo{
       font-size: 12px;
       color:lighten($textColor, 20%);
@@ -88,9 +92,13 @@
         position: relative;
         padding:15px;
         font-size: 14px;
-        color:$titleColor;
-        display:block;
+        p{
+          color:$titleColor;
+          font-size: 14px;
+          white-space: pre-wrap;
+        }
 
+        display:block;
         &:after {
           content: ' ';
           position: absolute;
@@ -119,4 +127,17 @@
 .defaultLogo{
   width:40px;
   height:40px;
+}
+.emoji{
+  position: absolute;
+  right:42px;
+  width: 42px;
+  height:100%;
+  font-size: 25px;
+  text-align: center;
+  span{
+    top:50%;
+    position: relative;
+    transform: translateY(-50%);
+  }
 }

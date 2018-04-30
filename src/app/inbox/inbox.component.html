@@ -3,14 +3,13 @@
     <app-tab name="Verzoeken" icon="fas fa-rocket" value="requests" [templateRef]="firstRef"></app-tab>
     <app-tab name="Aanvaard" icon="fas fa-star" value="accepted" [templateRef]="firstRef"></app-tab>
     <app-tab name="Ingehuurd" icon="fas fa-check-circle" value="hired"  [templateRef]="firstRef"></app-tab>
-    <app-tab name="Archief" icon="fas fa-archive" value="archived" [templateRef]="firstRef"></app-tab>
   </app-tabs>
   <ng-template #firstRef>
     <div class="requestWrap">
       <div class="requestNavigation">
         <ul *ngIf="offerList">
           <li *ngFor="let offer of offerList">
-            <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id">
+            <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id" [class.isrequest]="offer.accepted == 0">
               <div class="userPicture">
                 <img *ngIf="offer.request.user.picture_thumb" src="{{offer.request.user.picture_thumb}}"/>
                 <div *ngIf="!offer.request.user.picture_thumb" class="defaultLogo">
@@ -27,18 +26,28 @@
                   <p>
                     {{offer.request.description}}
                   </p>
-                  <div *ngIf="offer.accepted == 0">
-                    <a><span class="fas fa-check"></span>Accepteer</a>
-                    <a><span class="fas fa-times"></span>Wijs af</a>
-                  </div>
                 </div>
               </div>
             </a>
+            <div class="actions" *ngIf="offer.accepted == 0">
+              <a (click)="updateRequest(offer, 'accept')" class="green"><span class="fas fa-check"></span>Accepteer</a>
+              <a (click)="updateRequest(offer, 'decline')" class="red"><span class="fas fa-times"></span>Wijs af</a>
+            </div>
           </li>
         </ul>
       </div>
       <div class="chatter">
-        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user"></app-chat>
+        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user" (messageSend)="sendOfferMessage($event)"></app-chat>
+        <div class="placeholder" *ngIf="!selectedOffer">
+          <div>
+              <span class="far fa-comments">
+
+          </span>
+          </div>
+          <div>
+            <h2>Berichten verschijnen hier.</h2>
+          </div>
+        </div>
       </div>
     </div>
   </ng-template>

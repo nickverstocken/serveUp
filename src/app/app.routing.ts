@@ -18,8 +18,8 @@ const appRoutes: Routes = [
   { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
   { path: 'profile', component: UserProfileComponent},
   { path: 'inbox', component: InboxComponent},
-  { path: 'inbox/:filter', component: InboxComponent},
-  { path: 'inbox/:filter/:id', component: InboxComponent},
+  { path: 'inbox/:serviceid/:filter', component: InboxComponent},
+  { path: 'inbox/:serviceid/:filter/:id', component: InboxComponent},
   { path: '**', redirectTo: ''}
 ];
 

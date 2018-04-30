@@ -22,10 +22,8 @@ export class InboxComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       params => {
-        this.sub = this.serveUpService.selectedService.subscribe(result => {
-          if (result !== this.selectedServiceId) {
-            this.selectedServiceId = result;
-          }
+        this.selectedServiceId = params['serviceid'];
+        this.serveUpService.setSelectedService(this.selectedServiceId);
           if (!this.filter) {
             this.filter = params['filter'];
           }
@@ -33,17 +31,23 @@ export class InboxComponent implements OnInit {
           if (params['id']) {
             this.getOfferMessages(params['id']);
           }
-        });
       });
+    this.sub = this.serveUpService.selectedService.subscribe(result => {
+      if (this.selectedServiceId !== result) {
+        this.router.navigate([`inbox/${result}/${this.filter}`]);
+      }
+    });
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.filter = '';
   }
 
   filterRequests(val) {
     this.filter = val;
-    this.router.navigate([`inbox/${val}`]);
+    this.selectedOffer = undefined;
+    this.router.navigate([`inbox/${this.selectedServiceId}/${val}`]);
   }
 
   getRequests(id, filter) {
@@ -65,19 +69,38 @@ export class InboxComponent implements OnInit {
             let navigation = '';
             this.selectedOffer = undefined;
             if (this.offerList.length > 0) {
-              navigation = `inbox/${this.filter}/${this.offerList[0].id}`;
+              navigation = `inbox/${this.selectedServiceId}/${this.filter}/${this.offerList[0].id}`;
             } else {
-              navigation = `inbox/${this.filter}`;
+              navigation = `inbox/${this.selectedServiceId}/${this.filter}`;
             }
             this.router.navigate([navigation]);
           }
         });
     }
   }
-
+  sendOfferMessage(event){
+    const chatmessage = event.chatmessage;
+    const index = event.index;
+    this.serveUpService.sendServiceRequestMessage(this.selectedOffer.id, chatmessage).subscribe(result => {
+      this.messages[index] = result.message;
+    });
+  }
   changeSelected(offer) {
-    this.location.go(`inbox/${this.filter}/${offer.id}`);
+
+    this.location.go(`inbox/${this.selectedServiceId}/${this.filter}/${offer.id}`);
     this.getOfferMessages(offer.id);
 
+  }
+  updateRequest(offer, status){
+    this.serveUpService.updateServiceRequest(this.selectedServiceId, offer.id, {'action': status}).subscribe(result => {
+        if(result.success){
+          if(status === 'accept'){
+            this.router.navigate([`inbox/${this.selectedServiceId}/accepted/${result.offer.id}`]);
+          }
+          if(status === 'decline'){
+            this.offerList = this.offerList.filter(item => item !== offer);
+          }
+        }
+    });
   }
 }

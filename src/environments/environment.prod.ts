@@ -3,5 +3,8 @@ export const environment = {
   baseUrl: 'http://127.0.0.1:8000',
   mapbox: {
     accessToken: 'pk.eyJ1Ijoibmlja3ZlcnN0b2NrZW4iLCJhIjoiY2o4cnhseHhqMDJqYzJxcXU4ZzV3ZW54ayJ9.bnPqSBV_ZuvYuM3NwTkayg'
+  },
+  pusher: {
+    key: '3ff7ec1b2f475958d3ae',
   }
 };

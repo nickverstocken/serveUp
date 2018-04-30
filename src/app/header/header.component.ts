@@ -1,8 +1,10 @@
-import {Component, OnInit, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit, HostListener, AfterViewInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {User} from '../models/User';
 import {environment} from '../../environments/environment.prod';
+import {ServupService} from '../services/servup.service';
+import {PusherService} from '../services/pusher.service';
 
 declare var $: any;
 @Component({
@@ -10,14 +12,23 @@ declare var $: any;
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   user: User;
   authenticated;
   showSubnav = 'hideSubnav';
+  showNoti = 'hideNoti';
   innerWidth;
   mobile = false;
   mobileMenu = '';
-  constructor(private router: Router, private auth: AuthService) {
+  notifications;
+  unreadnoti = 0;
+  selectedService = -1;
+  NOTIFICATION_TYPES = {
+    request: 'App\\Notifications\\NewOffer'
+  };
+  sub;
+  pushersub;
+  constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -37,15 +48,36 @@ export class HeaderComponent implements OnInit {
       (userData) => {
         this.user = userData;
         this.authenticated = true;
+        this.pushersub = this.pusherService.notificationsChannel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', result => {
+          console.log(result);
+          this.notifications.push(result);
+          this.unreadnoti += 1;
+        });
       }
     );
     this.auth.isAuthenticated.subscribe(
       data => {
         this.authenticated = data;
       });
+    this.servupService.getNotifications().subscribe(
+      result => {
+       this.notifications = result.notifications;
+       this.unreadnoti = result.unread;
+      }
+    );
 
   }
+  ngAfterViewInit() {
+    this.sub = this.servupService.selectedService.subscribe(result => {
+      this.selectedService = result;
+    });
+  }
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
   logout(){
+    this.sub.unsubscribe();
+    this.pushersub.unsubscribe();
     this.auth.logout();
     this.showSubnav = 'hideSubnav';
     this.mobileMenu = '';
@@ -70,6 +102,28 @@ export class HeaderComponent implements OnInit {
       $('.chooseContainer').slideUp({'duration': 200});
       $('.fa-caret-down').removeClass('rotate');
     }
+  }
+  toggleNoti(){
+    if(this.showNoti === 'hideNoti'){
+      this.showNoti = '';
+    }else{
+      this.showNoti = 'hideNoti';
+    }
+  }
 
+  makeNotiRoute(notification){
+    let to = '?read=' + notification.id;
+    if(notification.type === this.NOTIFICATION_TYPES.request) {
+      to = 'inbox/' + notification.data.service_id + '/request/' + notification.data.offer_id;
+    }
+    return '/' + to;
+  }
+  markasReadAndRedirect(noti){
+    const route = this.makeNotiRoute(noti);
+    this.servupService.markAsRead(noti.id).subscribe(result => {
+      this.notifications = result.notifications;
+      this.unreadnoti = result.unread;
+      this.router.navigate([route]);
+    });
   }
 }

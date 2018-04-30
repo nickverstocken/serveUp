@@ -24,6 +24,10 @@ ul{
         text-decoration: none;
         background:lighten($borderColor,8%);
       }
+      &.isrequest{
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
     }
   }
 }
@@ -34,6 +38,37 @@ ul{
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
+}
+.actions{
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 2px solid lighten($borderColor,5%);
+  text-decoration: none;
+  background:lighten($borderColor,8%);
+  padding:10px;
+  display: flex;
+  a{
+    flex:1 auto;
+    border:1px solid currentColor;
+    padding:5px;
+    &:hover{
+      text-decoration: none;
+    }
+    &.red:hover{
+      background: $red;
+      color:#fff !important;
+    }
+    &.green:hover{
+      background: $green;
+      color:#fff !important;
+    }
+    &:first-child{
+      margin-right: 5px;
+    }
+    .fas{
+      margin-right: 5px;
+    }
+  }
 }
 .userPicture{
   img{
@@ -90,4 +125,21 @@ ul{
   height:100%;
   border-left:1px solid $borderColor;
   border-right: 1px solid $borderColor;
+}
+.placeholder{
+  background-image: url("/assets/images/chatbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color:darken($borderColor, 7%);
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  span{
+    font-size: 15vw;
+  }
+  h2{
+    color:darken($borderColor, 7%);
+  }
 }

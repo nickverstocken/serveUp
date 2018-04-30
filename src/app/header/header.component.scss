@@ -143,7 +143,7 @@
     padding: 0;
     transform: translateY(0%);
     transition: all 0.2s ease;
-    &.hideSubnav{
+    &.hideSubnav, &.hideNoti{
       transform: translateY(calc(-100% - 6px));
     }
     @include boxShadowMedium;
@@ -166,11 +166,16 @@
   }
 }
 .notification{
+  position: relative;
   &:hover{
     text-shadow: none !important;
     text-decoration: none;
   }
-  span{
+  .notiBadge{
+    top:10px;
+    right:8px;
+  }
+  .icon{
     width:25px;
     height:25px;
     font-size: 20px;
@@ -229,6 +234,33 @@
     }
   }
 }
+.notificationText{
+  padding:10px 20px;
+  border-bottom: 1px solid $borderColor;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  max-width: 320px;
+  &:hover{
+    background: $backgroundColor;
+  }
+  .user{
+    margin-right: 15px;
+  }
+  .notiDescription{
+    font-size: 14px;
+  }
+  .userImageThumb{
+    width:50px;
+    height:50px;
+  }
+  h4{
+    font-size: 14px;
+    color:$orange;
+    margin:0;
+    margin-bottom: 5px;
+  }
+}
 
 @media all and (max-width:800px) {
   .menumobile{
@@ -250,6 +282,10 @@
     padding:20px;
     position: relative;
     margin-left: auto;
+    .notiBadge{
+      top:12px;
+      right:15px;
+    }
   }
 
 }

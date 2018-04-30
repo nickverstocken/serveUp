@@ -107,4 +107,16 @@ export class ServupService {
   getServiceRequestMessages(serviceid, offerid): Observable<any> {
     return this.api.get(`/service/${serviceid}/offer/${offerid}/messages`);
   }
+  updateServiceRequest(serviceid, offerid, action): Observable<any> {
+    return this.api.put(`/service/${serviceid}/offer/${offerid}/update`, action);
+  }
+  sendServiceRequestMessage(offerid, message): Observable<any> {
+    return this.api.post(`/service/offer/${offerid}/message`, message);
+  }
+  getNotifications(): Observable<any> {
+    return this.api.get(`/notifications`).retry(1);
+  }
+  markAsRead(id): Observable<any> {
+    return this.api.get(`/notifications?read=${id}`);
+  }
 }

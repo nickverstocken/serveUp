@@ -9,20 +9,22 @@
 </header>
 <header class="loggedIn" *ngIf="authenticated">
   <nav class="navigation">
-    <a  (click)="openMobileMenu()" *ngIf="mobile" class="menumobile">
+    <a (click)="openMobileMenu()" *ngIf="mobile" class="menumobile">
       <i class="fas fa-bars"></i>
     </a>
     <div class="logo"><a href="">Serve Up!</a></div>
-    <a class="notification" *ngIf="mobile"><span class="fas fa-bell"></span></a>
+    <a (click)="toggleNoti()"  class="notification" *ngIf="mobile"><span class="icon fas fa-bell"></span><span *ngIf="unreadnoti > 0" class="notiBadge">{{unreadnoti}}</span></a>
+
     <ul *ngIf="!mobile">
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="/">Berichten</a></li>
-      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/requests">Inbox</a></li>
-      <li id="notification"><a class="notification"><span class="fas fa-bell"></span></a></li>
+      <li *ngIf="user.role === 'service' && selectedService > 0"><a routerLink="/inbox/{{selectedService}}/requests">Inbox</a></li>
+      <li (click)="toggleNoti()" id="notification"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
       <li (click)="toggleSubNav()" id="user"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
-        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
+          class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
       </a>
       </li>
     </ul>
@@ -31,11 +33,11 @@
       <a (click)="openMobileMenu()" class="close"><span class="lnr lnr-cross"></span></a>
       <li (click)="showSubnav === 'hideSubnav' ? showSubnav = '' : showSubnav ='hideSubnav'" id="user">
         <a routerLink="/">
-        <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
-        <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
-          class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
-        {{user.fname}} {{user.name}}
-      </a>
+          <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
+          <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
+            class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
+          {{user.fname}} {{user.name}}
+        </a>
         <div *ngIf="user.role === 'service'" id="selectService">
           <app-service-select [services]="user.service"></app-service-select>
         </div>
@@ -45,7 +47,7 @@
       <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
       <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
       <li><a routerLink="/"><span class="lnr lnr-bubble"></span>Berichten</a></li>
-      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/requests">Inbox</a></li>
+      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/{{selectedService}}/requests"><span class="lnr lnr-inbox"></span>Inbox</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
   </nav>
@@ -63,7 +65,9 @@
         <div class="userInfotext">
           <div class="username">{{user.fname}} {{user.name}}</div>
           <div class="email">{{user.email}}</div>
-          <div><button class="button" routerLink="profile">Mijn account</button></div>
+          <div>
+            <button class="button" routerLink="profile">Mijn account</button>
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +78,33 @@
       <button class="button btnstyle2" *ngIf="user.role === 'service'">Service toevoegen</button>
       <button class="button btnstyle2" (click)="logout()">Uitloggen</button>
     </div>
+  </div>
+  <div class="subnav {{showNoti}}">
 
+    <div *ngIf="unreadnoti > 0 ">
+      <div (click)="markasReadAndRedirect(noti)" class="notificationText" *ngFor="let noti of notifications">
+        <div class="user">
+          <span class="userImageThumb" *ngIf="noti.data.image"><img src="{{noti.data.image}}"/></span>
+          <span class="userImageThumb" *ngIf="!noti.data.image"><div
+            class="defaultProfile">{{noti.data.user.charAt(0)}}</div></span>
+        </div>
+        <div class="notiText">
+          <h4>{{noti.data.service}}</h4>
+          <div class="notiDescription">
+            <div *ngIf="noti.type === NOTIFICATION_TYPES.request">
+              Nieuw verzoek van <strong>{{noti.data.user}}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notificationText" *ngIf="unreadnoti <= 0">
+      <div class="notiText">
+        <h4>Je hebt geen notificaties...</h4>
+        <div class="notiDescription">
+          Je ben helemaal up to date!
+        </div>
+      </div>
+    </div>
   </div>
 </header>

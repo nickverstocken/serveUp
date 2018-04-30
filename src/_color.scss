@@ -1,4 +1,4 @@
-
+@import "~@ctrl/ngx-emoji-mart/picker";
 $orange:#F67600;
 $blue:#2196f3;
 $yellow:#FBB80F;
@@ -8,8 +8,8 @@ $titleColor:#2C3138;
 $textColor:#666;
 $backgroundColor:#F9F9F9;
 $borderColor:#e7e7e7;
-$messageBubbleReceived:#E0ECF8;
-$messageBubbleSend: #F6F7FB;
+$messageBubbleReceived:lighten($blue, 40%);
+$messageBubbleSend: lighten($green, 25%);
 $fontFamily:'Nunito', sans-serif;
 $borderRadius:4px;
 @mixin boxShadowSmall {

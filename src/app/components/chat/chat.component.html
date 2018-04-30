@@ -14,8 +14,7 @@
         <div class="messageText reveived">
           <div class="timeAgo"><span>{{message.created_at | timeAgo}}</span></div>
           <div class="messageBody">
-            <p>
-              {{message.message}}
+            <p [innerText]="message.message">
             </p>
           </div>
 
@@ -28,8 +27,7 @@
           <span *ngIf="message.updated_at" class="status far fa-check-circle"></span>
           <span>{{message.created_at | timeAgo}}</span></div>
         <div class="messageBody">
-          <p>
-            {{message.message}}
+          <p [innerText]="message.message">
           </p>
 
         </div>
@@ -47,7 +45,12 @@
     </div>
   </div>
   <div class="messageInput">
+    <div class="emojis" [hidden]="!showemojis">
+      <emoji-mart [backgroundImageFn]="'((set, sheetSize) => `/assets/images/emoji/apple.png`)'" [showPreview]="false" [sheetSize]="32"  [i18n]="{ search: 'Zoek', categories: { search: 'Zoekresultaten', recent: 'Recent' } }" [style]="{ position: 'absolute', bottom: '50px', right: '5px' }" (emojiClick)="addEmoji($event)"></emoji-mart>
+    </div>
+
     <textarea id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
+    <a class="emoji" (click)="showEmojis()"><span class="far fa-smile"></span></a>
     <button class="button" id="sendMessage"><span class="far fa-paper-plane"></span></button>
   </div>
 </div>

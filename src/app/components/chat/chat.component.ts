@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   chatmessage: Chatmessage;
   textArea;
   messagesElement;
+  showemojis = false;
   private messagesSubject = new BehaviorSubject<any>([]);
   private messagesObservable = this.messagesSubject.asObservable();
   constructor(private auth: AuthService) {
@@ -76,6 +77,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.textArea.style.height = (this.textArea.scrollHeight) + 'px';
     if (e.keyCode === 13 && !e.shiftKey){
       e.preventDefault();
+    }
+  }
+  showEmojis(){
+    console.log('show emojis');
+    if(this.showemojis){
+      this.showemojis = false;
+    }else{
+      this.showemojis = true;
     }
   }
 }

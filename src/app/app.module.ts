@@ -20,6 +20,7 @@ import {AuthInterceptor} from './httpInterceptor';
 import {ApiService} from './services/api.service';
 import {AuthService} from './services/auth.service';
 import {ServupService} from './services/servup.service';
+import {PusherService} from './services/pusher.service';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {NumbermaskDirective} from './directives/numbermask.directive';
@@ -48,6 +49,7 @@ import {ImageModalComponent} from './components/image-modal/image-modal.componen
 import {PriceExtrasComponent} from './components/price-extras/price-extras.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 // angular material components
 import {
   MatDatepickerModule,
@@ -97,7 +99,7 @@ import { InboxComponent } from './inbox/inbox.component';
     RequestCardComponent,
     TabsComponent,
     TabComponent,
-    InboxComponent,
+    InboxComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +110,8 @@ import { InboxComponent } from './inbox/inbox.component';
     HttpClientModule,
     ClickOutsideModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    PickerModule
   ],
   providers: [
     {
@@ -122,7 +125,8 @@ import { InboxComponent } from './inbox/inbox.component';
     },
     ApiService,
     AuthService,
-    ServupService
+    ServupService,
+    PusherService
   ],
   bootstrap: [AppComponent]
 })
