@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ServupService} from '../../services/servup.service';
 import {Service} from '../../models/Service';
+import {AuthService} from '../../services/auth.service';
 
 declare var $: any;
 
@@ -18,7 +19,8 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   currentRequest: number;
   currentService: Service;
   messages;
-  constructor(private router: Router, private route: ActivatedRoute, private serveUpService: ServupService) {
+  pricelistopened = false;
+  constructor(private router: Router, private route: ActivatedRoute, private serveUpService: ServupService, private auth: AuthService) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -36,24 +38,29 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     if (this.innerWidth <= 960) {
       this.mobile = true;
     }
-    this.route.params.subscribe(
-      params => {
-        if (this.currentRequest !== params['id']) {
-          this.currentRequest = params['id'];
-          this.serveUpService.getRequest(params['id']).subscribe(result => {
-              this.currentSelected = params['offerid'];
-              this.offerlist = result.request.offers;
-            },
-            error => {
-              if (error.status === 404) {
-                this.router.navigate(['projects']);
-              }
-            });
-        }
-        if (this.currentSelected !== params['offerid']) {
-            this.getSelectedOffer(params['offerid']);
-        }
-      });
+    this.auth.currentUser.subscribe(user => {
+      if(user.id){
+        this.route.params.subscribe(
+          params => {
+            if (this.currentRequest !== params['id']) {
+              this.currentRequest = params['id'];
+              this.serveUpService.getRequest(params['id']).subscribe(result => {
+                  this.currentSelected = params['offerid'];
+                  this.offerlist = result.request.offers;
+                },
+                error => {
+                  if (error.status === 404) {
+                    this.router.navigate(['projects']);
+                  }
+                });
+            }
+            if (this.currentSelected !== params['offerid']) {
+              this.getSelectedOffer(params['offerid']);
+            }
+          });
+      }
+    });
+
   }
 
   ngAfterViewInit() {
@@ -66,7 +73,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   getSelectedOffer(id) {
     this.serveUpService.getOffer(this.currentRequest, id).subscribe(result => {
         this.currentService = result.offer.service;
-        this.serveUpService.getOfferMessages(id).subscribe(result2 => {
+        this.serveUpService.getMessages(id).subscribe(result2 => {
           this.messages = result2.messages;
         });
       },
@@ -79,10 +86,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   sendMessage(event){
     const chatmessage = event.chatmessage;
     const index = event.index;
-    console.log(index);
-    console.log(chatmessage);
-    console.log(this.messages[index]);
-    this.serveUpService.sendOfferMessage(this.currentSelected, chatmessage).subscribe(result => {
+    this.serveUpService.sendMessage(this.currentSelected, chatmessage).subscribe(result => {
       this.messages[index] = result.message;
     });
   }
@@ -92,12 +96,14 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   }
 
   toggleUserPriceList() {
+    this.pricelistopened = true;
     $('#overview').toggleClass('open');
     $('.leftSubNav').toggleClass('open');
     $('#overlayProjectDetails').toggleClass('opened');
   }
 
   closeOverview() {
+    this.pricelistopened = false;
     $('#overview').removeClass('open');
     $('.leftSubNav').removeClass('open');
     $('#overlayProjectDetails').removeClass('opened');

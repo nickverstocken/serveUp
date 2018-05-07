@@ -45,12 +45,24 @@
     </div>
   </div>
   <div class="messageInput">
-    <div class="emojis" [hidden]="!showemojis">
-      <emoji-mart [backgroundImageFn]="'((set, sheetSize) => `/assets/images/emoji/apple.png`)'" [showPreview]="false" [sheetSize]="32"  [i18n]="{ search: 'Zoek', categories: { search: 'Zoekresultaten', recent: 'Recent' } }" [style]="{ position: 'absolute', bottom: '50px', right: '5px' }" (emojiClick)="addEmoji($event)"></emoji-mart>
-    </div>
 
-    <textarea id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
-    <a class="emoji" (click)="showEmojis()"><span class="far fa-smile"></span></a>
-    <button class="button" id="sendMessage"><span class="far fa-paper-plane"></span></button>
+    <div class="emojis" [hidden]="!showemojis">
+      <emoji-mart [backgroundImageFn]="'((set, sheetSize) => `/assets/images/emoji/apple.png`)'" [showPreview]="false" [sheetSize]="32"  [i18n]="{ search: 'Zoek', categories: { search: 'Zoekresultaten', recent: 'Recent' } }" [style]="{ position: 'absolute', bottom: '5px', right: '5px', 'max-width': '320px' }" (emojiClick)="addEmoji($event)"></emoji-mart>
+    </div>
+    <div class="textInput">
+      <textarea id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
+      <a class="emoji" (click)="showEmojis()"><span class="far fa-smile"></span></a>
+      <button class="button" id="sendMessage"><span class="far fa-paper-plane"></span></button>
+    </div>
+    <div class="actionbubbles">
+      <app-appointmentpicker (sendAppointment)="sendAppointMent($event)" (closeAppointment)="showAppointmentPopup = false" [show]="showAppointmentPopup" ></app-appointmentpicker>
+    </div>
+   <div class="actionbar">
+      <button (click)="showAppointmentPopup = true" class="btnappointment button btnstyle2 btnWithIcon"><span class="fa fa-calendar-alt"></span>Afspraak</button>
+     <button class="button btnstyle2 btnWithIcon"><span class="fa fa-euro-sign"></span>Prijsvoorstel</button>
+     <button class="button btnstyle2 btnWithIcon"><span class="fa fa-paperclip"></span>Bijlage</button>
+   </div>
+
+
   </div>
 </div>

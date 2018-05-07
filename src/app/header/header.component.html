@@ -52,7 +52,7 @@
     </ul>
   </nav>
 
-  <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" class="overlay {{mobileMenu}}"></a>
+  <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" [class.hidden]="mobileMenu !== 'opened'" class="overlay {{mobileMenu}}"></a>
 
   <div *ngIf="!mobile" class="subnav {{showSubnav}}">
     <div id="userInfo">
@@ -93,6 +93,9 @@
           <div class="notiDescription">
             <div *ngIf="noti.type === NOTIFICATION_TYPES.request">
               Nieuw verzoek van <strong>{{noti.data.user}}</strong>
+            </div>
+            <div *ngIf="noti.type === NOTIFICATION_TYPES.action">
+              Heeft je verzoek <strong>{{noti.data.action === 'accepted' ? 'geaccepteerd' : (noti.data.action === 'declined' ? 'geweigerd' : '')}}</strong>
             </div>
           </div>
         </div>

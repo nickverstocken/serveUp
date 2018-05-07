@@ -669,6 +669,44 @@ display:flex;
   font-size: 14px;
 
 }
+.dateTimeWrap{
+  display: flex;
+  .datepickerwrap{
+    flex:1 auto;
+    margin-right: 5px;
+  }
+  .timeWrap{
+    width:150px;
+  }
+}
+.editactions{
+  text-align: right;
+  margin-top: 10px;
+  padding:15px;
+  margin-right: -15px;
+  margin-left: -15px;
+  border-top: 1px solid $borderColor;
+  .button{
+    background: 0;
+    color:$titleColor;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-right: 15px;
+    &[disabled], &.disabled{
+      border:0;
+      color:darken($borderColor, 10%) !important;
+    }
+    &:hover{
+      box-shadow: none;
+    }
+  }
+  .button:last-child{
+    margin-right: 5px;
+    color:$blue;
+  }
+}
 .accordion{
   list-style: none;
   border-top: 1px solid #ddd;
@@ -708,37 +746,7 @@ display:flex;
         margin-bottom: 0px;
       }
     }
-    .actions{
-      text-align: right;
-      margin-top: 10px;
-      padding:15px;
-      padding-bottom: 5px;
-      margin-right: -15px;
-      margin-left: -15px;
-      border-top: 1px solid $borderColor;
-      .editting{
-        display: none;
-      }
-      .button{
-        background: 0;
-        color:$titleColor;
-        padding: 0;
-        font-weight: 400;
-        font-size: 14px;
-        text-transform: uppercase;
-        margin-right: 15px;
-        &[disabled]{
-          color:$borderColor !important;
-        }
-        &:hover{
-          box-shadow: none;
-        }
-      }
-      .button:last-child{
-        margin-right: 5px;
-        color:$blue;
-      }
-    }
+
     textarea{
       height: 150px;
     }
@@ -755,6 +763,7 @@ display:flex;
   @include boxShadowSmall;
   transition: all 0.2s ease;
   margin: 8px;
+  border-radius: $borderRadius;
   &:hover{
     @include boxShadowMedium;
   }
@@ -986,6 +995,34 @@ display:flex;
 }
 .opened{
   opacity: 1;
+}
+.popover{
+  position: absolute;
+  width:calc(100% - 15px);
+  max-width: 400px;
+  background: #fff;
+  border-radius: $borderRadius;
+  border-top: 1px solid $borderColor;
+  border-left:1px solid $borderColor;
+  filter: drop-shadow(rgba(0, 0, 0, 0.2) 2px 2px 1px);
+  padding:15px;
+  bottom:10px;
+  margin: 5px;
+  z-index:4;
+  h3{
+    margin: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  &:after{
+    border: 10px solid;
+    border-color: #fff transparent transparent;
+    content: "";
+    left: 50%;
+    margin-left: -10px;
+    position: absolute;
+    top: 100%;
+  }
 }
 /* end modals */
 @media all and (max-width: 1024px) {}

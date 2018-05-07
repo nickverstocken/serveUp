@@ -1,7 +1,6 @@
 import {Component, OnInit, AfterViewInit, ViewChild, OnChanges, ChangeDetectorRef} from '@angular/core';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
-import {MapAreaComponent} from '../components/map-area/map-area.component';
 import {ServupService} from '../services/servup.service';
 import {User} from '../models/User';
 import {AuthService} from '../services/auth.service';
@@ -19,7 +18,7 @@ declare var $: any;
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  mapIsLoaded = false;
+
   disallowUpload = true;
   isEditMode = false;
   editting = false;
@@ -81,8 +80,6 @@ export class UserProfileComponent implements OnInit {
       value: '200',
       name: '200 km'
     }];
-  @ViewChild('map')
-  private mapcomp: MapAreaComponent;
   @ViewChild('userimgupload')
   private userimgupload: ImageUploaderComponent;
   @ViewChild('serviceLogoUpload')
@@ -226,9 +223,6 @@ export class UserProfileComponent implements OnInit {
     this.formAc6 = this.fb.group({
       max_km: [this.selectedService.max_km]
     });
-    if(this.mapIsLoaded){
-      this.mapcomp.lnglat = [this.selectedService.city.lng, this.selectedService.city.lat];
-    }
 
   }
 
@@ -312,9 +306,6 @@ export class UserProfileComponent implements OnInit {
       if ($('#' + id).is(':hidden')) {
         $('#' + id).slideDown(250, 'swing');
       }
-      if (id === 'ac6' && this.mapIsLoaded) {
-        this.mapcomp.map.resize();
-      }
     } else {
       this.responseError[id] = 'Wijzig of annuleer eerst je wijzigingen a.u.b.' + '<br>';
     }
@@ -379,7 +370,6 @@ export class UserProfileComponent implements OnInit {
       case 'ac6': {
         Object.assign(this.selectedService, this.oldService);
         this.rebuildForm(this.formAc6, this.selectedService);
-        this.mapcomp.changeBounds(this.formAc6.controls['max_km'].value);
         break;
       }
       case 'ac7': {
@@ -417,7 +407,6 @@ export class UserProfileComponent implements OnInit {
 
   selectedRadiusChange(radius) {
     this.formAc6.controls['max_km'].setValue(radius[1]);
-    this.mapcomp.changeBounds(radius[1]);
   }
 
   userPictureLoad(file) {
@@ -452,13 +441,6 @@ export class UserProfileComponent implements OnInit {
       }
     );
 
-  }
-  mapLoaded(loaded) {
-    if (loaded) {
-      this.mapcomp.map.resize();
-      this.mapcomp.changeBounds(this.selectedService.max_km);
-      this.mapIsLoaded = true;
-    }
   }
 
   closeMediaPop() {

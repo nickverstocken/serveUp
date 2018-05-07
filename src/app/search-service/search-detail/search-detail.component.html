@@ -10,7 +10,7 @@
       <app-autofill-cities [id]="'searchCity'" [readonly]="false" [group]="formRequest.controls['city']"></app-autofill-cities>
       <div class="form-group withbutton">
         <input [matDatepicker]="picker" [min]="today" formControlName="due_date" autocomplete="off"  placeholder="Datum" type="text"  (click)="picker.open()">
-        <button class="button"><span (click)="picker.open()" class="icon far fa-calendar-alt"></span></button>
+        <button (click)="picker.open()" class="button"><span class="icon far fa-calendar-alt"></span></button>
         <mat-datepicker [touchUi]="mobile" #picker></mat-datepicker>
       </div>
       <div class="form-group">

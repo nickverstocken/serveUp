@@ -227,7 +227,6 @@
             </div>
             <app-select [disabled]="!isEditMode" [selectedItemInit]="[formAc6.controls['max_km'].value + ' km', formAc6.controls['max_km'].value + ' km']" (selectedValueChange)="selectedRadiusChange($event)" class="userselect"
                         [options]="maxkm"></app-select>
-            <app-map-area [lnglat]="[selectedService.city.lng, selectedService.city.lat]"  (mapLoaded)="mapLoaded($event)" #map></app-map-area>
             <div class="actions">
               <div class="edit">
                 <button (click)="editMode('ac6')" class="button">Wijzig</button>

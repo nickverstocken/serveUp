@@ -37,7 +37,7 @@
         </ul>
       </div>
       <div class="chatter">
-        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user" (messageSend)="sendOfferMessage($event)"></app-chat>
+        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user" (appointmentSend)="sendAppointment($event)" (messageSend)="sendOfferMessage($event)"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">

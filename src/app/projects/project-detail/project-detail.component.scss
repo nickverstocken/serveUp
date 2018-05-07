@@ -54,6 +54,7 @@ h2{
     flex-direction: column;
     justify-content: center;
     border-bottom: 2px solid $borderColor;
+    min-height: 220px;
     .priceBig{
       line-height: 1;
       .price{
@@ -196,10 +197,12 @@ h2{
       flex-direction: row;
       align-items: center;
       height: 100%;
+      width: 100%;
       text-align: left;
       padding:0;
       margin:0 auto;
       border-bottom:0;
+      min-height: initial;
       .priceBigWrap{
         margin-right: 10%;
       }

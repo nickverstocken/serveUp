@@ -11,8 +11,9 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   isrefreshing = false;
-
+  authService: AuthService;
   constructor(private inj: Injector, private router: Router) {
+    this.authService = this.inj.get(AuthService);
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
@@ -21,12 +22,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   getRefreshToken(next, req) {
 
-    const auth = this.inj.get(AuthService);
 
-    return auth.refreshToken().first().switchMap(
+    return this.authService.refreshToken().first().switchMap(
       response => {
         localStorage.setItem('token', response.token);
-        auth.populate();
+        console.log('refreshing');
         this.isrefreshing = false;
         return next.handle(this.addToken(req, response.token));
       }

@@ -1,0 +1,12 @@
+<div class="map">
+  <div class="form-group withbutton">
+    <input type="text" placeholder="Locatie" class="input searchlocation" name="searchlocation" #searchlocation [formControl]="searchControl">
+    <button class="button"><span class="fa fa-map-marker-alt"></span></button>
+  </div>
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [scrollwheel]="false">
+    <agm-marker
+      [latitude]="markerlatitude"
+      [longitude]="markerlongitude"
+      [markerDraggable]="false"></agm-marker>
+  </agm-map>
+</div>

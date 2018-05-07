@@ -24,10 +24,12 @@ export class AuthService {
     this.isAuthenticated.subscribe(
       result => {
         if(!result){
-          this.apiService.get('/login/user?include=city,service.faq')
-            .subscribe(data => {
-              this.setAuth(data.user);
-        });
+          if(localStorage.getItem('token')){
+            this.apiService.get('/login/user?include=city,service.faq')
+              .subscribe(data => {
+                this.setAuth(data.user);
+              });
+          }
       }
     });
   }

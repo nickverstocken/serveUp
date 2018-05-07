@@ -17,58 +17,59 @@ export class ServupService {
     this.selectedServiceSubject.next(serviceId);
   }
 
+  //misc
   getCities(): Observable<any> {
     return this.api.getLocal('./assets/BE_cities.json');
   }
-
   checkEmail(emailAdress): Observable<any> {
     return this.api.post('/checkEmail', emailAdress);
-  }
-
-  registerUser(frmData): Observable<any> {
-    return this.api.post('/register', frmData);
-  }
-
-  sendRegistrationMail(data): Observable<any> {
-    return this.api.post('/sendMail', data);
   }
 
   getCategories(): Observable<any> {
     return this.api.get('/categories');
   }
 
-  getCurrentUser(): Observable<any> {
-    return this.api.get('/login/user?include=city,service.faq');
-  }
-
-  updateUser(user): Observable<any> {
-    return this.api.post('/user/update', user);
-  }
-
-  changePass(form): Observable<any> {
-    return this.api.post('/user/changepassword', form);
-  }
-
-  updateService(id, form): Observable<any> {
-    return this.api.post(`/service/update/${id}`, form);
+  searchCategories(searchTerm): Observable<any> {
+    return this.api.get(`/subcategories?search=${searchTerm}`);
   }
 
   removeTag(serviceId, tagId): Observable<any> {
     return this.api.delete(`/service/${serviceId}/tag/${tagId}`);
   }
 
-  searchCategories(searchTerm): Observable<any> {
-    return this.api.get(`/subcategories?search=${searchTerm}`);
-  }
-
   getSubCategory(id): Observable<any> {
     return this.api.get(`/subcategory/${id}`);
+  }
+
+  //auth
+  registerUser(frmData): Observable<any> {
+    return this.api.post('/register', frmData);
+  }
+  sendRegistrationMail(data): Observable<any> {
+    return this.api.post('/sendMail', data);
+  }
+  getCurrentUser(): Observable<any> {
+    return this.api.get('/login/user?include=city,service.faq');
+  }
+
+  //user
+  updateUser(user): Observable<any> {
+    return this.api.post('/user/update', user);
+  }
+  changePass(form): Observable<any> {
+    return this.api.post('/user/changepassword', form);
+  }
+
+  //service
+  updateService(id, form): Observable<any> {
+    return this.api.post(`/service/update/${id}`, form);
   }
 
   getServicesNearbyCount(subcatId, cityName): Observable<any> {
     return this.api.get(`/service/${subcatId}/nearby/${cityName}/count`);
   }
 
+  //request
   saveRequest(form): Observable<any> {
     return this.api.post(`/request/save`, form);
   }
@@ -88,35 +89,37 @@ export class ServupService {
   deleteRequest(id): Observable<any> {
     return this.api.delete(`/request/${id}/delete`);
   }
+  getServiceRequestList(serviceid, filter): Observable<any> {
+    return this.api.get(`/service/${serviceid}/requests?filter=${filter}`);
+  }
 
+  updateServiceRequest(serviceid, offerid, action): Observable<any> {
+    return this.api.put(`/service/${serviceid}/offer/${offerid}/update`, action);
+  }
+
+  //offer
   getOffer(reqid, id): Observable<any> {
     return this.api.get(`/request/${reqid}/offer/${id}`);
   }
 
-  getOfferMessages(id): Observable<any> {
-    return this.api.get(`/offer/${id}/messages`);
-  }
-
-  sendOfferMessage(id, message): Observable<any> {
-    return this.api.post(`/offer/${id}/message`, message);
-  }
-
-  getServiceRequestList(serviceid, filter): Observable<any> {
-    return this.api.get(`/service/${serviceid}/requests?filter=${filter}`);
-  }
-  getServiceRequestMessages(serviceid, offerid): Observable<any> {
-    return this.api.get(`/service/${serviceid}/offer/${offerid}/messages`);
-  }
-  updateServiceRequest(serviceid, offerid, action): Observable<any> {
-    return this.api.put(`/service/${serviceid}/offer/${offerid}/update`, action);
-  }
-  sendServiceRequestMessage(offerid, message): Observable<any> {
-    return this.api.post(`/service/offer/${offerid}/message`, message);
-  }
+  //notification
   getNotifications(): Observable<any> {
     return this.api.get(`/notifications`).retry(1);
   }
   markAsRead(id): Observable<any> {
     return this.api.get(`/notifications?read=${id}`);
+  }
+
+  //message
+  sendMessage(offerid, message): Observable<any> {
+    return this.api.post(`/offer/${offerid}/message`, message);
+  }
+  getMessages(id): Observable<any> {
+    return this.api.get(`/offer/${id}/messages`);
+  }
+
+  //appointment
+  saveAppointMent(appointment): Observable<any> {
+    return this.api.post('/appointment/save', appointment);
   }
 }

@@ -1,0 +1,68 @@
+<div *ngIf="user"  id="accountWrap">
+  <div class="columnLayout">
+    <div class="left">
+      <form [formGroup]="formuser">
+      <div class="card usercard">
+        <div *ngIf="cardEdit !== 'formuser'" class="actions">
+          <a (click)="cardEdit = 'formuser'"><span class="fa fa-pencil-alt"></span></a>
+        </div>
+        <div class="imgUpload">
+          <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
+                              [disabled]="cardEdit !== 'formuser'" [image]="user.picture"
+                              [options]="{width: '100px', height: '100px', 'border-radius': '50%', 'border-width' : '0px'}"></app-image-uploader>
+        </div>
+
+        <!-- EDIT TEMPLATE -->
+        <div class="username edit" *ngIf="cardEdit === 'formuser'">
+          <input [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
+                 formControlName="fname" class="editable" value="Nick" id="fname"
+                 placeholder="Voornaam"/>
+          <input [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
+                 formControlName="name" class="editable" id="name" placeholder="Achternaam"/>
+          <input [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
+                 formControlName="email" class="editable" readonly id="email" placeholder="Email"/>
+          <input [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
+                 formControlName="address" class="editable" id="address" placeholder="Adres"/>
+          <div class="autofill" [formGroupName]="'city'">
+            <app-autofill-cities [id]="'userCity'" [readonly]="false" [group]="formuser.controls['city']"></app-autofill-cities>
+          </div>
+
+          <textarea formControlName="introduction" id="introduction" class="editable disabled" readonly
+                    placeholder="Stel jezelf kort voor..."></textarea>
+          <div class="editactions">
+            <button (click)="cancelEditMode('formuser', 'user')" class="button">Annuleer</button>
+            <button [disabled]="!formuser.valid" (click)="saveUser('formuser')" type="submit" class="button">Opslaan
+            </button>
+          </div>
+        </div>
+        <!-- END EDIT TEMPLATE -->
+
+        <div class="username" *ngIf="cardEdit !== 'formuser'">
+          <h1>{{formuser.controls.fname.value}} {{formuser.controls.name.value}}</h1>
+          <div class="place">
+            <small>{{formuser.controls.city.controls.zip.value}}, {{formuser.controls.city.controls.name.value}}</small>
+          </div>
+          <div class="bio">
+            <h3>Over mezelf</h3>
+            <p *ngIf="formuser.controls.introduction.value">{{formuser.controls.introduction.value}}</p>
+            <p *ngIf="!formuser.controls.introduction.value">Je hebt niets te zeggen...</p>
+          </div>
+        </div>
+      </div>
+      </form>
+      <div class="card">
+        <ul>
+          <li *ngFor="let service of user.service">
+            <a>{{service.name}}</a>
+          </li>
+        </ul>
+
+      </div>
+
+
+    </div>
+    <div class="right">
+
+    </div>
+  </div>
+</div>

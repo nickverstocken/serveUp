@@ -7,6 +7,8 @@ export class Chatmessage {
   sender?: User;
   receiver_id: number;
   receiver?: User;
+  type?:string;
+  read_at?: string;
   updated_at?: string;
   created_at?: string;
 }

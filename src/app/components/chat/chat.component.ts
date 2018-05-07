@@ -1,41 +1,45 @@
-import {Component, OnInit, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, AfterViewChecked, Input, Output, EventEmitter} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/User';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Chatmessage} from '../../models/Chatmessage';
-import {Service} from '../../models/Service';
+import {PusherService} from '../../services/pusher.service';
+import {Appointment} from '../../models/Appointment';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
+  providers: [DatePipe]
 })
-export class ChatComponent implements OnInit, AfterViewInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @Input() messages: Chatmessage[];
   @Input() receiver: User;
   @Output() messageSend: EventEmitter<any> = new EventEmitter<any>();
+  @Output() appointmentSend: EventEmitter<any> = new EventEmitter<any>();
   user: User;
   chatmessage: Chatmessage;
   textArea;
   messagesElement;
   showemojis = false;
-  private messagesSubject = new BehaviorSubject<any>([]);
-  private messagesObservable = this.messagesSubject.asObservable();
-  constructor(private auth: AuthService) {
+  chatSub;
+  showAppointmentPopup = false;
+  constructor(private auth: AuthService, private pusherService: PusherService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.messagesSubject.next(this.messages);
-    this.messagesObservable.subscribe((messages) => {
-      console.log(messages);
-    });
     this.auth.currentUser.subscribe(
       (userData) => {
         this.user = userData;
         this.clearChatMessage();
+        this.chatSub = this.pusherService.chatChannel.bind('App\\Events\\MessageSent', result => {
+          if(result.sender.id === this.receiver.id){
+            this.messages.push(result);
+          }
+        });
       });
   }
-  ngAfterViewInit(){
+  ngAfterViewChecked(){
     this.textArea = document.getElementById('textarea');
     this.messagesElement = document.getElementById('messages');
     this.scrollToBottom();
@@ -48,7 +52,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.chatmessage.receiver_id = this.receiver.id;
     this.chatmessage.receiver = this.receiver;
     this.chatmessage.created_at = new Date().toLocaleString();
-    this.chatmessage.updated_at = new Date().toLocaleString();
+    this.chatmessage.updated_at = null;
   }
   keyupfunction(e) {
     this.autoGrow(e);
@@ -80,11 +84,21 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
   }
   showEmojis(){
-    console.log('show emojis');
     if(this.showemojis){
       this.showemojis = false;
     }else{
       this.showemojis = true;
     }
+  }
+  sendAppointMent(frmData){
+    const appointment = new Appointment();
+    appointment.title = frmData.controls.title.value;
+    appointment.date =  this.datePipe.transform(frmData.controls.date.value, 'yyyy-MM-dd');
+    appointment.time = frmData.controls.time.value;
+    appointment.location = frmData.controls.location.value;
+    appointment.creator_id = this.user.id;
+    appointment.receiver_id = this.receiver.id;
+    appointment.approved = false;
+    this.appointmentSend.emit(appointment);
   }
 }

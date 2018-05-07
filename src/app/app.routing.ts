@@ -7,6 +7,7 @@ import {ProjectDetailComponent} from './projects/project-detail/project-detail.c
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import {InboxComponent} from './inbox/inbox.component';
+import {AccountComponent} from './account/account.component';
 
 const appRoutes: Routes = [
   // otherwise redirect to home
@@ -16,7 +17,8 @@ const appRoutes: Routes = [
   { path: 'search/:id', component: SearchDetailComponent},
   { path: 'projects', component: ProjectsComponent},
   { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
-  { path: 'profile', component: UserProfileComponent},
+  { path: 'profile', component: AccountComponent},
+  {path: 'account', component: UserProfileComponent},
   { path: 'inbox', component: InboxComponent},
   { path: 'inbox/:serviceid/:filter', component: InboxComponent},
   { path: 'inbox/:serviceid/:filter/:id', component: InboxComponent},

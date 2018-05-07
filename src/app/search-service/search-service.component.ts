@@ -34,12 +34,16 @@ export class SearchServiceComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.serveUpService.getCategories().subscribe(
-      result => {
-        this.categories = result.categories;
+    this.auth.currentUser.subscribe(result => {
+      if(result.id){
+        this.serveUpService.getCategories().subscribe(
+          result => {
+            this.categories = result.categories;
+          }
+        );
       }
-    );
+    });
+
   }
   search(event){
     const val = event.target.value;

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ServupService} from '../services/servup.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {AuthService} from '../services/auth.service';
+import {Appointment} from '../models/Appointment';
 
 @Component({
   selector: 'app-inbox',
@@ -16,27 +18,32 @@ export class InboxComponent implements OnInit {
   selectedOffer;
   messages;
 
-  constructor(private serveUpService: ServupService, private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private serveUpService: ServupService,private auth: AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(
-      params => {
-        this.selectedServiceId = params['serviceid'];
-        this.serveUpService.setSelectedService(this.selectedServiceId);
-          if (!this.filter) {
-            this.filter = params['filter'];
+    this.auth.currentUser.subscribe(user => {
+      if(user.id){
+        this.route.params.subscribe(
+          params => {
+            this.selectedServiceId = params['serviceid'];
+            this.serveUpService.setSelectedService(this.selectedServiceId);
+            if (!this.filter) {
+              this.filter = params['filter'];
+            }
+            this.getRequests(this.selectedServiceId, params['filter']);
+            if (params['id']) {
+              this.getOfferMessages(params['id']);
+            }
+          });
+        this.sub = this.serveUpService.selectedService.subscribe(result => {
+          if (this.selectedServiceId !== result) {
+            this.router.navigate([`inbox/${result}/${this.filter}`]);
           }
-          this.getRequests(this.selectedServiceId, params['filter']);
-          if (params['id']) {
-            this.getOfferMessages(params['id']);
-          }
-      });
-    this.sub = this.serveUpService.selectedService.subscribe(result => {
-      if (this.selectedServiceId !== result) {
-        this.router.navigate([`inbox/${result}/${this.filter}`]);
+        });
       }
     });
+
   }
 
   ngOnDestroy() {
@@ -60,7 +67,7 @@ export class InboxComponent implements OnInit {
 
   getOfferMessages(id) {
     if (this.selectedServiceId !== -1) {
-      this.serveUpService.getServiceRequestMessages(this.selectedServiceId, id).subscribe(result => {
+      this.serveUpService.getMessages(id).subscribe(result => {
           this.messages = result.messages;
           this.selectedOffer = this.offerList.filter(offer => offer.id === parseInt(id, 10))[0];
         },
@@ -81,7 +88,7 @@ export class InboxComponent implements OnInit {
   sendOfferMessage(event){
     const chatmessage = event.chatmessage;
     const index = event.index;
-    this.serveUpService.sendServiceRequestMessage(this.selectedOffer.id, chatmessage).subscribe(result => {
+    this.serveUpService.sendMessage(this.selectedOffer.id, chatmessage).subscribe(result => {
       this.messages[index] = result.message;
     });
   }
@@ -101,6 +108,12 @@ export class InboxComponent implements OnInit {
             this.offerList = this.offerList.filter(item => item !== offer);
           }
         }
+    });
+  }
+  sendAppointment(appointment: Appointment){
+    appointment.offer_id = this.selectedOffer.id;
+    this.serveUpService.saveAppointMent(appointment).subscribe(result => {
+      console.log(result);
     });
   }
 }

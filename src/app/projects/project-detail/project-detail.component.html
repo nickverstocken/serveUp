@@ -5,7 +5,7 @@
 
   </div>
   <button id="overview" (click)="toggleUserPriceList()"><span class="fas fa-arrow-right"></span></button>
-  <a (click)="closeOverview()" id="overlayProjectDetails" class="overlay"></a>
+  <a (click)="closeOverview()" id="overlayProjectDetails" [class.hidden]="!pricelistopened"  class="overlay"></a>
   <div class="middleFixed" *ngIf="currentService">
     <app-profile [service]="currentService" [user]="currentService.user" class="profile"></app-profile>
   </div>

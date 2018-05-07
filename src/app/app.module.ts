@@ -1,3 +1,9 @@
+// angular material components
+import {
+  MatDatepickerModule,
+  MatNativeDateModule,
+} from '@angular/material';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -40,7 +46,6 @@ import {UserPriceListComponent} from './components/user-price-list/user-price-li
 import {ReviewsComponent} from './components/reviews/reviews.component';
 import {ReviewItemComponent} from './components/reviews/review-item/review-item.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
-import {MapAreaComponent} from './components/map-area/map-area.component';
 import {ServiceSelectComponent} from './components/service-select/service-select.component';
 import {AutofillCitiesComponent} from './components/autofill-cities/autofill-cities.component';
 import {LoaderComponent} from './components/loader/loader.component';
@@ -50,16 +55,15 @@ import {PriceExtrasComponent} from './components/price-extras/price-extras.compo
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-// angular material components
-import {
-  MatDatepickerModule,
-  MatNativeDateModule,
-} from '@angular/material';
 import { RequestCardComponent } from './components/request-card/request-card.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
 import { InboxComponent } from './inbox/inbox.component';
-
+import { AccountComponent } from './account/account.component';
+import { AppointmentpickerComponent } from './components/chat/appointmentpicker/appointmentpicker.component';
+import { PriceofferComponent } from './components/chat/priceoffer/priceoffer.component';
+import { AgmCoreModule } from '@agm/core';
+import { MapsearchComponent } from './components/mapsearch/mapsearch.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +91,6 @@ import { InboxComponent } from './inbox/inbox.component';
     ReviewsComponent,
     ReviewItemComponent,
     UserProfileComponent,
-    MapAreaComponent,
     ServiceSelectComponent,
     AutofillCitiesComponent,
     NumbermaskDirective,
@@ -99,7 +102,11 @@ import { InboxComponent } from './inbox/inbox.component';
     RequestCardComponent,
     TabsComponent,
     TabComponent,
-    InboxComponent
+    InboxComponent,
+    AccountComponent,
+    AppointmentpickerComponent,
+    PriceofferComponent,
+    MapsearchComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +118,11 @@ import { InboxComponent } from './inbox/inbox.component';
     ClickOutsideModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    PickerModule
+    PickerModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBX4ApQUnjyZgcanGwjqgP1QfgBzAYRe8I',
+      libraries: ['places']
+    })
   ],
   providers: [
     {

@@ -1,0 +1,14 @@
+agm-map {
+  height: 250px;
+}
+.autoFill{
+  .rightAutoFill{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+}
+.map{
+  position: relative;
+}
