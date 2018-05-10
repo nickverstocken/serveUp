@@ -1,0 +1,46 @@
+<div class="dateMessageWrap" *ngIf="appointment">
+  <div class="datemessageBody">
+    <div class="datemessageHeader">
+      <div class="iconDate">
+        <span class="fa fa-calendar-alt"></span>
+      </div>
+      <div class="dateDetails">
+        <h3>{{appointment.title}}</h3>
+        <div class="date">{{appointment.date | date:'EE d MMMM y'}} om {{appointment.time}}</div>
+      </div>
+    </div>
+    <div class="locationimage">
+      <div class="locationheader">
+        <div class="iconDate">
+          <span class="fa fa-map-marker-alt"></span>
+        </div>
+        <h3>{{appointment.location.address}}</h3>
+      </div>
+      <a href="{{appointment.location.url}}" target="_blank" rel="noopener">
+        <img src="{{appointment.location.image}}" alt="{{appointment.location.address}}" />
+      </a>
+    </div>
+  </div>
+  <div *ngIf="!appointment.cancelled && !appointment.approved">
+    <div *ngIf="!creator" class="editactions">
+      <div *ngIf="!appointment.approved">
+        <button (click)="cancelAppointment(message.id)" class="button">Afwijzen</button>
+        <button (click)="approveAppointment(message.id)" class="button">Goedkeuren</button>
+      </div>
+    </div>
+    <div *ngIf="creator" class="editactions">
+      <button (click)="cancelOwnAppointment(message.id)" class="button">Annuleer afspraak</button>
+    </div>
+  </div>
+  <div *ngIf="appointment.cancelled">
+    <div class="editactions">
+      <span class="red">GEANNULEERD</span>
+    </div>
+  </div>
+  <div *ngIf="appointment.approved">
+    <div class="editactions">
+      <span class="green">GEACCEPTEERD</span>
+    </div>
+  </div>
+</div>
+

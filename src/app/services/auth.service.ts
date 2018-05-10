@@ -21,6 +21,7 @@ export class AuthService {
   }
 
   populate() {
+
     this.isAuthenticated.subscribe(
       result => {
         if(!result){
@@ -29,6 +30,8 @@ export class AuthService {
               .subscribe(data => {
                 this.setAuth(data.user);
               });
+          }else{
+            this.router.navigate(['home']);
           }
       }
     });

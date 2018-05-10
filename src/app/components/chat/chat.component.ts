@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewChecked, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, AfterViewChecked, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/User';
 import {Chatmessage} from '../../models/Chatmessage';
@@ -10,24 +10,27 @@ import {DatePipe} from '@angular/common';
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  encapsulation: ViewEncapsulation.None
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @Input() messages: Chatmessage[];
   @Input() receiver: User;
   @Output() messageSend: EventEmitter<any> = new EventEmitter<any>();
   @Output() appointmentSend: EventEmitter<any> = new EventEmitter<any>();
+  @Output() appointmentAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() messageEditted: EventEmitter<any> = new EventEmitter<any>();
   user: User;
   chatmessage: Chatmessage;
   textArea;
-  messagesElement;
   showemojis = false;
   chatSub;
   showAppointmentPopup = false;
-  constructor(private auth: AuthService, private pusherService: PusherService, private datePipe: DatePipe) {
+  constructor(private auth: AuthService, private pusherService: PusherService, private datePipe: DatePipe, private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.textArea = document.querySelector('#textarea');
     this.auth.currentUser.subscribe(
       (userData) => {
         this.user = userData;
@@ -37,12 +40,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             this.messages.push(result);
           }
         });
+        this.pusherService.chatChannel.bind('App\\Events\\MessageEditted', result => {
+
+          if(result.action === 'edit'){
+            this.messageEditted.emit(result.message);
+          }
+
+        });
       });
+    this.cdRef.detectChanges();
   }
-  ngAfterViewChecked(){
-    this.textArea = document.getElementById('textarea');
-    this.messagesElement = document.getElementById('messages');
-    this.scrollToBottom();
+  ngAfterViewChecked()
+  {
+    this.cdRef.detectChanges();
   }
   clearChatMessage(){
     this.chatmessage = new Chatmessage();
@@ -59,15 +69,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (e.keyCode === 13 && !e.shiftKey){
       if(this.chatmessage.message.trim()){
         this.messages.push(this.chatmessage);
-        this.scrollToBottom();
         this.messageSend.emit({'chatmessage' : this.chatmessage, 'index' : this.messages.indexOf(this.chatmessage)});
         this.clearChatMessage();
       }
 
     }
-  }
-  scrollToBottom(){
-    this.messagesElement.scrollTop = this.messagesElement.scrollHeight;
   }
   autoGrow(e) {
       this.textArea.style.height = '42px';
@@ -76,7 +82,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     } else {
       this.textArea.style.overflow = 'auto';
     }
-    this.scrollToBottom();
     this.textArea.scrollTop = this.textArea.scrollHeight;
     this.textArea.style.height = (this.textArea.scrollHeight) + 'px';
     if (e.keyCode === 13 && !e.shiftKey){
@@ -99,6 +104,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     appointment.creator_id = this.user.id;
     appointment.receiver_id = this.receiver.id;
     appointment.approved = false;
-    this.appointmentSend.emit(appointment);
+    this.chatmessage.type = 'date';
+    this.chatmessage.message = JSON.stringify(appointment);
+    this.messages.push(this.chatmessage);
+    this.appointmentSend.emit({'appointment' : appointment, 'index' : this.messages.indexOf(this.chatmessage)});
+    this.showAppointmentPopup = false
+    this.clearChatMessage();
+  }
+  cancelAppointment(message){
+    this.appointmentAction.emit({'action': 'canceled', message});
+  }
+  cancelOwnAppointment(message){
+    this.appointmentAction.emit({'action': 'cancelOwn', message});
+  }
+  acceptAppointment(message){
+    this.appointmentAction.emit({'action' : 'approved', message});
   }
 }

@@ -64,6 +64,7 @@ import { AppointmentpickerComponent } from './components/chat/appointmentpicker/
 import { PriceofferComponent } from './components/chat/priceoffer/priceoffer.component';
 import { AgmCoreModule } from '@agm/core';
 import { MapsearchComponent } from './components/mapsearch/mapsearch.component';
+import { AppointmentMessageComponent } from './components/chat/appointment-message/appointment-message.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +107,8 @@ import { MapsearchComponent } from './components/mapsearch/mapsearch.component';
     AccountComponent,
     AppointmentpickerComponent,
     PriceofferComponent,
-    MapsearchComponent
+    MapsearchComponent,
+    AppointmentMessageComponent
   ],
   imports: [
     BrowserModule,

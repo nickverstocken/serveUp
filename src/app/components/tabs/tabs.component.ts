@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, AfterViewInit, OnInit} from '@angular/core';
 import {TabComponent} from './tab/tab.component';
 
 @Component({
@@ -6,7 +6,7 @@ import {TabComponent} from './tab/tab.component';
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements AfterContentInit {
+export class TabsComponent implements AfterContentInit, OnInit {
   @Output() tabClicked: EventEmitter<any> = new EventEmitter<any>();
   @ContentChildren(TabComponent) tabList: QueryList<TabComponent>;
   currentTab: TabComponent;
@@ -14,6 +14,7 @@ export class TabsComponent implements AfterContentInit {
   constructor() { }
 
   ngAfterContentInit() {
+    console.log(this.current);
     if(this.current){
       this.currentTab = this.tabList.filter(tab => tab.value === this.current)[0];
       if(!this.currentTab){
@@ -22,9 +23,10 @@ export class TabsComponent implements AfterContentInit {
     }else{
       this.currentTab = this.tabList.first;
     }
-
   }
-
+  ngOnInit(){
+    console.log(this.current);
+  }
   onTabClick(tab: TabComponent) {
     this.currentTab = tab;
     this.tabClicked.emit(tab.value);

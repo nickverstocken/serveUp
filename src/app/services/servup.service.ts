@@ -122,4 +122,10 @@ export class ServupService {
   saveAppointMent(appointment): Observable<any> {
     return this.api.post('/appointment/save', appointment);
   }
+  deleteAppointment(id, messageInfo): Observable<any> {
+    return this.api.put(`/appointment/${id}/delete`, messageInfo);
+  }
+  acceptAppointment(id, messageInfo): Observable<any> {
+    return this.api.put(`/appointment/${id}/accept`, messageInfo);
+  }
 }

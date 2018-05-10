@@ -5,7 +5,7 @@ export class Appointment {
   title: string;
   date: string;
   time: string;
-  location: string;
+  location: any;
   creator: User;
   creator_id: number;
   receiver_id:number;

@@ -8,7 +8,6 @@ export class TabComponent implements OnInit {
   @Input() name: string;
   @Input() value: string;
   @Input() icon:string;
-  @Input() current: boolean;
   @Input() templateRef: TemplateRef<any>;
   constructor() { }
 

@@ -46,7 +46,7 @@
   }
 }
 .messageWrap{
-  overflow: auto;
+  overflow-y: scroll;
   flex:1 auto;
   top:0;
   .message{
@@ -97,13 +97,34 @@
         padding:15px;
         font-size: 14px;
         max-width: 500px;
+        .editactions{
+          margin: 0 -10px;
+          margin-bottom: -10px;
+          padding: 10px;
+          margin-top: 10px;
+          text-align: center;
+          .button{
+            &:last-child{
+              margin-right: 0;
+            }
+          }
+        }
+        img{
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+
+        }
+        h3{
+          margin: 0;
+          margin-bottom: 2px;
+        }
         p{
           color:$titleColor;
           font-size: 14px;
           white-space: pre-wrap;
           overflow: hidden;
         }
-
         display:block;
         &:after {
           content: ' ';
@@ -165,4 +186,63 @@
     font-size: 14px;
     font-weight: 400;
   }
+}
+.dateMessageWrap{
+  background: #fff;
+  min-width: 160px;
+  padding:10px;
+  border-radius: $borderRadius;
+  display: flex;
+  max-width: 320px;
+  flex-direction: column;
+  h3{
+    font-size: 12px;
+  }
+  img{
+    margin-top: 10px;
+    border-radius: $borderRadius;
+    border: 1px solid $borderColor;
+  }
+  @include boxShadowSmall;
+  .datemessageHeader{
+    display: flex;
+    margin: -10px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-bottom: 1px solid $borderColor;
+    .date{
+      font-size: 12px;
+    }
+  }
+  .iconDate{
+    background: $orange;
+    width:20px;
+    min-width: 20px;
+    min-height: 20px;
+    height:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: top;
+    .fa{
+      color:#fff;
+      font-size: 10px;
+    }
+  }
+  .locationheader{
+    display: flex;
+    align-items: center;
+  }
+}
+.infomessage{
+  padding:15px;
+  p{
+    text-align: center;
+    font-size: 14px;
+    color:$orange;
+    font-style: italic;
+  }
+
 }

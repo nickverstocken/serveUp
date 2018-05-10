@@ -73,15 +73,18 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   getSelectedOffer(id) {
     this.serveUpService.getOffer(this.currentRequest, id).subscribe(result => {
         this.currentService = result.offer.service;
-        this.serveUpService.getMessages(id).subscribe(result2 => {
-          this.messages = result2.messages;
-        });
+        this.getOfferMessages(id);
       },
       error => {
         if (error.status === 404) {
           this.router.navigate(['projects']);
         }
       });
+  }
+  getOfferMessages(id){
+    this.serveUpService.getMessages(id).subscribe(result2 => {
+      this.messages = result2.messages;
+    });
   }
   sendMessage(event){
     const chatmessage = event.chatmessage;
@@ -107,5 +110,39 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     $('#overview').removeClass('open');
     $('.leftSubNav').removeClass('open');
     $('#overlayProjectDetails').removeClass('opened');
+  }
+  sendAppointment(event){
+    const appointment =  event.appointment;
+    appointment.offer_id = this.currentSelected;
+    const index = event.index;
+    this.serveUpService.saveAppointMent(appointment).subscribe(result => {
+      this.messages[index] = result.message;
+    });
+  }
+  actionAppointment(event){
+    const appointment = JSON.parse(event.message.message);
+    switch (event.action){
+      case 'cancelOwn':
+        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+      case 'canceled':
+        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+      case 'approved':
+        this.serveUpService.acceptAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+    }
+  }
+  reloadMessages(message){
+    this.getOfferMessages(this.currentSelected);
   }
 }

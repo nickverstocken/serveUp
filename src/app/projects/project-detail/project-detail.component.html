@@ -30,7 +30,7 @@
     </div>
     <div class="chatBlock" *ngIf="currentService">
       <h2>Chat met {{currentService.user.fname}}</h2>
-      <app-chat (messageSend)="sendMessage($event)" [receiver]="currentService.user" [messages]="messages" class="chatter"></app-chat>
+      <app-chat (messageEditted)="reloadMessages($event)" (appointmentSend)="sendAppointment($event)" (appointmentAction)="actionAppointment($event)" (messageSend)="sendMessage($event)" [receiver]="currentService.user" [messages]="messages" class="chatter"></app-chat>
     </div>
   </div>
 </div>

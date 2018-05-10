@@ -1,26 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterContentInit ViewChild} from '@angular/core';
 import {ServupService} from '../services/servup.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthService} from '../services/auth.service';
 import {Appointment} from '../models/Appointment';
+import {TabsComponent} from '../components/tabs/tabs.component';
 
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, AfterContentInit {
   sub;
   selectedServiceId;
   offerList;
   filter;
   selectedOffer;
   messages;
-
+  @ViewChild('tabs') tabs: TabsComponent;
   constructor(private serveUpService: ServupService,private auth: AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
   }
-
+  ngAfterContentInit(){
+    this.tabs.current = this.route.snapshot.params['filter'];
+  }
   ngOnInit() {
     this.auth.currentUser.subscribe(user => {
       if(user.id){
@@ -30,6 +33,7 @@ export class InboxComponent implements OnInit {
             this.serveUpService.setSelectedService(this.selectedServiceId);
             if (!this.filter) {
               this.filter = params['filter'];
+              this.tabs.current = this.filter;
             }
             this.getRequests(this.selectedServiceId, params['filter']);
             if (params['id']) {
@@ -110,10 +114,38 @@ export class InboxComponent implements OnInit {
         }
     });
   }
-  sendAppointment(appointment: Appointment){
-    appointment.offer_id = this.selectedOffer.id;
+  sendAppointment(event){
+   const appointment =  event.appointment;
+   appointment.offer_id = this.selectedOffer.id;
+    const index = event.index;
     this.serveUpService.saveAppointMent(appointment).subscribe(result => {
-      console.log(result);
+      this.messages[index] = result.message;
     });
+  }
+  actionAppointment(event){
+    const appointment = JSON.parse(event.message.message);
+    switch (event.action){
+      case 'cancelOwn':
+        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.selectedOffer.id);
+          });
+        break;
+      case 'canceled':
+        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.sender_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.selectedOffer.id);
+          });
+        break;
+      case 'approved':
+        this.serveUpService.acceptAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.sender_id, 'message_id': event.message.id}).subscribe(
+          result => {
+            this.getOfferMessages(this.selectedOffer.id);
+          });
+        break;
+    }
+  }
+  reloadMessages(message){
+    this.getOfferMessages(this.selectedOffer.id);
   }
 }

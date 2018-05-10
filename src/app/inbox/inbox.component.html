@@ -1,5 +1,5 @@
 <div class="inboxWrap">
-  <app-tabs [current]="filter" (tabClicked)="filterRequests($event)">
+  <app-tabs #tabs (tabClicked)="filterRequests($event)">
     <app-tab name="Verzoeken" icon="fas fa-rocket" value="requests" [templateRef]="firstRef"></app-tab>
     <app-tab name="Aanvaard" icon="fas fa-star" value="accepted" [templateRef]="firstRef"></app-tab>
     <app-tab name="Ingehuurd" icon="fas fa-check-circle" value="hired"  [templateRef]="firstRef"></app-tab>
@@ -24,7 +24,7 @@
 
                 <div class="reqdescription">
                   <p>
-                    {{offer.request.description}}
+                  <!--  {{messages[messages.length - 1].type !== 'date' ? messages[messages.length - 1].message : 'Nieuwe afspraak'}}-->
                   </p>
                 </div>
               </div>
@@ -37,7 +37,7 @@
         </ul>
       </div>
       <div class="chatter">
-        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user" (appointmentSend)="sendAppointment($event)" (messageSend)="sendOfferMessage($event)"></app-chat>
+        <app-chat *ngIf="selectedOffer" [messages]="messages" [receiver]="selectedOffer.request.user" (messageEditted)="reloadMessages($event)" (appointmentSend)="sendAppointment($event)" (appointmentAction)="actionAppointment($event)" (messageSend)="sendOfferMessage($event)"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">

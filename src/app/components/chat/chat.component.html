@@ -1,7 +1,7 @@
 <div class="chatwrap">
-  <div id="messages" class="messageWrap">
+  <div id="messages" class="messageWrap" #scrollMe [scrollTop]="scrollMe.scrollHeight" >
     <div *ngFor="let message of messages">
-      <div *ngIf="message.receiver_id=== user.id"  class="message">
+      <div *ngIf="message.receiver_id=== user.id && message.type !== 'info'"  class="message">
         <div class="userwrap">
           <div class="userPicture">
             <img *ngIf="message.sender.picture_thumb" src="{{message.sender.picture_thumb}}"/>
@@ -14,22 +14,23 @@
         <div class="messageText reveived">
           <div class="timeAgo"><span>{{message.created_at | timeAgo}}</span></div>
           <div class="messageBody">
-            <p [innerText]="message.message">
+            <p [innerText]="message.message" *ngIf="message.type === 'request' || message.type === 'message'">
             </p>
+          <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)"  (onApproveAppointment)="acceptAppointment($event)"  (onCancelAppointment)="cancelAppointment($event)" [creator]="false" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
           </div>
 
         </div>
       </div>
-    <div *ngIf="message.sender_id === user.id" class="message">
+    <div *ngIf="message.sender_id === user.id && message.type !== 'info'" class="message">
       <div class="messageText send">
         <div class="timeAgo">
           <span *ngIf="!message.updated_at" class="status far fa-clock"></span>
           <span *ngIf="message.updated_at" class="status far fa-check-circle"></span>
           <span>{{message.created_at | timeAgo}}</span></div>
         <div class="messageBody">
-          <p [innerText]="message.message">
+          <p [innerText]="message.message" *ngIf="message.type === 'request' || message.type === 'message'">
           </p>
-
+          <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)" (onApproveAppointment)="acceptAppointment($event)" (onCancelAppointment)="cancelAppointment($event)" [creator]="true" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
         </div>
       </div>
       <div class="userwrap">
@@ -42,6 +43,11 @@
 
       </div>
     </div>
+      <div *ngIf="message.type === 'info'" class="infomessage">
+        <p>
+          {{message.message}}
+        </p>
+      </div>
     </div>
   </div>
   <div class="messageInput">
