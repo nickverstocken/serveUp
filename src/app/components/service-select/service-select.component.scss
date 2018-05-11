@@ -31,6 +31,7 @@
   }
   .serviceLogo{
     width:50px;
+    min-width: 50px;
     height:50px;
     border-radius: 50%;
     overflow: hidden;
@@ -50,5 +51,19 @@
       height:100%;
       font-size: 20px;
     }
+  }
+}
+#selectserviceprofile{
+  .serviceItem{
+    padding:10px 15px;
+  }
+  .serviceLogo{
+    width: 25px;
+    min-width: 25px;
+    height:25px;
+    .defaultLogo{
+      font-size: 14px;
+    }
+
   }
 }

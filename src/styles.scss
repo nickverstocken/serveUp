@@ -767,6 +767,10 @@ display:flex;
   &:hover{
     @include boxShadowMedium;
   }
+  ul{
+    list-style: none;
+    padding:0;
+  }
   &.imagecard{
     .cardHead{
       padding: 0;

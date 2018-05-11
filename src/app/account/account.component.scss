@@ -78,11 +78,6 @@ textarea{
     color: lighten($textColor, 10%);
   }
   .bio{
-    h3{
-      font-size: 14px;
-      margin: 0;
-      margin-bottom: 5px;
-    }
     p{
       font-size: 12px;
       line-height: 1;
@@ -94,4 +89,17 @@ textarea{
 }
 .editactions{
   margin-bottom: -15px;
+}
+.serviceSelectWrap{
+  margin-top: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid $borderColor;
+}
+.serviceSelectProfile{
+  margin:0 -15px;
+}
+h3{
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 5px;
 }

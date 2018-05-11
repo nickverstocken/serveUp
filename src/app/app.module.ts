@@ -54,7 +54,7 @@ import {ImageModalComponent} from './components/image-modal/image-modal.componen
 import {PriceExtrasComponent} from './components/price-extras/price-extras.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import { ClickOutsideModule } from 'ng-click-outside';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
+/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
 import { RequestCardComponent } from './components/request-card/request-card.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
@@ -120,7 +120,7 @@ import { AppointmentMessageComponent } from './components/chat/appointment-messa
     ClickOutsideModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    PickerModule,
+/*    PickerModule,*/
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBX4ApQUnjyZgcanGwjqgP1QfgBzAYRe8I',
       libraries: ['places']

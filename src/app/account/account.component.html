@@ -9,7 +9,7 @@
         <div class="imgUpload">
           <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
                               [disabled]="cardEdit !== 'formuser'" [image]="user.picture"
-                              [options]="{width: '100px', height: '100px', 'border-radius': '50%', 'border-width' : '0px'}"></app-image-uploader>
+                              [options]="{width: '100px', height: '100px', 'border-radius': '50%', 'border-width' : '2px'}"></app-image-uploader>
         </div>
 
         <!-- EDIT TEMPLATE -->
@@ -48,16 +48,23 @@
             <p *ngIf="!formuser.controls.introduction.value">Je hebt niets te zeggen...</p>
           </div>
         </div>
+        <div class="serviceSelectWrap">
+          <h3>Huidige service</h3>
+          <div class="serviceSelectProfile">
+            <app-service-select [id]="'selectserviceprofile'" [services]="user.service"></app-service-select>
+          </div>
+        </div>
+
+
+        <div class="submenuprofile">
+          <ul>
+            <li>
+
+            </li>
+          </ul>
+        </div>
       </div>
       </form>
-      <div class="card">
-        <ul>
-          <li *ngFor="let service of user.service">
-            <a>{{service.name}}</a>
-          </li>
-        </ul>
-
-      </div>
 
 
     </div>

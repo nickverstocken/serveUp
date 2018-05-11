@@ -1,9 +1,8 @@
-import {Component, OnInit, AfterContentInit ViewChild} from '@angular/core';
+import {Component, OnInit, AfterContentInit, ViewChild} from '@angular/core';
 import {ServupService} from '../services/servup.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthService} from '../services/auth.service';
-import {Appointment} from '../models/Appointment';
 import {TabsComponent} from '../components/tabs/tabs.component';
 
 @Component({
@@ -19,7 +18,7 @@ export class InboxComponent implements OnInit, AfterContentInit {
   selectedOffer;
   messages;
   @ViewChild('tabs') tabs: TabsComponent;
-  constructor(private serveUpService: ServupService,private auth: AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private serveUpService: ServupService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
   }
   ngAfterContentInit(){
     this.tabs.current = this.route.snapshot.params['filter'];
