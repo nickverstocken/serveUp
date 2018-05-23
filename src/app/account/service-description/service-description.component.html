@@ -1,0 +1,17 @@
+<form class="servicedescription" [formGroup]="formservice">
+  <div>
+    <div class="formbody">
+      <label>Beschrijving</label>
+      <textarea [class.has-error]="!formservice.controls['description'].valid && formservice.controls['description'].touched"
+                formControlName="description" spellcheck="false" class="editable" [class.disabled]="!editting" [readonly]="!editting"
+                placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
+    </div>
+    <div class="editactions">
+      <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+      <div *ngIf="editting">
+        <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+        <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+      </div>
+    </div>
+  </div>
+</form>

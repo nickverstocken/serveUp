@@ -1,6 +1,6 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild, OnDestroy, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import { } from 'googlemaps';
+import {  } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import {environment} from '../../../environments/environment';
 @Component({
@@ -21,7 +21,6 @@ export class MapsearchComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit() {
-   // https://maps.googleapis.com/maps/api/staticmap?size=400x400&zoom=14&markers=size:mid|color:red|Kruisstraat%2060,%209111%20Sint-Niklaas,%20Belgium
     this.zoom = 7;
     this.latitude = 50.85045;
     this.longitude = 4.34878;

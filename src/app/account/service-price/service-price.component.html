@@ -1,0 +1,35 @@
+<form class="serviceprice" [formGroup]="formservice">
+  <div>
+    <div class="formbody">
+      <label>Geschatte prijs</label>
+      <div class="priceblock">
+        <div class="priceBig">
+          <div class="price">
+            <span class="valuta">€</span><span class="number" [contentEditable]="editting">{{formservice.controls['price_estimate'].value}}</span>
+          </div>
+          <div class="rate">
+            <span [contentEditable]="editting">{{formservice.controls['rate'].value}}</span>
+          </div>
+        </div>
+      </div>
+      <label>Extra's</label>
+      <div class="prices_extras" formArrayName="price_extras">
+        <div *ngFor="let price_extra of formservice.controls.price_extras.controls; let i=index">
+          <div class="inputswrap price" [formGroupName]="i">
+            <app-price-extras (onRemovePriceExtra)="removePriceExtra($event)" [index]="i" [group]="formservice.controls.price_extras.controls[i]" [disabled]="!editting"></app-price-extras>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button [disabled]="!editting" [class.disabled]="!editting" (click)="addPriceExtra()" class="button fullWidth"><span class="fas fa-plus"></span> Nieuwe prijsextra</button>
+      </div>
+    </div>
+    <div class="editactions">
+      <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+      <div *ngIf="editting">
+        <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+        <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+      </div>
+    </div>
+  </div>
+</form>

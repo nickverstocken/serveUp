@@ -2,6 +2,8 @@
 import {
   MatDatepickerModule,
   MatNativeDateModule,
+  MatSliderModule,
+  MatSelectModule
 } from '@angular/material';
 
 import {BrowserModule} from '@angular/platform-browser';
@@ -62,9 +64,15 @@ import { InboxComponent } from './inbox/inbox.component';
 import { AccountComponent } from './account/account.component';
 import { AppointmentpickerComponent } from './components/chat/appointmentpicker/appointmentpicker.component';
 import { PriceofferComponent } from './components/chat/priceoffer/priceoffer.component';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, AgmCircle } from '@agm/core';
 import { MapsearchComponent } from './components/mapsearch/mapsearch.component';
 import { AppointmentMessageComponent } from './components/chat/appointment-message/appointment-message.component';
+import { ServiceDetailsComponent } from './account/service-details/service-details.component';
+import { ServiceDescriptionComponent } from './account/service-description/service-description.component';
+import { ServiceTravelComponent } from './account/service-travel/service-travel.component';
+import { ServiceBusinessHoursComponent } from './account/service-business-hours/service-business-hours.component';
+import { ServicePriceComponent } from './account/service-price/service-price.component';
+import { ServiceCategoryComponent } from './account/service-category/service-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,7 +116,13 @@ import { AppointmentMessageComponent } from './components/chat/appointment-messa
     AppointmentpickerComponent,
     PriceofferComponent,
     MapsearchComponent,
-    AppointmentMessageComponent
+    AppointmentMessageComponent,
+    ServiceDetailsComponent,
+    ServiceDescriptionComponent,
+    ServiceTravelComponent,
+    ServiceBusinessHoursComponent,
+    ServicePriceComponent,
+    ServiceCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,6 +134,8 @@ import { AppointmentMessageComponent } from './components/chat/appointment-messa
     ClickOutsideModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSliderModule,
+    MatSelectModule,
 /*    PickerModule,*/
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBX4ApQUnjyZgcanGwjqgP1QfgBzAYRe8I',

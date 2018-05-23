@@ -1,0 +1,67 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {Service} from '../../models/Service';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+
+@Component({
+  selector: 'app-service-price',
+  templateUrl: './service-price.component.html',
+  styleUrls: ['./service-price.component.scss']
+})
+export class ServicePriceComponent implements OnInit {
+  @Input() service: Service;
+  @Input() formservice;
+  editting = false;
+
+  constructor(private fb: FormBuilder) {
+  }
+
+  ngOnInit() {
+  }
+
+  cancelEdit() {
+    this.editting = false;
+    this.rebuildForm();
+  }
+
+  save() {
+    this.editting = false;
+  }
+
+  rebuildForm() {
+    this.resetPrice();
+  }
+
+  addPriceExtra(value = null) {
+    if (!value) {
+      value = {name: '', price: ''};
+    }
+    const control = <FormArray>this.formservice.controls['price_extras'];
+    const addrCtrl = this.initPriceExtra(value);
+    control.push(addrCtrl);
+  }
+
+  initPriceExtra(value) {
+    return this.fb.group({
+      name: [value.name, Validators.required],
+      price: [value.price, Validators.required]
+    });
+  }
+
+  removePriceExtra(index) {
+    const control = <FormArray>this.formservice.controls['price_extras'];
+    control.removeAt(index);
+  }
+
+  resetPrice() {
+    const control = <FormArray>this.formservice.controls['price_extras'];
+    for (let i = control.length - 1; i >= 0; i--) {
+      control.removeAt(i);
+    }
+    if (this.service.price_extras) {
+      for (const price_extra of this.service.price_extras) {
+        this.addPriceExtra(price_extra);
+      }
+    }
+
+  }
+}

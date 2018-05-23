@@ -1,0 +1,47 @@
+<form class="servicedetail" [formGroup]="formservice">
+  <div class="flex-column">
+    <div class="flex-auto">
+    <div class="profileBanner">
+      <img src="../../../assets/images/bannertest.jpg"/>
+    </div>
+    <div class="imgUpload">
+      <app-image-uploader [disabled]="!editting" (fileload)="serviceLogoUploaded($event)" [id]="'serviceLogoUpLoad'" #serviceLogoUpload [image]="formservice.logo"
+                          [options]="{width: '100%', margin: '0px', height: '100%', 'border-radius': '50%', 'border-width' : '4px'}"></app-image-uploader>
+    </div>
+    <div class="servicename">
+      <h2 [contentEditable]="editting">{{formservice.controls['name'].value}}</h2>
+    </div>
+    <div class="reviewScore">
+      <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
+      class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
+      <span class="reviewCount">7</span>
+    </div>
+
+    <div class="formbody">
+      <label>Adres</label>
+      <input [class.has-error]="!formservice.controls['address'].valid && formservice.controls['address'].touched"
+             formControlName="address"  class="editable" id="service_address" placeholder="Adres" [class.disabled]="!editting" [readonly]="!editting"  />
+      <div [formGroupName]="'city'">
+        <app-autofill-cities [id]="'serviceCity'" [readonly]="!editting"  [group]="formservice.controls['city']"></app-autofill-cities>
+      </div>
+      <label>Telefoon</label>
+      <input [class.has-error]="!formservice.controls['tel']?.valid && formservice.controls['tel']?.touched"
+             formControlName="tel" class="editable" id="service_tel" [readonly]="!editting"  placeholder="Telefoon" [class.disabled]="!editting"/>
+      <label>Jaar ervaring</label>
+      <input [class.has-error]="!formservice.controls['experience']?.valid && formservice.controls['experience']?.touched"
+             formControlName="experience" [class.disabled]="!editting" [readonly]="!editting"   class="editable" type="number" id="service_experience"
+             placeholder="Jaar ervaring"/>
+      <label>Website</label>
+      <input [class.has-error]="!formservice.controls['website']?.valid && formservice.controls['website']?.touched"
+             formControlName="website" class="editable" [readonly]="!editting" [class.disabled]="!editting" id="service_website" placeholder="Website"/>
+    </div>
+    </div>
+    <div class="flex-bottom editactions">
+      <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+      <div *ngIf="editting">
+        <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+        <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+      </div>
+    </div>
+  </div>
+</form>

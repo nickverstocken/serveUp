@@ -2,7 +2,8 @@
   <div class="columnLayout">
     <div class="left">
       <form [formGroup]="formuser">
-      <div class="card usercard">
+      <div class="usercard">
+        <div class="userblock">
         <div *ngIf="cardEdit !== 'formuser'" class="actions">
           <a (click)="cardEdit = 'formuser'"><span class="fa fa-pencil-alt"></span></a>
         </div>
@@ -48,28 +49,58 @@
             <p *ngIf="!formuser.controls.introduction.value">Je hebt niets te zeggen...</p>
           </div>
         </div>
-        <div class="serviceSelectWrap">
-          <h3>Huidige service</h3>
-          <div class="serviceSelectProfile">
-            <app-service-select [id]="'selectserviceprofile'" [services]="user.service"></app-service-select>
-          </div>
         </div>
-
-
-        <div class="submenuprofile">
-          <ul>
-            <li>
-
-            </li>
-          </ul>
+        <div class="serviceSelectWrap">
+          <div class="serviceSelectProfile">
+            <app-service-select (selectedService)="setService($event)" [id]="'selectserviceprofile'" [services]="user.service"></app-service-select>
+          </div>
         </div>
       </div>
       </form>
 
 
+      <div class="submenuprofile">
+        <ul>
+          <li class="current">
+            <a>Service instellingen</a>
+          </li>
+          <li>
+            <a>Persoonlijke instellingen</a>
+          </li>
+          <li>
+            <a>Service profiel</a>
+          </li>
+          <li>
+            <a>Persoonlijk profiel</a>
+          </li>
+        </ul>
+      </div>
+
     </div>
     <div class="right">
+      <div class="card details row-span-2">
+        <app-service-details class="componentwrap" [formservice]="formService" [service]="selectedService"></app-service-details>
+      </div>
+      <div class="card description col-span-2">
+        <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService"></app-service-description>
+      </div>
+      <div class="card">
+        <app-service-travel class="componentwrap" #serviceTravel [service]="selectedService" [formservice]="formService"></app-service-travel>
+      </div>
+      <div class="card">
+        <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-business-hours>
+      </div>
 
+      <div class="card">
+       <app-service-price class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-price>
+      </div>
+
+      <div class="card">
+        <app-service-category class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-category>
+      </div>
+      <div class="card">
+        <h3>social media</h3>
+      </div>
     </div>
   </div>
 </div>

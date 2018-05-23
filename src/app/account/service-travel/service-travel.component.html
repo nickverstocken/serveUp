@@ -1,0 +1,24 @@
+<div class="map">
+  <agm-map #map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [scrollwheel]="false">
+    <agm-marker
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [markerDraggable]="false">
+    </agm-marker>
+    <agm-circle #circle (radiusChange)="changeBounds($event)" [latitude]="latitude" [longitude]="longitude"
+                [radius]="radius"
+                [fillColor]="'red'">
+    </agm-circle>
+  </agm-map>
+</div>
+<div class="slider">
+  <label>Maximuum reisafstand {{formservice.controls.max_km.value}}</label>
+  <mat-slider #travelslider (change)="changeRadius($event)" [disabled]="!editting" [value]="radius / 1000" [max]="250" [min]="5" [step]="1" [thumbLabel]="true"></mat-slider>
+</div>
+<div class="editactions">
+  <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+  <div *ngIf="editting">
+    <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+    <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+  </div>
+</div>

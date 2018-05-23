@@ -1,0 +1,36 @@
+@import "../../../color";
+.serviceprice{
+  .formbody{
+    padding:15px;
+  }
+  .priceBig{
+    line-height: 1;
+    .price{
+      font-size: 40px;
+      font-weight: 200;
+      .number{
+        display: inline-block;
+      }
+      .valuta{
+        font-size: 20px;
+        position: relative;
+        top:3px;
+        vertical-align: top;
+      }
+    }
+    .rate{
+      margin-top:5px;
+    }
+  }
+  .priceblock{
+    padding:15px;
+    border-radius: $borderRadius;
+    background: $backgroundColor;
+    border: 1px solid $borderColor;
+    text-align: center;
+  }
+  .prices_extras{
+    max-height: 120px;
+    overflow-y: auto;
+  }
+}

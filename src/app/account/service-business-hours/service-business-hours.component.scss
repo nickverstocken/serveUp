@@ -1,0 +1,12 @@
+.servicebusiness-hours{
+  .formbody{
+    padding:15px;
+  }
+  app-day-select{
+    display: block;
+    margin-top: 15px;
+    .daySelectWrap{
+      height:250px;
+    }
+  }
+}

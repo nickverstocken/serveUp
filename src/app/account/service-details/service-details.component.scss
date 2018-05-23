@@ -1,0 +1,38 @@
+.servicedetail{
+  .profileBanner{
+    img{
+      width: 100%;
+      height:200px;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
+  }
+  .imgUpload{
+    width: 100px;
+    height:100px;
+    position: relative;
+    z-index: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    transform: translateY(-50px);
+    margin-bottom: -50px;
+  }
+  .formbody{
+    padding:0px 15px;
+    margin-bottom: 10px;
+  }
+  .reviewScore{
+    text-align: center;
+    margin-top:5px;
+    margin-bottom: 15px;
+  }
+  .servicename{
+    h2{
+      text-align: center;
+
+      margin-top: 10px;
+    }
+  }
+}
+

@@ -1,0 +1,15 @@
+<form class="servicebusiness-hours" [formGroup]="formservice">
+  <div>
+    <div class="formbody">
+      <label>Werkdagen</label>
+      <app-day-select [daysSelected]="formservice.controls['business_hours'].value"></app-day-select>
+    </div>
+    <div class="editactions">
+      <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+      <div *ngIf="editting">
+        <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+        <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+      </div>
+    </div>
+  </div>
+</form>

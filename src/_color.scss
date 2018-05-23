@@ -11,7 +11,7 @@ $borderColor:#e7e7e7;
 $messageBubbleReceived:lighten($blue, 40%);
 $messageBubbleSend: lighten($green, 25%);
 $fontFamily:'Nunito', sans-serif;
-$borderRadius:4px;
+$borderRadius:2px;
 @mixin boxShadowSmall {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
