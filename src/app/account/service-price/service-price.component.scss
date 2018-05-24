@@ -6,8 +6,17 @@
   .priceBig{
     line-height: 1;
     .price{
-      font-size: 40px;
+      font-size: 40px !important;
       font-weight: 200;
+      input.notvisible{
+        font-size: 40px !important;
+        font-weight: 200;
+        &.editting{
+          background: #fff;
+          border:1px solid $borderColor !important;
+        }
+      }
+
       .number{
         display: inline-block;
       }
@@ -20,6 +29,13 @@
     }
     .rate{
       margin-top:5px;
+      input.notvisible{
+        color:#999;
+        &.editting{
+          background: #fff;
+          border:1px solid $borderColor !important;
+        }
+      }
     }
   }
   .priceblock{

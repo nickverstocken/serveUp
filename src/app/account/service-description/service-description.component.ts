@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Service} from '../../models/Service';
+import {ServupService} from '../../services/servup.service';
 
 @Component({
   selector: 'app-service-description',
@@ -9,17 +10,28 @@ import {Service} from '../../models/Service';
 export class ServiceDescriptionComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
-  editting = false;
-  constructor() { }
+  @Input() editting = false;
+  @Output() onEditting: EventEmitter<any> = new EventEmitter<any>();
+  @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
+  categories;
+
+  constructor(private serveUpService: ServupService) { }
 
   ngOnInit() {
+    this.serveUpService.getCategories('subcategories').subscribe(result => {
+      this.categories = result.categories;
+    });
   }
   cancelEdit(){
     this.editting = false;
     this.rebuildForm();
   }
+  onEdit(){
+    this.onEditting.emit('service-description');
+  }
   save(){
     this.editting = false;
+    this.saveService.emit();
   }
   rebuildForm() {
     this.formservice.reset(this.service);

@@ -22,7 +22,6 @@ import {LandingComponent} from './landing/landing.component';
 import {FooterComponent} from './footer/footer.component';
 import {ImageUploaderComponent} from './components/image-uploader/image-uploader.component';
 import {MultipleImageUploaderComponent} from './components/multiple-image-uploader/multiple-image-uploader.component';
-
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './httpInterceptor';
 import {ApiService} from './services/api.service';
@@ -30,7 +29,6 @@ import {AuthService} from './services/auth.service';
 import {ServupService} from './services/servup.service';
 import {PusherService} from './services/pusher.service';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
-
 import {NumbermaskDirective} from './directives/numbermask.directive';
 import {searchZip, searchName, searchMultiplePipe} from './pipes/search';
 import { TimeAgoPipe } from './pipes/timeago';
@@ -56,7 +54,6 @@ import {ImageModalComponent} from './components/image-modal/image-modal.componen
 import {PriceExtrasComponent} from './components/price-extras/price-extras.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import { ClickOutsideModule } from 'ng-click-outside';
-/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
 import { RequestCardComponent } from './components/request-card/request-card.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab/tab.component';
@@ -72,7 +69,7 @@ import { ServiceDescriptionComponent } from './account/service-description/servi
 import { ServiceTravelComponent } from './account/service-travel/service-travel.component';
 import { ServiceBusinessHoursComponent } from './account/service-business-hours/service-business-hours.component';
 import { ServicePriceComponent } from './account/service-price/service-price.component';
-import { ServiceCategoryComponent } from './account/service-category/service-category.component';
+/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,8 +118,7 @@ import { ServiceCategoryComponent } from './account/service-category/service-cat
     ServiceDescriptionComponent,
     ServiceTravelComponent,
     ServiceBusinessHoursComponent,
-    ServicePriceComponent,
-    ServiceCategoryComponent,
+    ServicePriceComponent
   ],
   imports: [
     BrowserModule,

@@ -5,11 +5,14 @@
       <img src="../../../assets/images/bannertest.jpg"/>
     </div>
     <div class="imgUpload">
-      <app-image-uploader [disabled]="!editting" (fileload)="serviceLogoUploaded($event)" [id]="'serviceLogoUpLoad'" #serviceLogoUpload [image]="formservice.logo"
+      <app-image-uploader [disabled]="!editting" (fileload)="serviceLogoUploaded($event)" [id]="'serviceLogoUpLoad'" #serviceLogoUpload [image]="service.logo"
                           [options]="{width: '100%', margin: '0px', height: '100%', 'border-radius': '50%', 'border-width' : '4px'}"></app-image-uploader>
     </div>
     <div class="servicename">
-      <h2 [contentEditable]="editting">{{formservice.controls['name'].value}}</h2>
+      <h2 [contentEditable]="editting">
+        <input [class.has-error]="!formservice.controls['name'].valid && formservice.controls['name'].touched"
+                                                                     formControlName="name"  class="editable notvisible" placeholder="Naam" [readonly]="!editting" >
+      </h2>
     </div>
     <div class="reviewScore">
       <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
@@ -40,7 +43,7 @@
       <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
       <div *ngIf="editting">
         <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
-        <button *ngIf="editting" (click)="save()"  class="button">Wijzig</button>
+        <button *ngIf="editting" (click)="save()" [disabled]="!formservice.valid"  class="button">Wijzig</button>
       </div>
     </div>
   </div>

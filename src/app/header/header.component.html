@@ -72,7 +72,7 @@
       </div>
     </div>
     <div *ngIf="user.role === 'service'" id="selectService">
-      <app-service-select [services]="user.service"></app-service-select>
+      <app-service-select [services]="services"></app-service-select>
     </div>
     <div id="links">
       <button class="button btnstyle2" *ngIf="user.role === 'service'">Service toevoegen</button>

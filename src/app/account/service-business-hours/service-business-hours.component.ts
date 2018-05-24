@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Service} from '../../models/Service';
 
 @Component({
@@ -10,7 +10,8 @@ import {Service} from '../../models/Service';
 export class ServiceBusinessHoursComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
-  editting = false;
+  @Input() editting = false;
+  @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {
@@ -21,8 +22,12 @@ export class ServiceBusinessHoursComponent implements OnInit {
   }
   save(){
     this.editting = false;
+    this.saveService.emit();
   }
   rebuildForm() {
     this.formservice.reset(this.service);
+  }
+  daysSelected(event){
+      this.formservice.controls.business_hours.setValue(event);
   }
 }

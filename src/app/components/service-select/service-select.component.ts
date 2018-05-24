@@ -17,6 +17,7 @@ export class ServiceSelectComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.serveUpService.selectedService.subscribe(
       result => {
         const serviceId = result;

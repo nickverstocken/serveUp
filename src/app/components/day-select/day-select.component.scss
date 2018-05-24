@@ -7,6 +7,9 @@
   border: 1px solid $borderColor;
   background:#fff;
   justify-content: space-between;
+  &.disabled{
+    background: #f9f9f9;
+  }
   .days{
     display:flex;
     flex-wrap: wrap;

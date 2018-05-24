@@ -40,3 +40,9 @@ $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $cus
   border-radius: $borderRadius;
 
 }
+.mat-select-disabled{
+  background: #F9F9F9;
+}
+.mat-optgroup-label{
+  color:$orange;
+}

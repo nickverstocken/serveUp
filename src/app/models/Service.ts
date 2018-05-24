@@ -2,13 +2,14 @@ import {City} from './City';
 import {Category} from './Category';
 import {Tag} from './Tag';
 import {User} from './User';
+import {SubCategory} from './SubCategory';
 
 export class Service {
   id: number;
   name: string;
   description: string;
   category_id: number;
-  category: Category;
+  sub_category: SubCategory;
   address: string;
   city_id: number;
   city: City;

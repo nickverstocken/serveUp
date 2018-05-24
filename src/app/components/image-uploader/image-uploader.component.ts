@@ -12,7 +12,7 @@ export class ImageUploaderComponent implements OnInit {
   imageSrc = '';
 
   @Output() fileload: EventEmitter<any> = new EventEmitter();
-  @Input() image = '';
+  @Input() image;
   @Input() options = {};
   @Input() id;
   @Input() disabled = false;
@@ -21,9 +21,7 @@ export class ImageUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.image) {
-      this.imageSrc = this.image;
-    }
+
   }
   handleDragEnter() {
     if(!this.disabled){
@@ -70,7 +68,7 @@ export class ImageUploaderComponent implements OnInit {
 
   _handleReaderLoaded(e) {
     const reader = e.target;
-    this.imageSrc = reader.result;
+    this.image = reader.result;
     this.loaded = true;
     const input = (<HTMLInputElement> document.getElementById(this.id));
     const fileList: FileList = input.files;

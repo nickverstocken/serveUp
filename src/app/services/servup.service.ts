@@ -25,8 +25,8 @@ export class ServupService {
     return this.api.post('/checkEmail', emailAdress);
   }
 
-  getCategories(): Observable<any> {
-    return this.api.get('/categories');
+  getCategories(includes?: String): Observable<any> {
+    return this.api.get(`/categories?include=${includes}`);
   }
 
   searchCategories(searchTerm): Observable<any> {

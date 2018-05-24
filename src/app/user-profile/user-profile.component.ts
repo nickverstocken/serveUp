@@ -378,7 +378,6 @@ export class UserProfileComponent implements OnInit {
         break;
       }
       case 'ac8': {
-        this.selectedService.category = this.categories.filter(item => item.id === this.oldService.category_id)[0];
         this.selectedService.category_id = this.oldService.category_id;
         this.buildFormAc8();
       //  Object.assign(this.selectedService, this.oldService);
@@ -422,7 +421,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   changeCategory_id(event){
-    this.selectedService.category = this.categories.filter(item => item.id === event[1])[0];
+
     this.selectedService.category_id = event[1];
      this.formAc8.controls.category_id.setValue(event[1]);
   }

@@ -7,6 +7,7 @@ declare var $:any;
 })
 export class DaySelectComponent implements OnInit {
   @Input() daysSelected = {days : [], begin : '', end : ''} ;
+  @Input() disabled = false;
   @Output() selectedDaysTime: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
   daysOfWeek = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'];
@@ -201,22 +202,23 @@ export class DaySelectComponent implements OnInit {
     }
   ]
   ngOnInit() {
-    if(!this.daysSelected || !this.daysSelected.days || !this.daysSelected.begin || !this.daysSelected.end){
-      this.daysSelected = {days : [], begin : '', end : ''};
-    }
+
   }
 
   addOrRemoveDay(day){
-    if(!this.daysSelected || !this.daysSelected.days){
-      this.daysSelected = {days : [], begin : '', end : ''};
+    if(!this.disabled){
+      if(!this.daysSelected || !this.daysSelected.days){
+        this.daysSelected = {days : [], begin : '', end : ''};
+      }
+      if(this.daysSelected.days.includes(day)){
+        this.daysSelected.days = this.daysSelected.days.filter(d => d !== day);
+      }else{
+        this.daysSelected.days.push(day);
+      }
+      console.log(this.daysSelected);
+      this.selectedDaysTime.emit(this.daysSelected);
     }
-    if(this.daysSelected.days.includes(day)){
-      this.daysSelected.days = this.daysSelected.days.filter(d => d !== day);
-    }else{
-      this.daysSelected.days.push(day);
-    }
-    console.log(this.daysSelected);
-    this.selectedDaysTime.emit(this.daysSelected);
+
   }
   assignTime(beginorend, event){
     this.daysSelected[beginorend] = event[0];

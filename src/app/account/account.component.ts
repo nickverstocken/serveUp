@@ -1,11 +1,13 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {ServupService} from '../services/servup.service';
 import {AuthService} from '../services/auth.service';
 import {User} from '../models/User';
 import {EmailValidator} from '../custom-validation/email.validator';
 import {Service} from '../models/Service';
 import {ServiceTravelComponent} from './service-travel/service-travel.component';
+import {ServiceDetailsComponent} from './service-details/service-details.component';
+import {ServicePriceComponent} from './service-price/service-price.component';
 
 @Component({
   selector: 'app-account',
@@ -20,19 +22,48 @@ export class AccountComponent implements OnInit, AfterViewInit {
   formuser;
   formService;
   cardEdit;
+  services = [];
   @ViewChild('serviceTravel') serviceTravel: ServiceTravelComponent;
+  @ViewChild('servicePrice') servicePrice: ServicePriceComponent;
   constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.cardEdit = 'service-details';
     this.authService.currentUser.subscribe(result => {
       if(result.id){
         this.user = result;
+        Object.assign(this.services, this.user.service);
         this.buildFormUser();
       }
     });
   }
   ngAfterViewInit() {
 
+  }
+  saveUser(id) {
+    const frmData = this.assignFormData(this.formuser.value);
+    frmData.append('city_id', this.formuser.controls.city.controls.id.value);
+    this.serveUpService.updateUser(frmData).subscribe(
+      result => {
+        if(result.success){
+          this.cardEdit = '';
+          Object.assign(this.user, result.user);
+        }
+      },
+      (error) => {
+        /*this.handleErrors(id, error);*/
+      }
+    );
+  }
+
+  saveService() {
+    let frmData = this.assignFormData(this.formService.value);
+    frmData.append('city_id', this.formService.controls.city.controls.id.value);
+    this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
+      result => {
+        Object.assign(this.selectedService, result.service);
+      }
+    );
   }
   buildFormUser(){
     this.formuser = this.fb.group({
@@ -70,8 +101,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
       price_estimate: [this.selectedService.price_estimate, Validators.required],
       rate: [this.selectedService.rate, Validators.required],
       price_extras: this.fb.array([]),
-      category_id: [this.selectedService.category_id],
-      tags: [this.selectedService.tags]
+      subcategory_id: [this.selectedService.sub_category ? this.selectedService.sub_category.id : null],
+      category_id: [this.selectedService.sub_category  ? this.selectedService.sub_category.category.id : null]
     });
   }
   userPictureLoad(file) {
@@ -82,12 +113,33 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.cardEdit = undefined;
   }
   setService(service: Service) {
-    const index = this.user.service.indexOf(service);
-    this.selectedService = this.user.service[index];
+    this.selectedService = service;
     this.buidFormService();
     if(this.serviceTravel){
       this.serviceTravel.setLatLng(this.selectedService.city.lat, this.selectedService.city.lng);
     }
+    if(this.servicePrice){
 
+      if (this.selectedService.price_extras) {
+        for (let price_extra of this.selectedService.price_extras) {
+          this.servicePrice.addPriceExtra(price_extra);
+        }
+      }
+    }
+  }
+  assignFormData(model) {
+    const frmData = new FormData();
+    for (const key of Object.keys(model)) {
+      if(model[key]){
+        if(model[key] instanceof Object && Object.keys(model[key]).length > 0){
+          model[key] = JSON.stringify(model[key]);
+
+        }
+
+        frmData.append(key, model[key]);
+      }
+
+    }
+    return frmData;
   }
 }

@@ -2,7 +2,7 @@
   <div>
     <div class="formbody">
       <label>Werkdagen</label>
-      <app-day-select [daysSelected]="formservice.controls['business_hours'].value"></app-day-select>
+      <app-day-select (selectedDaysTime)="daysSelected($event)" [daysSelected]="formservice.controls.business_hours.value" [disabled]="!editting"></app-day-select>
     </div>
     <div class="editactions">
       <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>

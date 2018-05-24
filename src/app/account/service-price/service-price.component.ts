@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Service} from '../../models/Service';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
 
@@ -10,12 +10,15 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms';
 export class ServicePriceComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
-  editting = false;
-
+  @Input() editting = false;
+  @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    for (let price_extra of this.service.price_extras) {
+      this.addPriceExtra(price_extra);
+    }
   }
 
   cancelEdit() {
@@ -25,19 +28,23 @@ export class ServicePriceComponent implements OnInit {
 
   save() {
     this.editting = false;
+    this.saveService.emit();
   }
 
   rebuildForm() {
     this.resetPrice();
+    this.formservice.reset(this.service);
   }
 
   addPriceExtra(value = null) {
+    console.log(value);
     if (!value) {
       value = {name: '', price: ''};
     }
     const control = <FormArray>this.formservice.controls['price_extras'];
     const addrCtrl = this.initPriceExtra(value);
     control.push(addrCtrl);
+    console.log(this.formservice.controls.price_extras.controls);
   }
 
   initPriceExtra(value) {
@@ -57,8 +64,10 @@ export class ServicePriceComponent implements OnInit {
     for (let i = control.length - 1; i >= 0; i--) {
       control.removeAt(i);
     }
+
     if (this.service.price_extras) {
       for (const price_extra of this.service.price_extras) {
+
         this.addPriceExtra(price_extra);
       }
     }

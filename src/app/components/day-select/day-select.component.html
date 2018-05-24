@@ -1,4 +1,4 @@
-<div class="daySelectWrap">
+<div class="daySelectWrap" [class.disabled]="disabled">
   <div class="days">
     <div *ngFor="let day of daysOfWeek" class="day" id="{{day}}">
       <p>{{day}}</p>
@@ -20,9 +20,9 @@
     </div>
     <div class="timewrap">
       <div class="selectwrap">
-        <app-select class="select" (selectedValueChange)="assignTime('begin', $event)" [selectedItemInit]="daysSelected ? (daysSelected.begin ? [daysSelected.begin, daysSelected.begin] : null) : null"  [placeHolder]="'Begin'" [options]="timeoptions"></app-select>
+        <app-select [disabled]="disabled" class="select" (selectedValueChange)="assignTime('begin', $event)" [selectedItemInit]="daysSelected ? (daysSelected.begin ? [daysSelected.begin, daysSelected.begin] : null) : null"  [placeHolder]="'Begin'" [options]="timeoptions"></app-select>
         <span> - </span>
-        <app-select class="select" (selectedValueChange)="assignTime('end', $event)" [selectedItemInit]="daysSelected ? (daysSelected.end ? [daysSelected.end, daysSelected.end] : null) : null"  [placeHolder]="'Einde'" [options]="timeoptions"></app-select>
+        <app-select [disabled]="disabled"  class="select" (selectedValueChange)="assignTime('end', $event)" [selectedItemInit]="daysSelected ? (daysSelected.end ? [daysSelected.end, daysSelected.end] : null) : null"  [placeHolder]="'Einde'" [options]="timeoptions"></app-select>
       </div>
     </div>
   </div>

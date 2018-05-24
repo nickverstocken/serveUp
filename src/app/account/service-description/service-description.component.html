@@ -5,6 +5,14 @@
       <textarea [class.has-error]="!formservice.controls['description'].valid && formservice.controls['description'].touched"
                 formControlName="description" spellcheck="false" class="editable" [class.disabled]="!editting" [readonly]="!editting"
                 placeholder="Geef zoveel mogelijk info over u en je service"></textarea>
+      <label>Categorie</label>
+      <mat-select placeholder="Categorie" [formControl]="formservice.controls['subcategory_id']" disableRipple [disabled]="!editting">
+        <mat-optgroup *ngFor="let category of categories" [label]="category.name">
+          <mat-option *ngFor="let subcategory of category.subcategories" [value]="subcategory.id">
+            {{ subcategory.name }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
     </div>
     <div class="editactions">
       <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>

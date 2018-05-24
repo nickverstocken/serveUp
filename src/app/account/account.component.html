@@ -28,7 +28,7 @@
             <app-autofill-cities [id]="'userCity'" [readonly]="false" [group]="formuser.controls['city']"></app-autofill-cities>
           </div>
 
-          <textarea formControlName="introduction" id="introduction" class="editable disabled" readonly
+          <textarea formControlName="introduction" id="introduction" class="editable"
                     placeholder="Stel jezelf kort voor..."></textarea>
           <div class="editactions">
             <button (click)="cancelEditMode('formuser', 'user')" class="button">Annuleer</button>
@@ -52,7 +52,7 @@
         </div>
         <div class="serviceSelectWrap">
           <div class="serviceSelectProfile">
-            <app-service-select (selectedService)="setService($event)" [id]="'selectserviceprofile'" [services]="user.service"></app-service-select>
+            <app-service-select (selectedService)="setService($event)" [id]="'selectserviceprofile'" [services]="services"></app-service-select>
           </div>
         </div>
       </div>
@@ -79,25 +79,22 @@
     </div>
     <div class="right">
       <div class="card details row-span-2">
-        <app-service-details class="componentwrap" [formservice]="formService" [service]="selectedService"></app-service-details>
+        <app-service-details class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-details>
       </div>
       <div class="card description col-span-2">
-        <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService"></app-service-description>
+        <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-description>
       </div>
       <div class="card">
-        <app-service-travel class="componentwrap" #serviceTravel [service]="selectedService" [formservice]="formService"></app-service-travel>
+        <app-service-travel class="componentwrap" #serviceTravel [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-travel>
       </div>
       <div class="card">
-        <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-business-hours>
+        <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-business-hours>
       </div>
 
       <div class="card">
-       <app-service-price class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-price>
+       <app-service-price #servicePrice class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-price>
       </div>
 
-      <div class="card">
-        <app-service-category class="componentwrap" [service]="selectedService" [formservice]="formService"></app-service-category>
-      </div>
       <div class="card">
         <h3>social media</h3>
       </div>

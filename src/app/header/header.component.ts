@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   sub;
   pushersub;
   currentUserSub;
+  services = [];
   constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
   }
   @HostListener('window:resize', ['$event'])
@@ -51,6 +52,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         if(userData.id){
           this.user = userData;
           this.authenticated = true;
+          Object.assign(this.services, this.user.service);
           this.pushersub = this.pusherService.notificationsChannel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', result => {
             this.notifications.push(result);
             this.unreadnoti += 1;

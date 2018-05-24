@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Service} from '../../models/Service';
 import {  } from 'googlemaps';
 import {AgmCircle, AgmMap, MapsAPILoader} from '@agm/core';
@@ -11,7 +11,8 @@ import {MatSlider} from '@angular/material';
 export class ServiceTravelComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
-  editting = false;
+  @Input() editting = false;
+  @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
   latitude: number;
   longitude: number;
   radius = 0;
@@ -41,6 +42,7 @@ export class ServiceTravelComponent implements OnInit {
   }
   save(){
     this.editting = false;
+    this.saveService.emit();
   }
   rebuildForm() {
     this.formservice.reset(this.service);

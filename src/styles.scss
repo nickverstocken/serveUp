@@ -101,6 +101,16 @@ input, textarea{
       box-shadow: none;
     }
   }
+  &.notvisible{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: 0;
+    border: 0 !important;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 0 !important;
+  }
   &:focus{
     border: 1px solid $textColor;
   }

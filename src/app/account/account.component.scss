@@ -6,221 +6,229 @@
   flex-direction: column;
   height:calc(100vh - 60px);
   margin-bottom: -50px;
-}
-.columnLayout{
-  flex:1 auto;
-  display: flex;
-  .left{
-    flex: 0 0 25%;
-    min-width: 240px;
-    max-width: 420px;
-    background:#fff;
-    overflow: auto;
-    padding: 10px 0;
-    border-left: 1px solid $borderColor;
-    border-right: 1px solid $borderColor;
+  .columnLayout{
+    flex:1 auto;
+    display: flex;
+    .left{
+      flex: 0 0 25%;
+      min-width: 240px;
+      max-width: 420px;
+      background:#fff;
+      overflow: auto;
+      padding: 10px 0;
+      border-left: 1px solid $borderColor;
+      border-right: 1px solid $borderColor;
+    }
+    .right{
+      flex: 1 auto;
+      max-height: 100%;
+      padding: 15px;
+      overflow: auto;
+      border-right: 1px solid $borderColor;
+      background: $backgroundColor;
+      display: grid;
+      grid-gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(244px, 2fr));
+      grid-auto-flow: row;
+    }
   }
-  .right{
-    flex: 1 auto;
-    max-height: 100%;
-    padding: 15px;
-    overflow: auto;
-    border-right: 1px solid $borderColor;
-    background: $backgroundColor;
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(244px, 2fr));
-    grid-auto-flow: row;
-  }
-}
-.usercard{
-  position: relative;
-  padding:10px 20px;
-  padding-bottom: 0;
-  display: flex;
-  flex-direction: column;
-  .userblock{
+  .usercard{
+    position: relative;
+    padding:10px 20px;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column;
-  }
-}
-.actions{
-  position: absolute;
-  right:0px;
-  top:0px;
-  a{
-    font-size: 18px;
-    color:$textColor;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:40px;
-    height:40px;
-    &:hover{
-      color:$orange;
-      text-decoration: none;
-    }
-  }
-}
-.imgUpload{
-  align-self: center;
-}
-input, textarea, app-autofill-cities {
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-textarea{
-  height:100px;
-}
-.autofill{
-  margin-bottom: 5px;
-}
-.username{
-  &.edit{
-    margin-top: 15px;
-  }
-  h1{
-    font-size: 20px;
-    text-align: center;
-   margin-top: 15px;
-    margin-bottom: 5px;
-  }
-  .place{
-    text-align: center;
-    color: lighten($textColor, 10%);
-  }
-  .bio{
-    p{
-      font-size: 12px;
-      line-height: 1;
-    }
-    border-top: 1px solid $borderColor;
-    margin-top: 15px;
-    padding-top: 15px;
-  }
-}
-.editactions{
-  margin-bottom: -15px;
-}
-.serviceSelectWrap{
-  margin-top: 20px;
-}
-.serviceSelectProfile{
-  margin:0 -20px;
-  background: $backgroundColor;
-}
-h3{
-  font-size: 14px;
-  margin: 0;
-  margin-bottom: 5px;
-}
-.submenuprofile{
-  ul{
-    list-style: none;
-    padding:0;
-    margin: 0;
-    margin-top: 10px;
-    li{
-      &.current{
-        a{
-          border-left: 3px solid $orange;
-          text-decoration: none;
-          text-shadow: 0.5px 0px 0px #555, -0.5px 0px 0px #555;
-          color:$titleColor;
-        }
-      }
-    }
-  }
-  a{
-    color:lighten($textColor, 10%);
-    font-size: 14px;
-    transition:all 0.2s ease;
-    padding:10px 20px;
-    display: block;
-    &:hover{
-      text-decoration: none;
-      text-shadow: 0.5px 0px 0px #555, -0.5px 0px 0px #555;
-      color:$titleColor;
-    }
-  }
-
-}
-.card{
-  background: #fff;
-  margin: 0;
-  min-height: 250px;
-  height:100%;
-
-  &.description{
-    height:270px;
-  }
-  &:hover{
-    @include boxShadowSmall;
-  }
-  h2{
-    font-size: 18px;
-    line-height: 22px;
-    margin: 0 15px;
-  }
-  h2[contenteditable=true], span[contenteditable=true]{
-    border:1px solid $borderColor;
-    background: #fff;
-    &:focus{
-      border:1px solid $titleColor;
-      outline:0;
-      border-radius: $borderRadius;
-    }
-  }
-  &.details{
-
-  }
-}
-.col-span-2{
-  grid-column: span 2;
-}
-.row-span-2{
-  grid-row: span 2;
-}
-label{
-  color:$titleColor;
-  font-weight: 600;
-  font-size: 12px;
-  margin-bottom: 5px;
-  display: block;
-  margin-top: 5px;
-}
-.editactions{
-  margin: 0;
-}
-.componentwrap{
-  height:100%;
-  form{
-    height: 100%;
-    & > div{
-      height:100%;
+    .userblock{
       display: flex;
       flex-direction: column;
     }
-    .formbody{
-      flex: 1 auto;
+  }
+  .actions{
+    position: absolute;
+    right:0px;
+    top:0px;
+    a{
+      font-size: 18px;
+      color:$textColor;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      width:40px;
+      height:40px;
+      &:hover{
+        color:$orange;
+        text-decoration: none;
+      }
     }
-    .editactions{
-      margin-top: auto;
+  }
+  .imgUpload{
+    align-self: center;
+  }
+  input, textarea, app-autofill-cities {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  textarea{
+    height:100px;
+  }
+  .autofill{
+    margin-bottom: 5px;
+  }
+  .username{
+    &.edit{
+      margin-top: 15px;
+    }
+    h1{
+      font-size: 20px;
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    .place{
+      text-align: center;
+      color: lighten($textColor, 10%);
+    }
+    .bio{
+      p{
+        font-size: 12px;
+        line-height: 1;
+      }
+      border-top: 1px solid $borderColor;
+      margin-top: 15px;
+      padding-top: 15px;
+    }
+  }
+  .editactions{
+    margin-bottom: -15px;
+  }
+  .serviceSelectWrap{
+    margin-top: 20px;
+  }
+  .serviceSelectProfile{
+    margin:0 -20px;
+    background: $backgroundColor;
+  }
+  h3{
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  .submenuprofile{
+    ul{
+      list-style: none;
+      padding:0;
+      margin: 0;
+      margin-top: 10px;
+      li{
+        &.current{
+          a{
+            border-left: 3px solid $orange;
+            text-decoration: none;
+            text-shadow: 0.5px 0px 0px #555, -0.5px 0px 0px #555;
+            color:$titleColor;
+          }
+        }
+      }
+    }
+    a{
+      color:lighten($textColor, 10%);
+      font-size: 14px;
+      transition:all 0.2s ease;
+      padding:10px 20px;
+      display: block;
+      &:hover{
+        text-decoration: none;
+        text-shadow: 0.5px 0px 0px #555, -0.5px 0px 0px #555;
+        color:$titleColor;
+      }
+    }
+
+  }
+  .card{
+    background: #fff;
+    margin: 0;
+    min-height: 250px;
+    height:100%;
+    &.details{
+      overflow: hidden;
+    }
+    &.description{
+      height:270px;
+    }
+    &:hover{
+      @include boxShadowSmall;
+    }
+    h2{
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0 15px;
+    }
+    h2[contenteditable=true], span[contenteditable=true]{
+      border:1px solid $borderColor;
+      background: #fff;
+      &:focus{
+        border:1px solid $titleColor;
+        outline:0;
+        border-radius: $borderRadius;
+      }
+    }
+    &.details{
+
+    }
+  }
+  .col-span-2{
+    grid-column: span 2;
+  }
+  .row-span-2{
+    grid-row: span 2;
+  }
+  label{
+    color:$titleColor;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: block;
+    margin-top: 5px;
+  }
+  .editactions{
+    margin: 0;
+  }
+  .componentwrap{
+    height:100%;
+    form{
+      height: 100%;
+      & > div{
+        height:100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .formbody{
+        flex: 1 auto;
+        align-items: center;
+      }
+      .editactions{
+        margin-top: auto;
+      }
     }
   }
 }
+
 @media all and (max-width: 1024px) {
-  .card.details.row-span-2{
-    grid-column: span 2;
+  #accountWrap {
+    .card.details.row-span-2 {
+      grid-column: span 2;
+    }
   }
 }
 @media all and (max-width: 800px) {
-  .columnLayout .right{
-    display: block;
-    .card{
-      height:auto;
-      margin-bottom:20px;
+  #accountWrap{
+    .columnLayout .right{
+      display: block;
+      .card{
+        height:auto;
+        margin-bottom:20px;
+      }
     }
   }
+
 }
