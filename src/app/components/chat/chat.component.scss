@@ -182,6 +182,9 @@
     flex:1 auto;
     border:0;
     border-right: 1px solid $borderColor;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
     border-radius: 0;
     font-size: 14px;
     font-weight: 400;

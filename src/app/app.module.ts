@@ -7,7 +7,8 @@ import {
   MatSliderModule,
   MatSelectModule,
   MatStepperModule,
-  MatIconModule
+  MatIconModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import {BrowserModule} from '@angular/platform-browser';
@@ -75,7 +76,10 @@ import { ServiceBusinessHoursComponent } from './account/service-business-hours/
 import { ServicePriceComponent } from './account/service-price/service-price.component';
 import { ServiceFaqComponent } from './account/service-faq/service-faq.component';
 import { AddServiceModalComponent } from './account/add-service-modal/add-service-modal.component';
-
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { EventCalendarComponent } from './event-calendar/event-calendar.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { FullCalendarModule } from 'ng-fullcalendar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -126,7 +130,9 @@ import { AddServiceModalComponent } from './account/add-service-modal/add-servic
     ServiceBusinessHoursComponent,
     ServicePriceComponent,
     ServiceFaqComponent,
-    AddServiceModalComponent
+    AddServiceModalComponent,
+    CalendarComponent,
+    EventCalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -142,6 +148,10 @@ import { AddServiceModalComponent } from './account/add-service-modal/add-servic
     MatSelectModule,
     MatStepperModule,
     MatIconModule,
+    MatCheckboxModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    FullCalendarModule,
 /*    PickerModule,*/
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBX4ApQUnjyZgcanGwjqgP1QfgBzAYRe8I',

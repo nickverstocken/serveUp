@@ -1,0 +1,143 @@
+@import '../../../color';
+ng-fullcalendar{
+  display: block;
+  height: 100%;
+}
+#toggleCalendar{
+  padding:0;
+}
+
+#calendarWrap .collapse{
+  display: none;
+}
+#calendar{
+  height: 100%;
+}
+#calendarWrap{
+  display: flex;
+  position: relative;
+  overflow:hidden;
+  height:calc(100vh - 60px);
+  margin-bottom: -50px;
+  .left{
+    flex: 0 0 25%;
+    min-width: 240px;
+    max-width: 320px;
+    position: relative;
+    top:70px;
+    background: #fff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ul{
+      list-style: none;
+    }
+  }
+  .right{
+    flex: 1 auto;
+  }
+}
+
+#calendarWrap .leftTop{
+  border-bottom: 1px solid #E8E7E7;
+  border-top: 1px solid #E8E7E7;
+}
+#calendarWrap .leftBelow{
+  padding:15px;
+  font-weight: 400;
+}
+.leftBelow h3{
+  margin:0;
+
+}
+.headerCalendarFilter{
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.headerCalendarFilter #fileFilter input{
+  height:25px !important;
+}
+.visibleCalendarsList ul li{
+  padding-top:5px;
+  padding-bottom: 5px;
+}
+.cat1{
+  .mat-checkbox-checked.mat-accent{
+    /deep/ .mat-checkbox-background{
+      background: $green !important;
+    }
+  }
+}
+/deep/ owl-date-time-container{
+  box-shadow: none !important;
+
+}
+/deep/ .owl-dt-container{
+  font-size: 16px !important;
+  width:100%;
+}
+/deep/ .owl-dt-inline-container .owl-dt-calendar, .owl-dt-popup-container .owl-dt-calendar{
+  height:auto;
+}
+/deep/ .owl-dt-calendar-table .owl-dt-calendar-cell-selected{
+  background: $blue;
+}
+.overlay.opened{
+  top:160px;
+}
+@media only screen and (max-width: 800px) {
+  #calendarWrap .left{
+    top:100px;
+    height:100%;
+    position: absolute;
+    z-index:4;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: none;
+  }
+  #calendarWrap .left.open{
+    -webkit-box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.42);
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.42);
+    transform: translateX(0%);
+  }
+  #calendarWrap .collapse.open span{
+    transform: rotate(-180deg);
+  }
+  #calendarWrap .collapse.open{
+    opacity: 1;
+  }
+  #calendarWrap .collapse{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+    position: absolute;
+    background:$backgroundColor;
+    width:40px;
+    height:40px;
+    top:3px;
+    z-index: 2;
+    border-left:0;
+    color:$titleColor;
+    span{
+      transition:transform 0.3s ease;
+    }
+  }
+  #calendar .loading{
+    width:100%;
+    left:0px;
+
+  }
+  #calendar .fc-toolbar{
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    height: 120px;
+  }
+  #calendar .fc-icon, .fc-toolbar .fc-center{
+    order:2;
+  }
+
+}

@@ -1,0 +1,38 @@
+<div id="calendarWrap" *ngIf="user.id">
+  <div (click)="openLeft ? openLeft = false : openLeft = true" class="collapse" [class.open]="openLeft">
+    <span class="fa fa-arrow-right"></span>
+  </div>
+  <div class="left" [class.open]="openLeft">
+    <div class="leftTop">
+      <div id="miniCalendar">
+        <owl-date-time-inline (ngModelChange)="onChange($event)" [firstDayOfWeek]="1" [pickerType]="'calendar'" [(ngModel)]="date"></owl-date-time-inline>
+      </div>
+    </div>
+    <div class="leftBelow">
+      <div class="headerCalendarFilter">
+        <h3>Zichtbaar</h3>
+      </div>
+      <div class="visibleCalendarsList">
+        <ul id="toggleCalendar">
+          <li class="checkboxChoice">
+            <mat-checkbox id="cat"  class="cat" [disableRipple]="true">Persoonlijke afspraken</mat-checkbox>
+          </li>
+          <li *ngFor="let service of user.service; let i=index;">
+            <div [class]="'cat' + (i+1)" [attr.data-service-id]="service.id" >
+              <mat-checkbox [disableRipple]="true">{{service.name}} afspraken</mat-checkbox>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div id='calendar'>
+        <ng-fullcalendar (initialized)="calenderLoaded($event)" *ngIf="calendarOptions" #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (select)="dateSelected($event)" (eventDrop)="updateEvent($event.detail)"
+                         (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
+    </div>
+  </div>
+  <a class="overlay" [class.opened]="openLeft" (click)="openLeft = false"></a>
+</div>
+

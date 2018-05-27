@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   setAuth(user: User) {
-    console.log(user);
     this.currentUserSubject.next(user);
     this.isAuthenticatedSubject.next(true);
   }

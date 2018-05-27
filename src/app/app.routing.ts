@@ -8,6 +8,7 @@ import {UserProfileComponent} from './user-profile/user-profile.component';
 import {SearchDetailComponent} from './search-service/search-detail/search-detail.component';
 import {InboxComponent} from './inbox/inbox.component';
 import {AccountComponent} from './account/account.component';
+import {EventCalendarComponent} from './event-calendar/event-calendar.component';
 
 const appRoutes: Routes = [
   // otherwise redirect to home
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'inbox', component: InboxComponent},
   { path: 'inbox/:serviceid/:filter', component: InboxComponent},
   { path: 'inbox/:serviceid/:filter/:id', component: InboxComponent},
+  { path: 'calendar', component: EventCalendarComponent },
   { path: '**', redirectTo: ''}
 ];
 

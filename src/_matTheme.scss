@@ -11,7 +11,7 @@ $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $cus
 @include angular-material-theme($custom-theme);
 
 .mat-datepicker-content .mat-calendar-body-cell-content{
-  border-radius: $borderRadius;
+
 }
 .cdk-overlay-pane.mat-datepicker-popup{
   border-radius: $borderRadius;
@@ -69,8 +69,16 @@ $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $cus
 }
 .mat-step-icon .mat-icon{
   font-size: 12px !important;
-
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.mat-checkbox-checked.mat-accent{
+  .mat-checkbox-background{
+    background: $blue;
+  }
+}
+.mat-checkbox-background, .mat-checkbox-frame{
+  border-radius: $borderRadius !important;
+}
+

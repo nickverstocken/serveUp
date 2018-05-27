@@ -5,6 +5,7 @@
 @import "linearcons";
 @import "datepicker";
 @import "matTheme";
+@import "fullCalendar";
 ::-webkit-scrollbar-track
 {
   background-color: #F5F5F5;
@@ -79,11 +80,17 @@ button{
     }
   }
 }
+
 select{
   border-radius: $borderRadius;
   border:1px solid $borderColor;
   padding: 5px;
-  background: $backgroundColor;
+  background-color: $backgroundColor;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAMAAACelLz8AAAAJ1BMVEVmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmaP/QSjAAAADHRSTlMAAgMJC0uWpKa6wMxMdjkoAAAANUlEQVR4AeXJyQEAERAAsNl7Hf3X6xt0QL6JpZWq30pdvdadme+0PMdzvHm8YThHcT1H7K0BtOMDniZhWOgAAAAASUVORK5CYII=);
+  -webkit-background-size: 13px 13px;
+  background-size: 13px;
+  background-repeat: no-repeat;
+  background-position: right center;
   transition: all 0.2s ease-in;
   outline:0;
   height: 31px;
@@ -95,17 +102,7 @@ select{
   appearance: none;
   display: inline-block;
   position: relative;
-  &:after{
-    font-family: "Font Awesome 5 Free";
-    content: '\f0d7';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    font-size: 10px;
-    top:50%;
-    transform: translateY(-50%);
-    right: 0;
-  }
+
   &:focus{
     border: 1px solid $titleColor;
   }
@@ -148,6 +145,9 @@ input, textarea{
 }
 input[type="checkbox"]{
   width:auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 a{
   cursor: pointer;
@@ -1195,7 +1195,7 @@ display:flex;
   background: rgba(0,0,0,0.5);
   z-index: -1;
   opacity: 0;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
   &.opened{
     z-index: 3;
     opacity: 1;
