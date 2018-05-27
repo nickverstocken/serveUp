@@ -2,10 +2,24 @@
   .profileBanner{
     img{
       width: 100%;
-      height:200px;
+      height:150px;
       -o-object-fit: cover;
       object-fit: cover;
     }
+  }
+  .modalHeader{
+    h2{
+      margin: 0 !important;
+    }
+  }
+  .contentContainer{
+    padding:15px;
+  }
+  label a{
+    float:right;
+  }
+  .social{
+    margin-right: 5px;
   }
   .imgUpload{
     width: 100px;

@@ -20,18 +20,19 @@ export class ServiceSelectComponent implements OnInit {
 
     this.serveUpService.selectedService.subscribe(
       result => {
-        const serviceId = result;
+        const serviceId: Number = parseInt(result);
         if(serviceId !== -1){
-          const service = this.services.filter(item => item.id === parseInt(serviceId));
+          const service = this.services.filter(item => item.id === serviceId);
           this.selectedService.emit(service[0]);
           if(service.length > 0){
-            this.services =  this.services.filter(item => item.id !== parseInt(serviceId));
+            this.services =  this.services.filter(item => item.id !== serviceId);
             this.services.unshift(service[0]);
           }else{
             localStorage.setItem('selectedService', '-1');
           }
         }else{
           this.selectedService.emit(this.services[0]);
+
         }
       }
     )
@@ -47,12 +48,4 @@ export class ServiceSelectComponent implements OnInit {
     $('#' + this.id + ' .chooseContainer').slideUp({'duration': 200});
     $('#' + this.id + ' .fa-caret-down').removeClass('rotate');
   }
-
-/*  move(array, element, delta) {
-    const index = array.indexOf(element);
-    const newIndex = index + delta;
-    if (newIndex < 0 || newIndex == array.length) return; // Already at the top or bottom.
-    const indexes = [index, newIndex].sort(); // Sort the indixes
-    array.splice(indexes[0], 2, array[indexes[1]], array[indexes[0]]); // Replace from lowest index, two elements, reverting the order
-  }*/
 }

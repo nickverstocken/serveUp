@@ -2,16 +2,17 @@
   <div class="flex-column">
     <div class="flex-auto">
     <div class="profileBanner">
-      <img src="../../../assets/images/bannertest.jpg"/>
+      <app-image-uploader [disabled]="!editting" (fileload)="serviceLBannerUploaded($event)" [id]="showActions ? 'serviceBannerUpLoad' : 'serviceBannerUpLoadnew'" [image]="service.banner"
+                          [options]="{width: '100%', margin: '0px', height: '100%', 'border-radius': '0px', 'border-width' : '0px', 'background': '#ccc'}"></app-image-uploader>
     </div>
     <div class="imgUpload">
-      <app-image-uploader [disabled]="!editting" (fileload)="serviceLogoUploaded($event)" [id]="'serviceLogoUpLoad'" #serviceLogoUpload [image]="service.logo"
+      <app-image-uploader [disabled]="!editting" (fileload)="serviceLogoUploaded($event)" [id]=" showActions ? 'serviceLogoUpLoad' : 'serviceLogoUpLoadnew'" #serviceLogoUpload [image]="service.logo"
                           [options]="{width: '100%', margin: '0px', height: '100%', 'border-radius': '50%', 'border-width' : '4px'}"></app-image-uploader>
     </div>
     <div class="servicename">
       <h2 [contentEditable]="editting">
         <input [class.has-error]="!formservice.controls['name'].valid && formservice.controls['name'].touched"
-                                                                     formControlName="name"  class="editable notvisible" placeholder="Naam" [readonly]="!editting" >
+                                                                     formControlName="name"  class="editable notvisible" placeholder="Naam*" [readonly]="!editting" >
       </h2>
     </div>
     <div class="reviewScore">
@@ -21,7 +22,7 @@
     </div>
 
     <div class="formbody">
-      <label>Adres</label>
+      <label>Adres*</label>
       <input [class.has-error]="!formservice.controls['address'].valid && formservice.controls['address'].touched"
              formControlName="address"  class="editable" id="service_address" placeholder="Adres" [class.disabled]="!editting" [readonly]="!editting"  />
       <div [formGroupName]="'city'">
@@ -37,9 +38,16 @@
       <label>Website</label>
       <input [class.has-error]="!formservice.controls['website']?.valid && formservice.controls['website']?.touched"
              formControlName="website" class="editable" [readonly]="!editting" [class.disabled]="!editting" id="service_website" placeholder="Website"/>
+      <label>Social media <a [class.disabled]="!editting" (click)="showSocialAdd = true">Wijzig</a></label>
+      <div class="socialwrap">
+          <a rel="noopener noreferrer" target="_blank" *ngFor="let social of formservice.controls.social_networks.controls; let i=index" class="social {{social.controls.name.value}}" href="{{social.controls.url.value}}"><span class="fab fa-{{social.controls.name.value}}{{social.controls.name.value === 'facebook' ? '-f' : social.controls.name.value === 'linkedin' ? '-in' : ''}}"></span></a>
+      </div>
+      <div *ngIf="formservice.controls.social_networks.controls.length === 0">
+        <small>Geen sociale netwerken toegevoegd.</small>
+      </div>
     </div>
     </div>
-    <div class="flex-bottom editactions">
+    <div class="flex-bottom editactions" *ngIf="showActions">
       <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
       <div *ngIf="editting">
         <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
@@ -47,4 +55,41 @@
       </div>
     </div>
   </div>
+  <a *ngIf="showSocialAdd" class="overlay" (click)="closeSocialNetworksPop()" [class.opened]="showSocialAdd"></a>
+  <div *ngIf="showSocialAdd" [class.opened]="showSocialAdd" class="modalContainer">
+    <div class="modal">
+      <div class="modalHeader">
+        <div (click)="closeSocialNetworksPop()" class="close">
+          <span class="fas fa-times"></span>
+        </div>
+        <h2><span>Sociale netwerken</span></h2>
+      </div>
+      <div class="modalContent">
+        <div class="contentContainer">
+          <div class="card socialCard">
+
+          <div *ngFor="let social of formservice.controls.social_networks.controls; let i=index">
+            <div [formGroup]="formservice.controls.social_networks.controls[i]" class="inputswrap price">
+              <select formControlName="name">
+                <option *ngFor="let network of socialNetworks" [value]="network">
+                  {{network}}
+                </option>
+              </select>
+              <input [class.has-error]="!formservice.controls.social_networks.controls[i].controls['url'].valid && formservice.controls.social_networks.controls[i].controls['url'].touched" formControlName="url" class="editable"  placeholder="Url"/>
+              <button (click)="removeSocialNetwork(i)" class="button btnstyle2"><span class="fas fa-times"></span></button>
+            </div>
+          </div>
+          <div>
+            <button class="button btnstyle2 fullWidth" (click)="addSocialNetwork()">Voeg sociaal netwerk toe</button>
+          </div>
+          </div>
+          <div class="editactions">
+            <button (click)="closeSocialNetworksPop()" class="button">Annuleer</button>
+            <button (click)="saveSocial()" [class.disabled]="!formservice.controls.social_networks.valid"  class="button">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
+

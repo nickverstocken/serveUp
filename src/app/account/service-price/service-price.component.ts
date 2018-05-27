@@ -11,13 +11,16 @@ export class ServicePriceComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
   @Input() editting = false;
+  @Input() showActions = true;
   @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    for (let price_extra of this.service.price_extras) {
-      this.addPriceExtra(price_extra);
+    if(this.service.price_extras){
+      for (let price_extra of this.service.price_extras) {
+        this.addPriceExtra(price_extra);
+      }
     }
   }
 
@@ -37,14 +40,12 @@ export class ServicePriceComponent implements OnInit {
   }
 
   addPriceExtra(value = null) {
-    console.log(value);
     if (!value) {
       value = {name: '', price: ''};
     }
     const control = <FormArray>this.formservice.controls['price_extras'];
     const addrCtrl = this.initPriceExtra(value);
     control.push(addrCtrl);
-    console.log(this.formservice.controls.price_extras.controls);
   }
 
   initPriceExtra(value) {

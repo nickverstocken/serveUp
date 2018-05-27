@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 declare var $:any;
 @Component({
   selector: 'app-day-select',
   templateUrl: './day-select.component.html',
   styleUrls: ['./day-select.component.scss']
 })
-export class DaySelectComponent implements OnInit {
-  @Input() daysSelected = {days : [], begin : '', end : ''} ;
+export class DaySelectComponent implements OnInit, OnChanges {
+  @Input() daysSelected = {days : [], begin : 'begin', end : 'einde'} ;
   @Input() disabled = false;
   @Output() selectedDaysTime: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
@@ -204,25 +204,20 @@ export class DaySelectComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  ngOnChanges(){
+    if(!this.daysSelected){
+      this.daysSelected = {days : [], begin : 'begin', end : 'einde'};
+    }
+  }
   addOrRemoveDay(day){
     if(!this.disabled){
-      if(!this.daysSelected || !this.daysSelected.days){
-        this.daysSelected = {days : [], begin : '', end : ''};
-      }
       if(this.daysSelected.days.includes(day)){
         this.daysSelected.days = this.daysSelected.days.filter(d => d !== day);
       }else{
         this.daysSelected.days.push(day);
       }
-      console.log(this.daysSelected);
       this.selectedDaysTime.emit(this.daysSelected);
     }
 
-  }
-  assignTime(beginorend, event){
-    this.daysSelected[beginorend] = event[0];
-    console.log(this.daysSelected);
-    this.selectedDaysTime.emit(this.daysSelected);
   }
 }

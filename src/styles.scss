@@ -79,6 +79,37 @@ button{
     }
   }
 }
+select{
+  border-radius: $borderRadius;
+  border:1px solid $borderColor;
+  padding: 5px;
+  background: $backgroundColor;
+  transition: all 0.2s ease-in;
+  outline:0;
+  height: 31px;
+  padding-right: 15px;
+  font-size: 14px;
+  color:$titleColor;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  &:after{
+    font-family: "Font Awesome 5 Free";
+    content: '\f0d7';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+    top:50%;
+    transform: translateY(-50%);
+    right: 0;
+  }
+  &:focus{
+    border: 1px solid $titleColor;
+  }
+}
 label{
   color:$textColor;
   font-size: 14px;
@@ -124,6 +155,11 @@ a{
   &:hover, &:focus{
     outline:none;
     text-decoration: underline;
+  }
+  &.disabled{
+    color: $textColor;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 p{
@@ -771,6 +807,7 @@ display:flex;
 .card{
   display: flex;
   flex-direction: column;
+
   @include boxShadowSmall;
   transition: all 0.2s ease;
   margin: 8px;
@@ -935,6 +972,7 @@ display:flex;
     position: relative;
     width: 320px;
     pointer-events: auto;
+    margin-top: 60px;
   }
   .modalHeader{
     .close{
@@ -965,21 +1003,23 @@ display:flex;
   }
   .modalContent{
     max-height: 100vh;
-    max-height: calc(90vh - 200px);
+    max-height: calc(90vh - 60px);
     background: #f5f5f5;
     position: relative;
     overflow: auto;
     z-index: 1;
     border-radius: 0 0 4px 4px;
+
     input{
       width:100%;
     }
     .contentContainer{
       .card{
-        margin:10px;
+        margin:15px;
         border-radius: 4px;
         padding:10px;
         background:#fff;
+        min-height: initial !important;
         @include boxShadowSmall;
         h3{
           margin-top:0px;
@@ -1028,6 +1068,41 @@ display:flex;
     margin-left: -10px;
     position: absolute;
     top: 100%;
+  }
+}
+.social {
+  width:30px;
+  height:30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition:all 0.2s ease;
+  &:hover {
+    text-decoration: none;
+    background: $orange !important;
+  }
+  span {
+    color: #fff;
+  }
+
+  &.twitter {
+    background: $twitter;
+  }
+  &.facebook {
+    background:$facebook;
+  }
+  &.linkedin{
+    background: $linkedin;
+  }
+  &.dribbble{
+    background: $dribble;
+  }
+  &.instagram{
+    background: $instagram;
+  }
+  &.youtube{
+    background: $youtube;
   }
 }
 /* end modals */

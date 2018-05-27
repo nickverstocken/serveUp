@@ -1,0 +1,76 @@
+<a (click)="close()" class="overlay" [class.opened]="show"></a>
+<div id="addServiceWrap" [class.opened]="show" class="modalContainer">
+  <div id="addServiceModal" class="modal">
+    <div class="modalHeader">
+      <div (click)="close()" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2><span>Nieuwe service toevoegen</span></h2>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <mat-vertical-stepper [linear]="true">
+          <ng-template matStepperIcon="edit">
+            <mat-icon><span class="stepicon fa fa-pencil-alt"></span></mat-icon>
+          </ng-template>
+
+          <ng-template matStepperIcon="done">
+            <mat-icon>done_all</mat-icon>
+          </ng-template>
+          <mat-step [stepControl]="step1">
+            <div class="card">
+              <form [formGroup]="step1">
+                <ng-template matStepLabel>Algemene info</ng-template>
+                <app-service-details [showActions]="false" [editting]="true" [formservice]="step1" [service]="selectedService"></app-service-details>
+                <div class="editactions">
+                  <button class="button" [disabled]="!step1.valid" [class.disabled]="!step1.valid"  matStepperNext>Volgende</button>
+                </div>
+              </form>
+
+            </div>
+
+          </mat-step>
+          <mat-step [stepControl]="step2">
+            <form [formGroup]="step2">
+              <ng-template matStepLabel>Beschrijving</ng-template>
+            <div class="card">
+              <app-service-description [showActions]="false" [editting]="true" [service]="selectedService" [formservice]="step2"></app-service-description>
+            </div>
+              <div class="card">
+                <app-service-price [showActions]="false" [editting]="true" [service]="selectedService" [formservice]="step2"></app-service-price>
+                <div class="editactions">
+                  <button class="button" matStepperPrevious>Terug</button>
+                  <button class="button" [disabled]="!step2.valid" [class.disabled]="!step2.valid" matStepperNext>Volgende</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="step3">
+            <form [formGroup]="step3">
+            <ng-template matStepLabel>Werkdagen</ng-template>
+            <div class="card">
+              <app-service-business-hours [showActions]="false" [editting]="true" [service]="selectedService" [formservice]="step3"></app-service-business-hours>
+              <div class="editactions">
+                <button class="button" matStepperPrevious>Terug</button>
+                <button class="button" [disabled]="!step3.valid" [class.disabled]="!step3.valid" matStepperNext>Volgende</button>
+              </div>
+            </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="step4">
+            <form [formGroup]="step4">
+              <ng-template matStepLabel>Maximuum km</ng-template>
+              <div class="card">
+                <app-service-travel *ngIf="step1.controls.city.controls.lat.value" [showActions]="false" [editting]="true" [service]="selectedService" [formservice]="step4"></app-service-travel>
+                <div class="editactions">
+                  <button class="button" matStepperPrevious>Terug</button>
+                  <button (click)="addService()" [disabled]="!step4.valid" [class.disabled]="!step4.valid" class="button green" matStepperNext>Voeg service toe</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-vertical-stepper>
+      </div>
+    </div>
+  </div>
+</div>

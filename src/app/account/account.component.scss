@@ -1,4 +1,5 @@
 @import '../../color';
+
 #accountWrap{
   max-width: 1200px;
   margin: 0 auto;
@@ -102,7 +103,7 @@
     margin-bottom: -15px;
   }
   .serviceSelectWrap{
-    margin-top: 20px;
+    margin-top:15px;
   }
   .serviceSelectProfile{
     margin:0 -20px;
@@ -211,22 +212,112 @@
       }
     }
   }
+  .addService{
+    text-align: center;
+    margin-top: 15px;
+  }
 }
 
-@media all and (max-width: 1024px) {
+@media all and (max-width: 1062px) {
   #accountWrap {
     .card.details.row-span-2 {
       grid-column: span 2;
+    }
+    .servicedetail {
+      .profileBanner {
+        img {
+          height: 250px;
+          -o-object-fit: cover;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+}
+@media all and (max-width: 430px){
+  #accountWrap{
+    .submenuprofile ul{
+      margin-bottom: -20px;
+      a{
+        white-space: nowrap;
+      }
+    }
+    .submenuprofile{
+      border-bottom: 2px solid $borderColor;
     }
   }
 }
 @media all and (max-width: 800px) {
   #accountWrap{
+    .chooseContainer{
+      z-index:2;
+    }
+    .columnLayout{
+      display: block;
+      background:$backgroundColor;
+    }
+    .serviceSelectWrap{
+      margin: 15px 0px;
+    }
+    .serviceSelectProfile{
+      background: #fff;
+      max-width: 250px;
+      margin: 0 auto;
+      border: 1px solid $borderColor;
+    }
+    .addService{
+
+      button{
+        max-width: 250px;
+        margin: 0 auto;
+      }
+    }
     .columnLayout .right{
       display: block;
+      border:0;
       .card{
         height:auto;
         margin-bottom:20px;
+      }
+    }
+    .columnLayout .left{
+      min-width: initial;
+      max-width: initial;
+      border-right:0;
+      padding-bottom: 0;
+      overflow: visible;
+      .bio{
+        border: 0;
+        margin: 0;
+        text-align: center;
+        p{
+          max-width: 400px;
+          margin: 0 auto;
+        }
+      }
+    }
+    .submenuprofile{
+      overflow: hidden;
+    }
+    .submenuprofile ul{
+      display: flex;
+      border-top: 2px solid $borderColor;
+      border-bottom: 2px solid $borderColor;
+      margin-top: 0;
+      overflow: auto;
+
+      li{
+        flex:1 auto;
+        a{
+          padding: 20px;
+          text-align: center;
+          margin-bottom: -2px;
+        }
+      }
+      li.current a{
+        border-left: 0;
+        border-bottom: 2px solid $orange;
       }
     }
   }

@@ -11,8 +11,10 @@ export class ServiceDescriptionComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
   @Input() editting = false;
+  @Input() showActions = true;
   @Output() onEditting: EventEmitter<any> = new EventEmitter<any>();
   @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
+
   categories;
 
   constructor(private serveUpService: ServupService) { }

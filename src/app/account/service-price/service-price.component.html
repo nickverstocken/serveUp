@@ -14,7 +14,7 @@
           <div class="rate">
             <span>
               <input [class.editting]="editting"  [class.has-error]="!formservice.controls['rate'].valid && formservice.controls['rate'].touched"
-                     formControlName="rate"  class="editable notvisible" placeholder="Prijs" [readonly]="!editting" >
+                     formControlName="rate"  class="editable notvisible" placeholder="Tarief" [readonly]="!editting" >
             </span>
           </div>
         </div>
@@ -28,10 +28,10 @@
         </div>
       </div>
       <div>
-        <button [disabled]="!editting" [class.disabled]="!editting" (click)="addPriceExtra()" class="button fullWidth"><span class="fas fa-plus"></span> Nieuwe prijsextra</button>
+        <button [disabled]="!editting" [class.disabled]="!editting" (click)="addPriceExtra()" class="button btnstyle2 fullWidth"><span class="fas fa-plus"></span> Nieuwe prijsextra</button>
       </div>
     </div>
-    <div class="editactions">
+    <div class="editactions" *ngIf="showActions">
       <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
       <div *ngIf="editting">
         <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>

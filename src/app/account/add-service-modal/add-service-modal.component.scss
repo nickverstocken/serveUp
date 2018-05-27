@@ -1,0 +1,59 @@
+@import "../../../color";
+#addServiceWrap{
+  #addServiceModal{
+    width: 100%;
+    max-width: 400px;
+    .contentContainer{
+      padding: 15px;
+      padding-top: 0px;
+    }
+  }
+  .editactions{
+    margin-right: 0;
+    margin-left: 0;
+    .green{
+      border: 0 !important;
+    }
+  }
+  mat-step-header{
+    margin-bottom: -15px;
+  }
+  .card{
+    position: relative;
+    padding:0 !important;
+    overflow: hidden;
+    &.socialCard{
+      padding: 15px !important;
+    }
+    label{
+      color:$titleColor;
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 5px;
+      display: block;
+      margin-top: 5px;
+    }
+    h2[contenteditable=true], span[contenteditable=true]{
+      border:1px solid $borderColor;
+      background: #fff;
+      &:focus{
+        border:1px solid $titleColor;
+        outline:0;
+        border-radius: $borderRadius;
+      }
+    }
+    h2{
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0 15px;
+    }
+    input, textarea, app-autofill-cities {
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    textarea{
+      height:100px;
+    }
+  }
+
+}

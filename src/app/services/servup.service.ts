@@ -8,6 +8,8 @@ import {Service} from '../models/Service';
 export class ServupService {
   private selectedServiceSubject = new BehaviorSubject<any>(-1);
   public selectedService = this.selectedServiceSubject.asObservable().distinctUntilChanged();
+  public serviceAddedSubj = new BehaviorSubject<any>(null);
+  public addedService = this.serviceAddedSubj.asObservable().distinctUntilChanged();
 
   constructor(private api: ApiService) {
   }
@@ -16,7 +18,9 @@ export class ServupService {
     localStorage.setItem('selectedService', serviceId);
     this.selectedServiceSubject.next(serviceId);
   }
-
+  serviceAdded(service){
+    this.serviceAddedSubj.next(service);
+  }
   //misc
   getCities(): Observable<any> {
     return this.api.getLocal('./assets/BE_cities.json');
@@ -49,7 +53,7 @@ export class ServupService {
     return this.api.post('/sendMail', data);
   }
   getCurrentUser(): Observable<any> {
-    return this.api.get('/login/user?include=city,service.faq');
+    return this.api.get('/login/user?include=city,service');
   }
 
   //user
@@ -68,7 +72,9 @@ export class ServupService {
   getServicesNearbyCount(subcatId, cityName): Observable<any> {
     return this.api.get(`/service/${subcatId}/nearby/${cityName}/count`);
   }
-
+  addService(form): Observable<any> {
+    return this.api.post(`/service/save`, form);
+  }
   //request
   saveRequest(form): Observable<any> {
     return this.api.post(`/request/save`, form);

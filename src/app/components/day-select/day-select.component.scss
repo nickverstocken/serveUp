@@ -6,6 +6,9 @@
   border-radius: $borderRadius;
   border: 1px solid $borderColor;
   background:#fff;
+  align-items: center;
+  flex-direction: column;
+
   justify-content: space-between;
   &.disabled{
     background: #f9f9f9;
@@ -15,6 +18,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    flex:1 auto;
     .day{
       margin-right: 10px;
       display: flex;
@@ -34,7 +38,7 @@
         align-items: center;
         justify-content: center;
         &.selected{
-          background:$orange;
+          background:$blue;
           color:#fff;
       }
       }
@@ -65,6 +69,12 @@
         display:flex;
         align-items: center;
         flex:1 auto;
+        justify-content: space-around;
+        select{
+          flex:1 auto;
+
+          max-width: 80px;
+        }
       }
     }
   }

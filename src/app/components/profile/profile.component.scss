@@ -109,32 +109,7 @@
         width: 30px;
       }
     }
-    .social {
-      width:30px;
-      height:30px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      transition:all 0.2s ease;
-      &:hover {
-        text-decoration: none;
-        background: $orange !important;
-      }
-      span {
-        color: #fff;
-      }
 
-      &.twitter {
-        background: #1DA1F2;
-      }
-      &.facebook {
-        background: #4267B2;
-      }
-      &.linkedin{
-        background: #006097;
-      }
-    }
   }
   h2 {
     font-weight: 300;
@@ -148,6 +123,12 @@
   .viewMore {
     text-align: center;
     margin-top: 10px;
+  }
+  .social{
+    margin-right: 5px;
+    span{
+      color:#fff;
+    }
   }
 }
 @media all and (max-width: 960px){

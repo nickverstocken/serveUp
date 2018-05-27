@@ -61,6 +61,8 @@ export class AutofillCitiesComponent implements OnInit {
     this.adressForm.controls['id'].setValue(city.id);
     this.adressForm.controls['name'].setValue(city.name);
     this.adressForm.controls['zip'].setValue(city.zip);
+    this.adressForm.controls['lat'].setValue(city.lat);
+    this.adressForm.controls['lng'].setValue(city.lng);
     this.showAutoFill = false;
   }
 }

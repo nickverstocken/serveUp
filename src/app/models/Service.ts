@@ -35,6 +35,8 @@ export class Service {
   price_estimate: number;
   rate: string;
   price_extras: object[];
+  social_networks: object[];
+  faq: object[];
   standard_response: string;
   tags;
   user?: User;

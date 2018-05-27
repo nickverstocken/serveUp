@@ -49,6 +49,9 @@
             <p *ngIf="!formuser.controls.introduction.value">Je hebt niets te zeggen...</p>
           </div>
         </div>
+          <div class="addService">
+            <button (click)="showAddService()" class="button btnstyle2 fullWidth">Voeg een service toe</button>
+          </div>
         </div>
         <div class="serviceSelectWrap">
           <div class="serviceSelectProfile">
@@ -68,18 +71,18 @@
             <a>Persoonlijke instellingen</a>
           </li>
           <li>
-            <a>Service profiel</a>
+            <a>Service reviews</a>
           </li>
           <li>
-            <a>Persoonlijk profiel</a>
+            <a>Persoonlijke reviews</a>
           </li>
         </ul>
       </div>
 
     </div>
-    <div class="right">
+    <div class="right serviceSettings" *ngIf="user.service.length > 1">
       <div class="card details row-span-2">
-        <app-service-details class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-details>
+        <app-service-details #serviceDetail class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-details>
       </div>
       <div class="card description col-span-2">
         <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-description>
@@ -90,14 +93,11 @@
       <div class="card">
         <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-business-hours>
       </div>
-
-      <div class="card">
+      <div class="card servicepricecard">
        <app-service-price #servicePrice class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-price>
       </div>
 
-      <div class="card">
-        <h3>social media</h3>
-      </div>
     </div>
   </div>
 </div>
+<app-add-service-modal (onAdd)="addService($event)" *ngIf="showServiceAdd" (onclose)="showServiceAdd = false" [show]="showServiceAdd"></app-add-service-modal>

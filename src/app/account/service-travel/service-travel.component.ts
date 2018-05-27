@@ -12,6 +12,7 @@ export class ServiceTravelComponent implements OnInit {
   @Input() service: Service;
   @Input() formservice;
   @Input() editting = false;
+  @Input() showActions = true;
   @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
   latitude: number;
   longitude: number;

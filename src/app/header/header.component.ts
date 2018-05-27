@@ -47,9 +47,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     if (this.innerWidth <= 800) {
       this.mobile = true;
     }
-    this.currentUserSub = this.auth.currentUser.subscribe(
-      (userData) => {
+    this.auth.currentUser.subscribe(
+      userData => {
         if(userData.id){
+          console.log(userData);
           this.user = userData;
           this.authenticated = true;
           Object.assign(this.services, this.user.service);
@@ -66,6 +67,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         }
       }
     );
+    this.servupService.serviceAddedSubj.subscribe(result => {
+      if(result){
+        this.services.push(result);
+        this.servupService.serviceAddedSubj.next(null);
+      }
+
+    });
     this.auth.isAuthenticated.subscribe(
       data => {
         this.authenticated = data;
@@ -81,9 +89,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.sub.unsubscribe();
   }
   logout(){
-    this.sub.unsubscribe();
     this.pushersub.unsubscribe();
-    this.currentUserSub.unsubscribe();
     this.auth.logout();
     this.showSubnav = 'hideSubnav';
     this.mobileMenu = '';

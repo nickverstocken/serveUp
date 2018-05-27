@@ -26,7 +26,7 @@ export class AuthService {
       result => {
         if(!result){
           if(localStorage.getItem('token')){
-            this.apiService.get('/login/user?include=city,service.faq')
+            this.apiService.get('/login/user?include=city,service')
               .subscribe(data => {
                 this.setAuth(data.user);
               });
@@ -42,12 +42,14 @@ export class AuthService {
   }
 
   setAuth(user: User) {
+    console.log(user);
     this.currentUserSubject.next(user);
     this.isAuthenticatedSubject.next(true);
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('selectedService');
     this.currentUserSubject.next(new User());
     this.isAuthenticatedSubject.next(false);
   }

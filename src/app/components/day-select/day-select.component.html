@@ -20,9 +20,19 @@
     </div>
     <div class="timewrap">
       <div class="selectwrap">
-        <app-select [disabled]="disabled" class="select" (selectedValueChange)="assignTime('begin', $event)" [selectedItemInit]="daysSelected ? (daysSelected.begin ? [daysSelected.begin, daysSelected.begin] : null) : null"  [placeHolder]="'Begin'" [options]="timeoptions"></app-select>
+        <select [disabled]="disabled" [(ngModel)]="daysSelected.begin">
+          <option [value]="'begin'" >Begin</option>
+          <option [value]="time.value"  *ngFor="let time of timeoptions">
+            {{time.name}}
+          </option>
+        </select>
         <span> - </span>
-        <app-select [disabled]="disabled"  class="select" (selectedValueChange)="assignTime('end', $event)" [selectedItemInit]="daysSelected ? (daysSelected.end ? [daysSelected.end, daysSelected.end] : null) : null"  [placeHolder]="'Einde'" [options]="timeoptions"></app-select>
+        <select [disabled]="disabled" [(ngModel)]="daysSelected.end">
+          <option [value]="'einde'" >Einde</option>
+          <option [value]="time.value"  *ngFor="let time of timeoptions">
+            {{time.name}}
+          </option>
+        </select>
       </div>
     </div>
   </div>

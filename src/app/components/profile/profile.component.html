@@ -1,12 +1,15 @@
 <div id="userProfile" *ngIf="user && service">
   <div id="topPart">
     <div class="profileBanner">
-      <img src="../../../assets/images/bannertest.jpg"/>
+      <img *ngIf="service.banner"
+           src="{{service.banner}}" alt="{{service.name + ' banner image'}}"/>
+      <img *ngIf="!service.banner" src="assets/images/defaultbanner.png"/>
     </div>
     <div class="profilePicture">
       <div class="profilePictureImage">
-        <img
-          src="https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2014/12/12/15/Zoe_Sugg.jpg"/>
+        <img *ngIf="service.logo"
+          src="{{service.logo}}" alt="{{service.name + ' logo'}}"/>
+        <img *ngIf="!service.logo" src="assets/images/defaultProfile.jpg"/>
       </div>
     </div>
     <div class="namereview">
@@ -35,39 +38,25 @@
         <li *ngIf="service.tel"><span class="fas fa-phone-volume"></span><span class="label">Telefoon </span><span class="text">{{service.tel}}</span>
         </li>
         <li><span class="fas fa-trophy"></span><span class="label">Jaar ervaring </span><span class="text">{{service.experience}}</span></li>
-        <li *ngIf="service.website"><span class="fas fa-link"></span><span class="label">Website </span><span class="text"><a>{{service.website}}</a></span>
+        <li *ngIf="service.website"><span class="fas fa-link"></span><span class="label">Website </span><span class="text"><a href="{{service.website}}" rel="noopener noreferrer" target="_blank">{{service.website}}</a></span>
         </li>
         <li><span class="fas fa-share-alt"></span><span class="label">Social media</span><span class="text">
-          <a class="social facebook"><span class="fab fa-facebook-f"></span></a>
-         <a class="social twitter"><span class="fab fa-twitter"></span></a>
-           <a class="social linkedin"><span class="fab fa-linkedin-in"></span></a>
+          <a *ngFor="let social of service.social_networks" class="social {{social.name}}" href="{{social.url}}" rel="noopener noreferrer" target="_blank"><span class="fab fa-{{social.name}}{{social.name === 'facebook' ? '-f' : social.name === 'linkedin' ? '-in' : ''}}"></span></a>
         </span></li>
       </ul>
     </div>
   </div>
   <div id="qandaDetails" class="details">
-    <h2>Q&A</h2>
+    <h2>Extra info</h2>
     <div id="qanda">
       <div class="qandaItem">
-        <h3><span>Q.</span> Hoe onderscheid jij je van de concurrentie?</h3>
+        <h3><span>Q.</span>Wat zit er niet in de prijs?</h3>
         <span> A. </span>
         <p> Ik probeer van elk evenement een persoonlijke missie te maken zodat iedereen tevreden is!</p>
       </div>
-      <div>
-        <div class="qandaItem">
-          <h3><span>Q.</span> Wat zit er allemaal in de prijs en wat niet?</h3>
-          <span> A. </span>
-          <p><b>In de prijs :</b> Vervoerskosten, geluidsinstallatie, rookmachine. <br/> <b>Niet in de prijs :</b> Boxen
-            (€ 50)</p>
-        </div>
-        <div class="qandaItem">
-          <h3><span>Q.</span> Wat moet er allemaal voorzien zijn op de locatie zelf?</h3>
-          <span> A. </span>
-          <p>Drank, Eten, Artiestenlounge </p>
-        </div>
-      </div>
-      <div class="viewMore">
-        <button class="button">Toon meer</button>
+      <div class="qandaItem">
+        <h3><span>Q.</span>Openingsuren?</h3>
+       <app-day-select [disabled]="true" [daysSelected]="service.business_hours"></app-day-select>
       </div>
     </div>
   </div>

@@ -1,9 +1,13 @@
+
+/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
 // angular material components
 import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatSliderModule,
-  MatSelectModule
+  MatSelectModule,
+  MatStepperModule,
+  MatIconModule
 } from '@angular/material';
 
 import {BrowserModule} from '@angular/platform-browser';
@@ -69,7 +73,9 @@ import { ServiceDescriptionComponent } from './account/service-description/servi
 import { ServiceTravelComponent } from './account/service-travel/service-travel.component';
 import { ServiceBusinessHoursComponent } from './account/service-business-hours/service-business-hours.component';
 import { ServicePriceComponent } from './account/service-price/service-price.component';
-/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
+import { ServiceFaqComponent } from './account/service-faq/service-faq.component';
+import { AddServiceModalComponent } from './account/add-service-modal/add-service-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +124,9 @@ import { ServicePriceComponent } from './account/service-price/service-price.com
     ServiceDescriptionComponent,
     ServiceTravelComponent,
     ServiceBusinessHoursComponent,
-    ServicePriceComponent
+    ServicePriceComponent,
+    ServiceFaqComponent,
+    AddServiceModalComponent
   ],
   imports: [
     BrowserModule,
@@ -132,6 +140,8 @@ import { ServicePriceComponent } from './account/service-price/service-price.com
     MatDatepickerModule,
     MatSliderModule,
     MatSelectModule,
+    MatStepperModule,
+    MatIconModule,
 /*    PickerModule,*/
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBX4ApQUnjyZgcanGwjqgP1QfgBzAYRe8I',

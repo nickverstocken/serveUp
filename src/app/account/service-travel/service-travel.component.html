@@ -15,7 +15,7 @@
   <label>Maximuum reisafstand {{formservice.controls.max_km.value}}</label>
   <mat-slider #travelslider (change)="changeRadius($event)" [disabled]="!editting" [value]="radius / 1000" [max]="250" [min]="5" [step]="1" [thumbLabel]="true"></mat-slider>
 </div>
-<div class="editactions">
+<div class="editactions" *ngIf="showActions">
   <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
   <div *ngIf="editting">
     <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>

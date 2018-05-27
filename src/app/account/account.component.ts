@@ -23,8 +23,10 @@ export class AccountComponent implements OnInit, AfterViewInit {
   formService;
   cardEdit;
   services = [];
+  showServiceAdd = false;
   @ViewChild('serviceTravel') serviceTravel: ServiceTravelComponent;
   @ViewChild('servicePrice') servicePrice: ServicePriceComponent;
+  @ViewChild('serviceDetail') serviceDetail: ServiceDetailsComponent;
   constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -65,6 +67,17 @@ export class AccountComponent implements OnInit, AfterViewInit {
       }
     );
   }
+  addService(service){
+    let frmData = this.assignFormData(service);
+    this.serveUpService.addService(frmData).subscribe(result => {
+     this.user.service.push(result.service);
+     this.services.push(result.service);
+     this.serveUpService.serviceAddedSubj.next(result.service);
+     this.serveUpService.setSelectedService(result.service.id);
+     this.showServiceAdd = false;
+
+    });
+  }
   buildFormUser(){
     this.formuser = this.fb.group({
       fname: [this.user.fname, Validators.required],
@@ -83,8 +96,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
   buidFormService(){
     this.formService = this.fb.group({
       name: [this.selectedService.name, Validators.required],
-      description: [this.selectedService.description],
+      description: [this.selectedService.description, Validators.required],
       logo: [this.selectedService.logo],
+      banner: [this.selectedService.banner],
       address: [this.selectedService.address, Validators.required],
       city: this.fb.group({
         id: [this.selectedService.city.id, Validators.required],
@@ -96,6 +110,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
       tel: [this.selectedService.tel],
       experience: [this.selectedService.experience],
       website: [this.selectedService.website],
+      social_networks: this.fb.array([]),
       business_hours: [this.selectedService.business_hours],
       max_km: [this.selectedService.max_km],
       price_estimate: [this.selectedService.price_estimate, Validators.required],
@@ -119,10 +134,16 @@ export class AccountComponent implements OnInit, AfterViewInit {
       this.serviceTravel.setLatLng(this.selectedService.city.lat, this.selectedService.city.lng);
     }
     if(this.servicePrice){
-
       if (this.selectedService.price_extras) {
         for (let price_extra of this.selectedService.price_extras) {
           this.servicePrice.addPriceExtra(price_extra);
+        }
+      }
+    }
+    if(this.serviceDetail){
+      if(this.selectedService.social_networks){
+        for (let social of this.selectedService.social_networks) {
+          this.serviceDetail.addSocialNetwork(social);
         }
       }
     }
@@ -141,5 +162,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     }
     return frmData;
+  }
+  showAddService(){
+    this.showServiceAdd = true;
   }
 }
