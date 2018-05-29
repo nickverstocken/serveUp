@@ -31,6 +31,7 @@ export class ServiceSelectComponent implements OnInit {
             localStorage.setItem('selectedService', '-1');
           }
         }else{
+          this.serveUpService.setSelectedService(this.services[0].id);
           this.selectedService.emit(this.services[0]);
 
         }

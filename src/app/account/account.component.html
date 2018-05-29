@@ -80,7 +80,7 @@
       </div>
 
     </div>
-    <div class="right serviceSettings" *ngIf="user.service.length > 1">
+    <div class="right serviceSettings" *ngIf="user.service.length > 0">
       <div class="card details row-span-2">
         <app-service-details #serviceDetail class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-details>
       </div>

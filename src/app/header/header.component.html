@@ -19,7 +19,7 @@
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="/">Berichten</a></li>
-      <li *ngIf="user.role === 'service' && selectedService > 0"><a routerLink="/inbox/{{selectedService}}/requests">Inbox</a></li>
+      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/{{selectedService}}/requests">Inbox</a></li>
       <li><a routerLink="calendar">Mijn afspraken</a></li>
       <li (click)="toggleNoti()" id="notification"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
       <li (click)="toggleSubNav()" id="user"><a>

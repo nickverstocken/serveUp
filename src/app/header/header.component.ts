@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.auth.currentUser.subscribe(
       userData => {
         if(userData.id){
+          console.log(userData);
           this.user = userData;
           this.authenticated = true;
           Object.assign(this.services, this.user.service);

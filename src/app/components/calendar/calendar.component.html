@@ -15,11 +15,11 @@
       <div class="visibleCalendarsList">
         <ul id="toggleCalendar">
           <li class="checkboxChoice">
-            <mat-checkbox id="cat"  class="cat" [disableRipple]="true">Persoonlijke afspraken</mat-checkbox>
+            <mat-checkbox id="cat0" [checked]="true" (change)="toggleEvents($event, 'personal')" [disableRipple]="true">Persoonlijke afspraken</mat-checkbox>
           </li>
           <li *ngFor="let service of user.service; let i=index;">
-            <div [class]="'cat' + (i+1)" [attr.data-service-id]="service.id" >
-              <mat-checkbox [disableRipple]="true">{{service.name}} afspraken</mat-checkbox>
+            <div [class]="'cat' + (i+1)" [attr.data-service-id]="service.id">
+              <mat-checkbox [checked]="true" (change)="toggleEvents($event, service.id)" [disableRipple]="true">{{service.name}} afspraken</mat-checkbox>
             </div>
 
           </li>
@@ -29,7 +29,7 @@
   </div>
   <div class="right">
     <div id='calendar'>
-        <ng-fullcalendar (initialized)="calenderLoaded($event)" *ngIf="calendarOptions" #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (select)="dateSelected($event)" (eventDrop)="updateEvent($event.detail)"
+        <ng-fullcalendar (eventRender)="eventRender($event.detail)" (initialized)="calenderLoaded($event)" *ngIf="calendarOptions" #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (select)="dateSelected($event)" (eventDrop)="updateEvent($event.detail)"
                          (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
     </div>
   </div>

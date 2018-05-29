@@ -134,4 +134,7 @@ export class ServupService {
   acceptAppointment(id, messageInfo): Observable<any> {
     return this.api.put(`/appointment/${id}/accept`, messageInfo);
   }
+  getAppointments(start, end){
+    return this.api.get(`/appointments?start=${start}&end=${end}`);
+  }
 }

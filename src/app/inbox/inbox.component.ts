@@ -105,6 +105,7 @@ export class InboxComponent implements OnInit, AfterContentInit {
     this.serveUpService.updateServiceRequest(this.selectedServiceId, offer.id, {'action': status}).subscribe(result => {
         if(result.success){
           if(status === 'accept'){
+            this.tabs.current = 'accepted';
             this.router.navigate([`inbox/${this.selectedServiceId}/accepted/${result.offer.id}`]);
           }
           if(status === 'decline'){
