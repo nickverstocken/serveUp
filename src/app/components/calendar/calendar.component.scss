@@ -170,6 +170,7 @@ ng-fullcalendar {
 /deep/ .owl-dt-container {
   font-size: 16px !important;
   width: 100%;
+  z-index:3 !important;
 }
 
 /deep/ .owl-dt-inline-container .owl-dt-calendar, .owl-dt-popup-container .owl-dt-calendar {

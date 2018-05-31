@@ -80,6 +80,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { EventCalendarComponent } from './event-calendar/event-calendar.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { EventPopupComponent } from './components/calendar/event-popup/event-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +133,8 @@ import { FullCalendarModule } from 'ng-fullcalendar';
     ServiceFaqComponent,
     AddServiceModalComponent,
     CalendarComponent,
-    EventCalendarComponent
+    EventCalendarComponent,
+    EventPopupComponent
   ],
   imports: [
     BrowserModule,

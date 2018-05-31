@@ -9,12 +9,14 @@ import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import {ServupService} from '../../services/servup.service';
+import {fadeInOut} from '../../animations';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  animations:  [fadeInOut]
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
   date = new Date();
@@ -28,13 +30,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   user;
   queryPararms = {date: '', view: ''};
   openLeft = false;
-  checked = [];
+  showEvent = false;
+  selectedApp;
+  selectedAppPersonal;
+  eventShowSub;
   @ViewChild('ucCalendar') ucCalendar: FullcalendarComp;
 
   constructor(private router: Router, private datePipe: DatePipe, private route: ActivatedRoute, private authService: AuthService, private serveUpService: ServupService) {
   }
 
   ngOnInit() {
+
     this.calendarOptions = {
       editable: false,
       eventLimit: true,
@@ -60,15 +66,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.height = document.querySelector('#calendar').clientHeight + 20;
     this.calendarOptions.height = this.height;
 
-  }
-  eventRender(eventObj){
-    let displayEvent = false;
-    eventObj.event.source.className.forEach((className) => {
-        if(this.checked.indexOf(className) !== -1){
-          displayEvent = true;
-        }
-    });
-    return displayEvent;
   }
 
   ngAfterViewInit() {
@@ -101,14 +98,24 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       this.events = data.appointments;
       Object.keys(this.events).forEach((calendar, index) => {
         this.ucCalendar.fullCalendar('removeEventSource', calendar);
-        this.ucCalendar.fullCalendar('addEventSource', {events: this.events[calendar], id: calendar, className: 'cat' + calendar});
+        this.ucCalendar.fullCalendar('addEventSource', {events: this.events[calendar], id: calendar, className: calendar});
       });
     });
   }
   eventClick(event) {
-    console.log(event);
-  }
+    this.selectedAppPersonal = event.event.source.id === 'cat0';
+    console.log(this.selectedAppPersonal);
+    this.eventShowSub = this.serveUpService.getAppointment(event.event.id).subscribe(result => {
+      this.selectedApp = result.appointment;
+    });
+    this.showEvent = true;
 
+  }
+  closeEventPopup(){
+    this.showEvent = false;
+    this.selectedApp = undefined;
+    this.eventShowSub.unsubscribe();
+  }
   updateEvent(event) {
 
   }
@@ -144,7 +151,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   toggleEvents(event, id) {
     if (event.checked) {
-      this.ucCalendar.fullCalendar('addEventSource', {events: this.events[id], id: id, className: 'cat' + id});
+      this.ucCalendar.fullCalendar('addEventSource', {events: this.events[id], id: id, className:id});
     } else {
       this.ucCalendar.fullCalendar('removeEventSource', id);
     }

@@ -1,0 +1,77 @@
+<div *ngIf="appointment">
+<a (click)="close()" class="overlay" [class.opened]="show"></a>
+<div [class.opened]="show" class="modalContainer">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="close()" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2><span>Afspraak</span></h2>
+    </div>
+    <div class="modalContent">
+
+      <div class="contentContainer">
+        <div class="card">
+          <div class="appBannerImage">
+            <a href="{{appointment.location.url}}" target="_blank" rel="noopener nofollow">
+            <img [src]="appointment.location.image" [alt]="appointment.title + 'image'" />
+            </a>
+          </div>
+          <h3>{{appointment.title}}</h3>
+          <div class="appointmentFields">
+          <div class="withIconcardText">
+            <div class="label">
+              <span class="icon far fa-clock"></span> <span>{{ appointment.date | date:'EEEE d MMM , y'}} om {{ appointment.time.split(':')[0] + ':' + appointment.time.split(':')[1]}}</span>
+            </div>
+          </div>
+          <div class="withIconcardText userInfo">
+            <div class="label">
+              <span class="icon fa fa-user"></span>
+              <div class="infouser">
+                <div>Met</div>
+                <div class="user">
+                  <div class="picture">
+                    <a *ngIf="personal">
+                      <span class="userImageThumb" *ngIf="appointment.offer.service.user.picture_thumb"> <img src="{{appointment.offer.service.user.picture_thumb}}" /></span>
+                      <span class="userImageThumb" *ngIf="!appointment.offer.service.user.picture_thumb"><div
+                        class="defaultProfile">{{appointment.offer.service.user.fname.charAt(0)}}</div></span>
+                    </a>
+                    <a *ngIf="!personal">
+                      <span class="userImageThumb" *ngIf="appointment.offer.request.user.picture_thumb"> <img src="{{appointment.offer.request.user.picture_thumb}}" /></span>
+                      <span class="userImageThumb" *ngIf="!appointment.offer.request.user.picture_thumb"><div
+                        class="defaultProfile">{{appointment.offer.request.user.fname.charAt(0)}}</div></span>
+                    </a>
+                  </div>
+                  <div class="info">
+                <span *ngIf="personal">
+                  {{appointment.offer.service.user.fname}} {{appointment.offer.service.user.name}}
+                </span>
+                    <span *ngIf="!personal">
+                  {{appointment.offer.request.user.fname}} {{appointment.offer.request.user.name}}
+                </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="withIconcardText">
+              <div class="label">
+                <span class="icon fas fa-map-marker-alt"></span> <span><a href="{{appointment.location.url}}" target="_blank" rel="noopener nofollow">{{ appointment.location.address}}</a></span>
+              </div>
+            </div>
+            <div class="withIconcardText">
+              <div class="label">
+                <span class="icon far fa-building"></span> <span>{{ appointment.offer.service.name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="editactions">
+            <button  class="button red">Annuleer afspraak</button>
+            <button class="button" *ngIf="appointment.creator_id === user.id">Wijzig</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

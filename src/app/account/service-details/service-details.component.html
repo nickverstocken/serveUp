@@ -82,11 +82,12 @@
           <div>
             <button class="button btnstyle2 fullWidth" (click)="addSocialNetwork()">Voeg sociaal netwerk toe</button>
           </div>
+            <div class="editactions">
+              <button (click)="closeSocialNetworksPop()" class="button">Annuleer</button>
+              <button (click)="saveSocial()" [class.disabled]="!formservice.controls.social_networks.valid"  class="button">OK</button>
+            </div>
           </div>
-          <div class="editactions">
-            <button (click)="closeSocialNetworksPop()" class="button">Annuleer</button>
-            <button (click)="saveSocial()" [class.disabled]="!formservice.controls.social_networks.valid"  class="button">OK</button>
-          </div>
+
         </div>
       </div>
     </div>

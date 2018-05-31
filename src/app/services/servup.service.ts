@@ -137,4 +137,7 @@ export class ServupService {
   getAppointments(start, end){
     return this.api.get(`/appointments?start=${start}&end=${end}`);
   }
+  getAppointment(id){
+    return this.api.get(`/appointment/${id}`);
+  }
 }

@@ -1,0 +1,51 @@
+@import "../../../../color";
+.appBannerImage{
+  margin: -15px;
+  margin-bottom: 15px;
+  position: relative;
+  button{
+    position: absolute;
+    bottom:5px;
+    font-size: 12px;
+  }
+  img{
+    width:100%;
+    height:150px;
+    object-fit: cover;
+
+    display: block;
+  }
+}
+.user{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  .picture{
+    a{
+      width:25px;
+      height:25px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: $orange;
+      color:#fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      text-decoration: none;
+      margin-right: 8px;
+      img{
+        width:100%;
+        height:100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+.editactions{
+  margin: -15px;
+  margin-top: 25px;
+  .red{
+    border:0 !important;
+  }
+}
