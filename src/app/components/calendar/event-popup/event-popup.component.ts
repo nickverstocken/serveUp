@@ -10,13 +10,16 @@ export class EventPopupComponent implements OnInit {
   @Input() appointment;
   @Input() personal;
   @Input() user;
+  @Output() cancelAppointment: EventEmitter<any> = new EventEmitter<any>();
   @Output() closeEventPop: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {
-    console.log(this.appointment);
   }
   close(){
     this.closeEventPop.emit();
+  }
+  onCancelAppointment(){
+    this.cancelAppointment.emit(this.appointment);
   }
 }

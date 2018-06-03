@@ -28,7 +28,6 @@
             <div class="label">
               <span class="icon fa fa-user"></span>
               <div class="infouser">
-                <div>Met</div>
                 <div class="user">
                   <div class="picture">
                     <a *ngIf="personal">
@@ -66,8 +65,7 @@
             </div>
           </div>
           <div class="editactions">
-            <button  class="button red">Annuleer afspraak</button>
-            <button class="button" *ngIf="appointment.creator_id === user.id">Wijzig</button>
+            <button (click)="onCancelAppointment()"  class="button red">Annuleer afspraak</button>
           </div>
         </div>
       </div>

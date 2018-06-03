@@ -1,0 +1,37 @@
+<div *ngIf="show" class="popover">
+  <h3>Upload bijlage(n)</h3>
+  <div class="multipleUploadWrap">
+    <div *ngFor="let file of files; let i = index" class="imagewrap">
+      {{file.mime_type}}
+      <div (click)="clickImage(files)" [ngStyle]="options" class="{{edit ? 'innerwrap': ''}}">
+        <img
+          class="img"
+          [src]=file.filepath
+          [ngStyle]="options"
+          (load)="handleImageLoad()"
+          [class.loaded]="fileLoaded"/>
+      </div>
+    </div>
+    <label *ngIf="files.length <=0" class="uploader" ondragover="return false;"
+           [class.loaded]="loaded"
+           [ngStyle]="options"
+           (mouseenter)="mouseEnter()"
+           (mouseleave)="mouseLeave()"
+           (dragenter)="handleDragEnter()"
+           (dragleave)="handleDragLeave()"
+           (drop)="handleDrop($event)">
+
+      <span [class]="dragging ? 'icon fas fa-plus' : 'icon fas fa-image'"></span>
+
+      <input multiple id="fileInput" type="file" name="file" accept="*"
+             (change)="handleInputChange($event)">
+    </label>
+  </div>
+    <div class="editactions">
+      <button (click)="closeFileUpload.emit(true)" class="button">Annuleer</button><button (click)="onsendFiles()" class="button">OK</button>
+    </div>
+
+</div>
+<a (click)="closeFileUpload.emit(true)" class="overlay" [class.hidden]="!show" [class.opened]="show">
+
+</a>

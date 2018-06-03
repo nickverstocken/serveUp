@@ -95,7 +95,7 @@ export class ServupService {
   deleteRequest(id): Observable<any> {
     return this.api.delete(`/request/${id}/delete`);
   }
-  getServiceRequestList(serviceid, filter): Observable<any> {
+  getServiceRequestList(serviceid, filter?): Observable<any> {
     return this.api.get(`/service/${serviceid}/requests?filter=${filter}`);
   }
 
@@ -107,7 +107,15 @@ export class ServupService {
   getOffer(reqid, id): Observable<any> {
     return this.api.get(`/request/${reqid}/offer/${id}`);
   }
-
+  getAllOffers(): Observable<any> {
+    return this.api.get(`/offers`);
+  }
+  sendPriceOffer(id, offer): Observable<any> {
+    return this.api.post(`/offer/${id}/priceoffer`, offer);
+  }
+  actionPriceOffer(id, fields): Observable<any> {
+    return this.api.put(`/offer/${id}/actionpriceoffer`, fields);
+  }
   //notification
   getNotifications(): Observable<any> {
     return this.api.get(`/notifications`).retry(1);

@@ -67,7 +67,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           }
         } else {
-          this.router.navigate(['/home']);
+          this.authService.logout();
           return Observable.throw(error);
         }
       });

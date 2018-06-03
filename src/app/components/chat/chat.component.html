@@ -1,7 +1,7 @@
 <div class="chatwrap">
-  <div id="messages" class="messageWrap" #scrollMe [scrollTop]="scrollMe.scrollHeight" >
+  <div *ngIf="!loading" id="messages" class="messageWrap" #scrollMe [scrollTop]="scrollMe.scrollHeight" >
     <div *ngFor="let message of messages">
-      <div *ngIf="message.receiver_id=== user.id && message.type !== 'info'"  class="message">
+      <div *ngIf="message.receiver_id=== user.id && message.type !== 'info' && offerId == message.message_id"  class="message">
         <div class="userwrap">
           <div class="userPicture">
             <img *ngIf="message.sender.picture_thumb" src="{{message.sender.picture_thumb}}"/>
@@ -17,11 +17,12 @@
             <p [innerText]="message.message" *ngIf="message.type === 'request' || message.type === 'message'">
             </p>
           <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)"  (onApproveAppointment)="acceptAppointment($event)"  (onCancelAppointment)="cancelAppointment($event)" [creator]="false" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
+            <app-priceoffer-message (onCancelOwnPriceOffer)="cancelOwnPriceOffer($event)" (onApprovePriceOffer)="acceptPriceOffer($event)" (onCancelPriceOffer)="cancelPriceOffer($event)" [creator]="false" [message]="message" *ngIf="message.type === 'price'"></app-priceoffer-message>
           </div>
 
         </div>
       </div>
-    <div *ngIf="message.sender_id === user.id && message.type !== 'info'" class="message">
+    <div *ngIf="message.sender_id === user.id && message.type !== 'info' && offerId == message.message_id" class="message">
       <div class="messageText send">
         <div class="timeAgo">
           <span *ngIf="!message.updated_at" class="status far fa-clock"></span>
@@ -31,6 +32,7 @@
           <p [innerText]="message.message" *ngIf="message.type === 'request' || message.type === 'message'">
           </p>
           <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)" (onApproveAppointment)="acceptAppointment($event)" (onCancelAppointment)="cancelAppointment($event)" [creator]="true" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
+          <app-priceoffer-message (onCancelOwnPriceOffer)="cancelOwnPriceOffer($event)" (onApprovePriceOffer)="acceptPriceOffer($event)" (onCancelPriceOffer)="cancelPriceOffer($event)"  [creator]="true" [message]="message" *ngIf="message.type === 'price'"></app-priceoffer-message>
         </div>
       </div>
       <div class="userwrap">
@@ -43,7 +45,7 @@
 
       </div>
     </div>
-      <div *ngIf="message.type === 'info'" class="infomessage">
+      <div *ngIf="message.type === 'info' && offerId == message.message_id" class="infomessage">
         <p>
           {{message.message}}
         </p>
@@ -56,17 +58,19 @@
       <emoji-mart [backgroundImageFn]="'((set, sheetSize) => `/assets/images/emoji/apple.png`)'" [showPreview]="false" [sheetSize]="32"  [i18n]="{ search: 'Zoek', categories: { search: 'Zoekresultaten', recent: 'Recent' } }" [style]="{ position: 'absolute', bottom: '5px', right: '5px', 'max-width': '320px' }" (emojiClick)="addEmoji($event)"></emoji-mart>
     </div>-->
     <div class="textInput">
-      <textarea id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
+      <textarea [disabled]="disabled" [class.disabled]="disabled" id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
       <a class="emoji" (click)="showEmojis()"><span class="far fa-smile"></span></a>
       <button class="button" id="sendMessage"><span class="far fa-paper-plane"></span></button>
     </div>
     <div class="actionbubbles">
       <app-appointmentpicker (sendAppointment)="sendAppointMent($event)" (closeAppointment)="showAppointmentPopup = false" [show]="showAppointmentPopup" ></app-appointmentpicker>
+      <app-priceoffer [show]="showPriceOfferPopup" (sendPriceOffer)="sendPriceOffer($event)" (closePriceOffer)="showPriceOfferPopup = false"></app-priceoffer>
+      <app-file-uploader [show]="showFileUploaderPopup" (closeFileUpload)="showFileUploaderPopup = false"></app-file-uploader>
     </div>
    <div class="actionbar">
-      <button (click)="showAppointmentPopup = true" class="btnappointment button btnstyle2 btnWithIcon"><span class="fa fa-calendar-alt"></span>Afspraak</button>
-     <button class="button btnstyle2 btnWithIcon"><span class="fa fa-euro-sign"></span>Prijsvoorstel</button>
-     <button class="button btnstyle2 btnWithIcon"><span class="fa fa-paperclip"></span>Bijlage</button>
+      <button [disabled]="disabled" [class.disabled]="disabled"  (click)="showPopover('Appointment')" class="btnappointment button btnstyle2 btnWithIcon"><span class="fa fa-calendar-alt"></span>Afspraak</button>
+     <button [disabled]="disabled" [class.disabled]="disabled"  (click)="showPopover('PriceOffer')" class="button btnstyle2 btnWithIcon"><span class="fa fa-euro-sign"></span>Prijsvoorstel</button>
+     <button [disabled]="disabled" [class.disabled]="disabled" (click)="showPopover('FileUploader')"  class="button btnstyle2 btnWithIcon"><span class="fa fa-paperclip"></span>Bijlage</button>
    </div>
 
 

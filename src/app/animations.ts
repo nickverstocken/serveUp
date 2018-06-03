@@ -1,7 +1,7 @@
 import {animation, style, animate, trigger,  transition, useAnimation} from '@angular/animations';
 
 export const fadeIn = animation([
-  style({opactiy: 0}),
+  style({opacity: 0}),
   animate('500ms', style({opacity: 1}))
 ]);
 

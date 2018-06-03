@@ -18,8 +18,7 @@
     <ul *ngIf="!mobile">
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
-      <li><a routerLink="/">Berichten</a></li>
-      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/{{selectedService}}/requests">Inbox</a></li>
+      <li><a routerLink="/inbox">Inbox</a></li>
       <li><a routerLink="calendar">Mijn afspraken</a></li>
       <li (click)="toggleNoti()" id="notification"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
       <li (click)="toggleSubNav()" id="user"><a>
@@ -47,8 +46,7 @@
       <li><a routerLink="profile"><span class="lnr lnr-user"></span>Profiel</a></li>
       <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
       <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
-      <li><a routerLink="/"><span class="lnr lnr-bubble"></span>Berichten</a></li>
-      <li *ngIf="user.role === 'service'"><a routerLink="/inbox/{{selectedService}}/requests"><span class="lnr lnr-inbox"></span>Inbox</a></li>
+      <li ><a routerLink="/inbox"><span class="lnr lnr-inbox"></span>Inbox</a></li>
       <li><a routerLink="calendar"><span class="lnr lnr-calendar-full"></span>Mijn afspraken</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
@@ -83,14 +81,14 @@
   </div>
   <div class="subnav {{showNoti}}">
 
-    <div *ngIf="unreadnoti > 0 ">
+    <div *ngIf="unreadnoti > 0">
       <div (click)="markasReadAndRedirect(noti)" class="notificationText" *ngFor="let noti of notifications">
         <div class="user">
           <span class="userImageThumb" *ngIf="noti.data.image"><img src="{{noti.data.image}}"/></span>
           <span class="userImageThumb" *ngIf="!noti.data.image"><div
             class="defaultProfile">{{noti.data.user.charAt(0)}}</div></span>
         </div>
-        <div class="notiText">
+        <div class="notiText" [class.unread]="!noti.read_at">
           <h4>{{noti.data.service}}</h4>
           <div class="notiDescription">
             <div *ngIf="noti.type === NOTIFICATION_TYPES.request">
@@ -103,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div class="notificationText" *ngIf="unreadnoti <= 0">
+    <div class="notificationText"  *ngIf="unreadnoti <= 0">
       <div class="notiText">
         <h4>Je hebt geen notificaties...</h4>
         <div class="notiDescription">

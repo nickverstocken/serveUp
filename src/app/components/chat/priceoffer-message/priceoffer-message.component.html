@@ -1,0 +1,35 @@
+<div class="dateMessageWrap" *ngIf="priceOffer">
+  <div class="datemessageBody">
+    <h2>Prijsvoorstel</h2>
+    <div class="priceWrap">
+      <div class="priceDetails">
+        <span class="valuta">€</span>
+        <span class="price">{{priceOffer.price}}</span>
+      </div>
+      <div class="rate">{{priceOffer.rate}}</div>
+    </div>
+
+  </div>
+  <div *ngIf="!priceOffer.cancelled && !priceOffer.approved">
+    <div *ngIf="!creator" class="editactions">
+      <div *ngIf="!priceOffer.approved">
+        <button (click)="cancelPriceoffer(message.id)" class="button">Afwijzen</button>
+        <button (click)="approvePriceoffer(message.id)" class="button">Goedkeuren</button>
+      </div>
+    </div>
+    <div *ngIf="creator" class="editactions">
+      <button (click)="cancelOwnPriceoffer(message.id)" class="button">Annuleer</button>
+    </div>
+  </div>
+  <div *ngIf="priceOffer.cancelled">
+    <div class="editactions">
+      <span class="red">GEANNULEERD</span>
+    </div>
+  </div>
+  <div *ngIf="priceOffer.approved">
+    <div class="editactions">
+      <span class="green">GEACCEPTEERD</span>
+    </div>
+  </div>
+</div>
+

@@ -7,7 +7,7 @@ ul{
     display: block;
     a{
       color:$textColor;
-      padding:25px 10px;
+      padding:15px 10px;
       display: flex;
       align-items: center;
       border-top: 2px solid #fff;
@@ -60,5 +60,10 @@ ul{
     margin-bottom: 5px;
     margin-top: 0px;
     font-size: 16px;
+  }
+  .status{
+    font-weight: 700;
+    font-size: 12px;
+    margin-top: 5px;
   }
 }

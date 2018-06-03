@@ -101,6 +101,7 @@
       display: block;
       color: $titleColor;
       &.text {
+        text-align: right;
         margin-left: auto;
         color: $textColor;
       }

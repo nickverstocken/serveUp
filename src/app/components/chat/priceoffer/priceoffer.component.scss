@@ -1,0 +1,37 @@
+@import "../../../../color";
+.priceBig{
+  line-height: 1;
+  .price{
+    font-size: 40px !important;
+    font-weight: 200;
+    input.notvisible{
+      font-size: 40px !important;
+      font-weight: 200;
+      border:1px solid $borderColor !important;
+    }
+
+    .number{
+      display: inline-block;
+    }
+    .valuta{
+      font-size: 20px;
+      position: relative;
+      top:3px;
+      vertical-align: top;
+    }
+  }
+  .rate{
+    margin-top:5px;
+    input.notvisible{
+      color:#999;
+      border:1px solid $borderColor !important;
+    }
+  }
+}
+.editactions{
+  margin-bottom: -15px;
+}
+.overlay{
+  cursor:initial;
+  background: 0;
+}

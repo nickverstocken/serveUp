@@ -35,4 +35,4 @@
   </div>
   <a class="overlay" [class.opened]="openLeft" (click)="openLeft = false"></a>
 </div>
-<app-event-popup [@fadeInOut] *ngIf="showEvent" (closeEventPop)="closeEventPopup()" [personal]="selectedAppPersonal" [appointment]="selectedApp" [user]="user" [show]="showEvent"></app-event-popup>
+<app-event-popup *ngIf="showEvent" (cancelAppointment)="cancelAppointment($event)" (closeEventPop)="closeEventPopup()" [personal]="selectedAppPersonal" [appointment]="selectedApp" [user]="user" [show]="showEvent"></app-event-popup>

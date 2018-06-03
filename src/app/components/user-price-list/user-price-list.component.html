@@ -13,13 +13,24 @@
           <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
           <span class="reviewCount">7</span>
         </div>
+        <div class="status {{offer.status}}">
+         <span *ngIf="offer.status === 'awaiting'" class="orange">
+           Wachten op antwoord
+         </span>
+          <span *ngIf="offer.status === 'accepted'" class="green">
+           Geaccepteerd
+         </span>
+          <span *ngIf="offer.status === 'declined'" class="red">
+           Geweigerd
+         </span>
+        </div>
       </div>
       <div class="userPrice">
         <div class="price">
-          <span class="valuta">€</span><span class="number">{{offer.service.price_estimate}}</span>
+          <span class="valuta">€</span><span class="number">{{offer.price_offer ? offer.price_offer : offer.service.price_estimate}}</span>
         </div>
         <div class="rate">
-          <span>{{offer.service.rate}}</span>
+          <span>{{offer.rate ? offer.rate : offer.service.rate}}</span>
         </div>
       </div>
     </a>

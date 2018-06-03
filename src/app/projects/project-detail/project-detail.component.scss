@@ -10,6 +10,19 @@ h2,h3{
   margin: 0 auto;
   margin-bottom: -50px;
 }
+.backbtn{
+  display: none;
+  width:60px;
+  height:60px;
+  position: absolute;
+  top:0px;
+  left:0px;
+  color:$textColor;
+  background: #fff;
+  border:0;
+  font-size: 16px;
+  z-index: 8;
+}
 .leftSubNav, .rightAsside{
   position: fixed;
   width:25vw;
@@ -101,7 +114,7 @@ h2{
     z-index:2;
   }
 }
-#overview{
+#overview, .messagesFloatOpen{
   z-index:4;
   position: fixed;
   background: $backgroundColor;
@@ -110,22 +123,47 @@ h2{
   top:60px;
   left:0;
   display: none;
+  width:40px;
+  height:40px;
   margin-left: -1px;
   border-radius: 0;
-  padding:15px;
   transition: all 0.2s linear;
   span{
     transition:transform 0.3s ease ;
   }
   &.open{
     left:320px;
-    margin-left: -55px;
+    margin-left: -40px;
     span{
       transform: rotate(-540deg);
     }
   }
   &:hover{
     box-shadow: none;
+  }
+}
+.messagesFloatOpen{
+  right:5px;
+  top:65px;
+  left:auto;
+  width:50px;
+  height:50px;
+  font-size: 20px;
+  border-radius: 50%;
+  background: $blue;
+  z-index:2;
+  @include boxShadowMedium;
+  color:#fff;
+  &:hover{
+    @include boxShadowMedium;
+    background: darken($blue, 5%);
+  }
+  &.open{
+    left:auto;
+    margin-left: 0;
+    span{
+      transform: none;
+    }
   }
 }
 @media all and (max-width: 1200px) {
@@ -160,16 +198,19 @@ h2{
     @include boxShadowMedium;
   }
   .rightAsside{
-    width: 35%;
-    left:65vw;
+    width: 40%;
+    left:60vw;
   }
   .middleFixed{
-    width: 65%;
+    width: 60%;
     left:0;
     margin:0;
   }
 }
-@media all and (max-width: 960px) {
+@media all and (max-width: 800px) {
+  .messagesFloatOpen{
+    display: inline-block;
+  }
   .fixedWrap{
     position: relative;
     width:100%;
@@ -207,7 +248,7 @@ h2{
         margin-right: 10%;
       }
       .priceBig{
-        margin-top: 10px;
+        margin-top: -5px;
         position: relative;
         .price{
           display: inline-block;
@@ -247,7 +288,30 @@ h2{
       }
     }
     .chatBlock{
-      display: none;
+      position: fixed;
+      top:60px;
+      left:0;
+      right:0;
+      bottom:0;
+      background: #fff;
+      z-index:3;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      &.opened{
+        display: flex;
+        transform: translateX(0%);
+        h2{
+          position: relative;
+          text-align: center;
+        }
+      }
     }
+  }
+  .backbtn{
+    display: inline-block;
+  }
+  .middleFixed.chatterOpen{
+    z-index: -1;
+    height: calc(100vh - 60px);
   }
 }

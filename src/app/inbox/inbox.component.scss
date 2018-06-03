@@ -1,6 +1,5 @@
 @import '../../color';
 .inboxWrap{
-  padding-top: 10px;
   margin-bottom: -50px;
   height:calc(100vh - 60px);
   overflow: hidden;
@@ -90,7 +89,7 @@ ul{
   .namedate{
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     .created{
       font-size: 12px;
       margin-left: auto;
@@ -115,10 +114,19 @@ ul{
 }
 .requestNavigation{
   flex: 0 0 25%;
-  min-width: 240px;
+  min-width: 320px;
   max-width: 420px;
   height:100%;
+  margin-left:0;
+  position: relative;
   border-left:1px solid $borderColor;
+  transition:all 0.3s ease;
+  &.open{
+
+  }
+  &.collapse{
+    margin-left: -320px;
+  }
 }
 .chatter{
   flex:1 auto;
@@ -141,5 +149,59 @@ ul{
   }
   h2{
     color:darken($borderColor, 7%);
+  }
+}
+.offerStatus{
+  font-weight: 700;
+  font-size: 12px;
+  margin-top:0px;
+  display: flex;
+  .price_est{
+    margin-left: auto;
+  }
+}
+#overlayProjectDetails{
+  &.opened{
+    z-index:2;
+  }
+}
+#overview{
+  position: absolute;
+  background: #fff;
+  color:$textColor;
+  border:0;
+  top:0px;
+  left:0px;
+  z-index:8;
+  margin-left: -1px;
+  border-radius: 0;
+  width:60px;
+  height:60px;
+  transition: all 0.2s linear;
+  span{
+    transition:transform 0.3s ease ;
+  }
+  &.open{
+    left:320px;
+    margin-left: -55px;
+    span{
+      transform: rotate(-540deg);
+    }
+  }
+  &:hover{
+    box-shadow: none;
+  }
+}
+@media all and (max-width:680px) {
+  .chatter{
+
+    min-width: 100%;
+  }
+  .requestNavigation{
+    background: #fff;
+    min-width: 100%;
+    &.collapse{
+      margin-left: -100%;
+    }
   }
 }

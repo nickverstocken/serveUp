@@ -81,6 +81,8 @@ import { EventCalendarComponent } from './event-calendar/event-calendar.componen
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { EventPopupComponent } from './components/calendar/event-popup/event-popup.component';
+import { PriceofferMessageComponent } from './components/chat/priceoffer-message/priceoffer-message.component';
+import { FileUploaderComponent } from './components/chat/file-uploader/file-uploader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +136,9 @@ import { EventPopupComponent } from './components/calendar/event-popup/event-pop
     AddServiceModalComponent,
     CalendarComponent,
     EventCalendarComponent,
-    EventPopupComponent
+    EventPopupComponent,
+    PriceofferMessageComponent,
+    FileUploaderComponent
   ],
   imports: [
     BrowserModule,

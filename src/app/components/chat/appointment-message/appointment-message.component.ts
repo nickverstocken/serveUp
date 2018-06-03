@@ -18,8 +18,10 @@ export class AppointmentMessageComponent implements OnInit {
 
   ngOnInit() {
     this.appointment = JSON.parse(this.message.message);
-    if(!this.appointment.location.address){
-      this.appointment.location = JSON.parse(this.appointment.location);
+    if(this.appointment.location){
+      if(!this.appointment.location.address){
+        this.appointment.location = JSON.parse(this.appointment.location);
+      }
     }
   }
   cancelAppointment(id){

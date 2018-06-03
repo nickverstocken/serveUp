@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, AfterViewInit, OnInit} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, OnInit} from '@angular/core';
 import {TabComponent} from './tab/tab.component';
 
 @Component({
@@ -12,7 +12,6 @@ export class TabsComponent implements AfterContentInit, OnInit {
   currentTab: TabComponent;
   @Input() current;
   constructor() { }
-
   ngAfterContentInit() {
     console.log(this.current);
     if(this.current){
@@ -24,8 +23,10 @@ export class TabsComponent implements AfterContentInit, OnInit {
       this.currentTab = this.tabList.first;
     }
   }
+  setActiveTab(name){
+    console.log(name);
+  }
   ngOnInit(){
-    console.log(this.current);
   }
   onTabClick(tab: TabComponent) {
     this.currentTab = tab;

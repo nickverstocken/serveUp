@@ -1,0 +1,23 @@
+h2{
+  margin: 0;
+  border-bottom: 1px solid #f4f4f4;
+  font-size: 18px;
+  font-weight: 400;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.priceDetails{
+  font-size: 40px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  .valuta{
+    font-size: 25px;
+    position: relative;
+    top: 3px;
+    vertical-align: top;
+    margin-right: -10px;
+  }
+}
+.priceWrap{
+  text-align: center;
+}

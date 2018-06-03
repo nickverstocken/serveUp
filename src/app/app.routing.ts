@@ -21,8 +21,6 @@ const appRoutes: Routes = [
   { path: 'profile', component: AccountComponent},
   {path: 'account', component: UserProfileComponent},
   { path: 'inbox', component: InboxComponent},
-  { path: 'inbox/:serviceid/:filter', component: InboxComponent},
-  { path: 'inbox/:serviceid/:filter/:id', component: InboxComponent},
   { path: 'calendar', component: EventCalendarComponent },
   { path: '**', redirectTo: ''}
 ];

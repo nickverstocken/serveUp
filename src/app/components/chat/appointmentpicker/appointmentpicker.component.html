@@ -2,24 +2,24 @@
   <h3>Maak een afspraak</h3>
   <form [formGroup]="formAppointment">
     <div class="form-group withbutton">
-      <input name="title" formControlName="title" type="text" placeholder="Titel" />
+      <input [class.has-error]="!formAppointment.controls['title'].valid && formAppointment.controls['title'].touched" name="title" formControlName="title" type="text" placeholder="Titel" />
     </div>
     <div class="dateTimeWrap">
       <div class="datepickerwrap form-group withbutton">
-        <input formControlName="date" #datePickerInput [matDatepicker]="picker" matInput [min]="today" autocomplete="off"  placeholder="Datum" type="text" (focus)="picker.open()" (click)="picker.open()">
+        <input [class.has-error]="!formAppointment.controls['date'].valid && formAppointment.controls['date'].touched" formControlName="date" #datePickerInput [matDatepicker]="picker" matInput [min]="today" autocomplete="off"  placeholder="Datum" type="text" (focus)="picker.open()" (click)="picker.open()">
         <button (click)="picker.open()" class="button"><span class="icon far fa-calendar-alt"></span></button>
         <mat-datepicker [touchUi]="mobile" #picker></mat-datepicker>
       </div>
       <div class="timeWrap form-group withbutton">
-        <input formControlName="time" class="timepicker" type="time" name="appointmentTime"/>
+        <input [class.has-error]="!formAppointment.controls['time'].valid && formAppointment.controls['time'].touched" formControlName="time" class="timepicker" type="time" name="appointmentTime"/>
         <button class="button"><span class="icon far fa-clock"></span></button>
       </div>
     </div>
   <div class="placeChooser">
-    <app-mapsearch (placeSelected)="setPlace($event)"></app-mapsearch>
+    <app-mapsearch [class.has-error]="!formAppointment.controls['location'].valid && formAppointment.controls['location'].touched"  (placeSelected)="setPlace($event)"></app-mapsearch>
   </div>
   <div class="editactions">
-    <button (click)="closeAppointment.emit(true)" class="button">Annuleer</button><button (click)="onsendAppointment()" [class.disabled]="!formAppointment.valid" class="button">OK</button>
+    <button (click)="closeAppointment.emit(true)" class="button">Annuleer</button><button (click)="onsendAppointment()" [disabled]="!formAppointment.valid" [class.disabled]="!formAppointment.valid" class="button">OK</button>
   </div>
   </form>
 </div>

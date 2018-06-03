@@ -7,7 +7,7 @@
           <div class="price">
             <span class="valuta"></span><span class="number">
             <span *ngIf="!editting"><span class="valuta">€</span>{{formservice.controls['price_estimate'].value}}</span>
-            <input *ngIf="editting" [class.has-error]="!formservice.controls['price_estimate'].valid && formservice.controls['price_estimate'].touched"
+            <input numbermask *ngIf="editting" [class.has-error]="!formservice.controls['price_estimate'].valid && formservice.controls['price_estimate'].touched"
                    formControlName="price_estimate"  class="editable notvisible" [class.editting]="editting" placeholder="Prijs" [readonly]="!editting" >
           </span>
           </div>

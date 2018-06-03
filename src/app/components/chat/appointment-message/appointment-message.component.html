@@ -9,12 +9,12 @@
         <div class="date">{{appointment.date | date:'EE d MMMM y'}} om {{appointment.time}}</div>
       </div>
     </div>
-    <div class="locationimage">
+    <div class="locationimage" *ngIf="appointment.location">
       <div class="locationheader">
         <div class="iconDate">
           <span class="fa fa-map-marker-alt"></span>
         </div>
-        <h3>{{appointment.location.address}}</h3>
+        <h3 >{{appointment.location.address}}</h3>
       </div>
       <a href="{{appointment.location.url}}" target="_blank" rel="noopener">
         <img src="{{appointment.location.image}}" alt="{{appointment.location.address}}" />

@@ -1,3 +1,27 @@
-<p>
-  priceoffer works!
-</p>
+<div *ngIf="show" class="popover">
+  <h3>Doe een prijsvoorstel</h3>
+  <form [formGroup]="formPriceOffer">
+    <div class="priceblock">
+      <div class="priceBig">
+        <div class="price">
+          <span class="valuta"></span><span class="number">
+            <input numbermask [class.has-error]="!formPriceOffer.controls['price'].valid && formPriceOffer.controls['price'].touched"
+                   formControlName="price"  class="editable notvisible" placeholder="Prijs" >
+          </span>
+        </div>
+        <div class="rate">
+            <span>
+              <input [class.editting]="editting"  [class.has-error]="!formPriceOffer.controls['rate'].valid && formPriceOffer.controls['rate'].touched"
+                     formControlName="rate"  class="editable notvisible" placeholder="Tarief">
+            </span>
+        </div>
+      </div>
+    </div>
+    <div class="editactions">
+      <button (click)="closePriceOffer.emit(true)" class="button">Annuleer</button><button (click)="onsendPriceOffer()" [disabled]="!formPriceOffer.valid" [class.disabled]="!formPriceOffer.valid" class="button">OK</button>
+    </div>
+  </form>
+</div>
+<a (click)="closePriceOffer.emit(true)" class="overlay" [class.hidden]="!show" [class.opened]="show">
+
+</a>

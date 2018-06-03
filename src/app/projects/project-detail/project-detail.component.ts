@@ -20,6 +20,9 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   currentService: Service;
   messages;
   pricelistopened = false;
+  chatterOpen = false;
+  loading = true;
+  currentOffer;
   constructor(private router: Router, private route: ActivatedRoute, private serveUpService: ServupService, private auth: AuthService) {
   }
 
@@ -73,6 +76,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   getSelectedOffer(id) {
     this.serveUpService.getOffer(this.currentRequest, id).subscribe(result => {
         this.currentService = result.offer.service;
+        this.currentOffer = result.offer;
         this.getOfferMessages(id);
       },
       error => {
@@ -84,6 +88,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   getOfferMessages(id){
     this.serveUpService.getMessages(id).subscribe(result2 => {
       this.messages = result2.messages;
+      this.loading = false;
     });
   }
   sendMessage(event){
@@ -94,6 +99,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     });
   }
   changeSelected(offerid) {
+    this.closeOverview();
     this.currentSelected = offerid;
     this.router.navigate(['project/' + this.currentRequest + '/offer/' + this.currentSelected]);
   }
@@ -104,7 +110,12 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     $('.leftSubNav').toggleClass('open');
     $('#overlayProjectDetails').toggleClass('opened');
   }
-
+  openChatter(){
+    this.chatterOpen = true;
+  }
+  closeChatter(){
+    this.chatterOpen = false;
+  }
   closeOverview() {
     this.pricelistopened = false;
     $('#overview').removeClass('open');
@@ -119,6 +130,13 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
       this.messages[index] = result.message;
     });
   }
+  sendPriceOffer(event){
+    const priceOffer = event.priceoffer;
+    const index = event.index;
+    this.serveUpService.sendPriceOffer(this.currentSelected, priceOffer).subscribe(result => {
+      this.messages[index] = result.message;
+    });
+  }
   actionAppointment(event){
     const appointment = JSON.parse(event.message.message);
     switch (event.action){
@@ -129,20 +147,60 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
           });
         break;
       case 'canceled':
-        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+        this.serveUpService.deleteAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.sender_id, 'message_id': event.message.id}).subscribe(
           result => {
             this.getOfferMessages(this.currentSelected);
           });
         break;
       case 'approved':
-        this.serveUpService.acceptAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.receiver_id, 'message_id': event.message.id}).subscribe(
+        this.serveUpService.acceptAppointment(appointment.id, {'offer_id': event.message.message_id, 'receiver_id': event.message.sender_id, 'message_id': event.message.id}).subscribe(
           result => {
             this.getOfferMessages(this.currentSelected);
           });
         break;
     }
   }
+  actionPriceOffer(event){
+    const priceOffer = JSON.parse(event.message.message);
+    switch (event.action){
+      case 'cancelOwn':
+        console.log('cancelOwnRequest');
+        this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.receiver_id, 'message_id': event.message.id, 'action': 'geannuleerd'}).subscribe(
+          result => {
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+      case 'canceled':
+        console.log('cancelRequest');
+        this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.sender_id, 'message_id': event.message.id, 'action': 'geweigerd'}).subscribe(
+          result => {
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+      case 'approved':
+
+        this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.sender_id, 'message_id': event.message.id, 'action': 'geaccepteerd', 'price' : priceOffer.price, 'rate' : priceOffer.rate}).subscribe(
+          result => {
+            const index = this.offerlist.indexOf(this.currentOffer);
+            this.offerlist[index].price_offer = priceOffer.price;
+            this.offerlist[index].rate = priceOffer.rate;
+            this.getOfferMessages(this.currentSelected);
+          });
+        break;
+    }
+  }
   reloadMessages(message){
+    console.log(message);
+    if(message.type === 'price'){
+      const priceOffer = JSON.parse(message.message);
+      if(priceOffer.approved){
+        const index = this.offerlist.indexOf(this.offerlist.filter(o => o.id === this.currentOffer.id)[0]);
+        console.log(this.offerlist);
+        this.offerlist[index].price_offer = priceOffer.price;
+        this.offerlist[index].rate = priceOffer.rate;
+      }
+
+    }
     this.getOfferMessages(this.currentSelected);
   }
 }

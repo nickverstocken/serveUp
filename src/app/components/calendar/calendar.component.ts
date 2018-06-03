@@ -3,11 +3,8 @@ import {CalendarComponent as FullcalendarComp} from 'ng-fullcalendar';
 import {EventObject, Options} from 'fullcalendar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
-import {take} from 'rxjs/operators/take';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {AuthService} from '../../services/auth.service';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
 import {ServupService} from '../../services/servup.service';
 import {fadeInOut} from '../../animations';
 
@@ -155,5 +152,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     } else {
       this.ucCalendar.fullCalendar('removeEventSource', id);
     }
+  }
+  cancelAppointment(appointment){
+    console.log(this.ucCalendar.fullCalendar('clientEvents', appointment.id));
+    let receiver;
+    if(!this.selectedAppPersonal){
+        receiver = appointment.offer.request.user.id;
+    }
+    this.serveUpService.deleteAppointment(appointment.id, {'offer_id': appointment.offer.id, 'receiver_id': receiver, 'message_id': appointment.message_id}).subscribe(
+      result => {
+        this.ucCalendar.fullCalendar('removeEvents', appointment.id);
+        this.events = this.events.filter( item => item.id !== appointment.id);
+      });
   }
 }
