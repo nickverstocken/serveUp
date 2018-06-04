@@ -116,6 +116,9 @@ export class ServupService {
   actionPriceOffer(id, fields): Observable<any> {
     return this.api.put(`/offer/${id}/actionpriceoffer`, fields);
   }
+  saveAttachements(id, files): Observable<any> {
+    return this.api.post(`/offer/${id}/attachements`, files);
+  }
   //notification
   getNotifications(): Observable<any> {
     return this.api.get(`/notifications`).retry(1);

@@ -137,6 +137,12 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
       this.messages[index] = result.message;
     });
   }
+  sendFiles(event){
+    const index = event.index;
+    this.serveUpService.saveAttachements(this.currentSelected, event.files).subscribe(result => {
+      this.messages.push(result.message);
+    });
+  }
   actionAppointment(event){
     const appointment = JSON.parse(event.message.message);
     switch (event.action){

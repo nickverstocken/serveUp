@@ -83,6 +83,7 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { EventPopupComponent } from './components/calendar/event-popup/event-popup.component';
 import { PriceofferMessageComponent } from './components/chat/priceoffer-message/priceoffer-message.component';
 import { FileUploaderComponent } from './components/chat/file-uploader/file-uploader.component';
+import { AttachementMessageComponent } from './components/chat/attachement-message/attachement-message.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,7 +139,8 @@ import { FileUploaderComponent } from './components/chat/file-uploader/file-uplo
     EventCalendarComponent,
     EventPopupComponent,
     PriceofferMessageComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
+    AttachementMessageComponent
   ],
   imports: [
     BrowserModule,

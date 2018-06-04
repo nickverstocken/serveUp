@@ -29,6 +29,7 @@ export class ChatComponent implements OnInit {
   @Output() priceOfferAction: EventEmitter<any> = new EventEmitter<any>();
   @Output() messageEditted: EventEmitter<any> = new EventEmitter<any>();
   @Output() messageReceived: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sendFiles: EventEmitter<any> = new EventEmitter<any>();
   user: User;
   chatmessage: Chatmessage;
   textArea;
@@ -176,5 +177,14 @@ export class ChatComponent implements OnInit {
     this.showAppointmentPopup = false;
     this.showPriceOfferPopup = false;
     this['show' + type + 'Popup'] = true;
+  }
+  onSendFiles(files){
+    const frmData = new FormData();
+    for(const file of files){
+      frmData.append('files[]', file.fileObject);
+    }
+    this.sendFiles.emit({'files' : frmData, 'index': this.messages.indexOf(this.chatmessage) });
+    this.showFileUploaderPopup = false;
+    this.clearChatMessage();
   }
 }

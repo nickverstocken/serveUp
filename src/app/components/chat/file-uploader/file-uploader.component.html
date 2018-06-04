@@ -1,18 +1,21 @@
 <div *ngIf="show" class="popover">
   <h3>Upload bijlage(n)</h3>
   <div class="multipleUploadWrap">
-    <div *ngFor="let file of files; let i = index" class="imagewrap">
-      {{file.mime_type}}
-      <div (click)="clickImage(files)" [ngStyle]="options" class="{{edit ? 'innerwrap': ''}}">
-        <img
+    <div *ngFor="let file of files; let i = index" class="imagewrap" [class.other]="!file.mime_type.startsWith('image/')">
+        <img (click)="clickImage(file)" *ngIf="file.mime_type.startsWith('image/')"
           class="img"
           [src]=file.filepath
           [ngStyle]="options"
-          (load)="handleImageLoad()"
+          (load)="handleFilesLoad()"
           [class.loaded]="fileLoaded"/>
-      </div>
+        <div (click)="clickOther(file)" *ngIf="!file.mime_type.startsWith('image/')" class="otherFiles">
+
+          <span class="fileicon far fa-file-alt"></span>
+          <span class="filetype"><label>{{file.mime_type.split('/')[1]}}</label></span>
+          <span class="fileName">{{file.name}}</span>
+        </div>
     </div>
-    <label *ngIf="files.length <=0" class="uploader" ondragover="return false;"
+    <label class="uploader" ondragover="return false;"
            [class.loaded]="loaded"
            [ngStyle]="options"
            (mouseenter)="mouseEnter()"
@@ -21,14 +24,14 @@
            (dragleave)="handleDragLeave()"
            (drop)="handleDrop($event)">
 
-      <span [class]="dragging ? 'icon fas fa-plus' : 'icon fas fa-image'"></span>
+      <span [class]="dragging ? 'icon fas fa-plus' : 'icon fas fa-paperclip'"></span>
 
       <input multiple id="fileInput" type="file" name="file" accept="*"
              (change)="handleInputChange($event)">
     </label>
   </div>
     <div class="editactions">
-      <button (click)="closeFileUpload.emit(true)" class="button">Annuleer</button><button (click)="onsendFiles()" class="button">OK</button>
+      <button (click)="closeFileUpload.emit(true)" class="button">Annuleer</button><button [class.disabled]="files.length <= 0" [disabled]="" (click)="onsendFiles()" class="button">OK</button>
     </div>
 
 </div>

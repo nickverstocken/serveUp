@@ -1,0 +1,18 @@
+<div class="dateMessageWrap" *ngIf="media">
+  <div class="datemessageBody">
+    <h2>Bijlage{{media.length === 1 ?  '' : 'n'}}</h2>
+    <div class="imagesWrap">
+      <div *ngFor="let file of media; let i = index" class="imagewrap" [class.single]="media.length === 1" [class.double]="media.length === 2"  [class.other]="!file.mime_type.startsWith('image/')">
+        <img (click)="clickImage(file)" *ngIf="file.mime_type.startsWith('image/')"
+             class="img"
+             [src]="file.path" />
+        <div (click)="clickOther(file)" *ngIf="!file.mime_type.startsWith('image/')" class="otherFiles">
+          <span class="fileicon far fa-file-alt"></span>
+          <span class="filetype"><label>{{file.mime_type.split('/')[1]}}</label></span>
+          <span class="fileName">{{file.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-image-modal (closePopup)="showImageModal = false" *ngIf="showImageModal" [show]="showImageModal" [allMedia]="allImages" [selectedMedia]="currentSelectedImage"></app-image-modal>

@@ -171,7 +171,12 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
       }
     });
   }
-
+  sendFiles(event){
+    const index = event.index;
+    this.serveUpService.saveAttachements(this.selectedOffer.id, event.files).subscribe(result => {
+      this.messages.push(result.message);
+    });
+  }
   sendAppointment(event) {
     const appointment = event.appointment;
     appointment.offer_id = this.selectedOffer.id;
@@ -233,7 +238,6 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
           });
         break;
       case 'canceled':
-        console.log('cancelRequest');
         this.serveUpService.actionPriceOffer(this.selectedOffer.id, {'receiver_id': event.message.sender_id, 'message_id': event.message.id, 'action': 'geweigerd'}).subscribe(
           result => {
             this.getOfferMessages(this.selectedOffer.id);

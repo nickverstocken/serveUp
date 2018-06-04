@@ -37,7 +37,8 @@
                 (messageSend)="sendMessage($event)"
                 (priceofferSend)="sendPriceOffer($event)"
                 (priceOfferAction)="actionPriceOffer($event)"
-                [receiver]="currentService.user" [messages]="messages" class="chatter"></app-chat>
+                [receiver]="currentService.user" [messages]="messages" class="chatter"
+                (sendFiles)="sendFiles($event)"></app-chat>
     </div>
   </div>
 </div>

@@ -18,6 +18,7 @@
             </p>
           <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)"  (onApproveAppointment)="acceptAppointment($event)"  (onCancelAppointment)="cancelAppointment($event)" [creator]="false" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
             <app-priceoffer-message (onCancelOwnPriceOffer)="cancelOwnPriceOffer($event)" (onApprovePriceOffer)="acceptPriceOffer($event)" (onCancelPriceOffer)="cancelPriceOffer($event)" [creator]="false" [message]="message" *ngIf="message.type === 'price'"></app-priceoffer-message>
+            <app-attachement-message [creator]="false" [message]="message" *ngIf="message.type === 'document'"></app-attachement-message>
           </div>
 
         </div>
@@ -33,6 +34,7 @@
           </p>
           <app-appointment-message (onCancelOwnAppointment)="cancelOwnAppointment($event)" (onApproveAppointment)="acceptAppointment($event)" (onCancelAppointment)="cancelAppointment($event)" [creator]="true" [message]="message" *ngIf="message.type === 'date'" ></app-appointment-message>
           <app-priceoffer-message (onCancelOwnPriceOffer)="cancelOwnPriceOffer($event)" (onApprovePriceOffer)="acceptPriceOffer($event)" (onCancelPriceOffer)="cancelPriceOffer($event)"  [creator]="true" [message]="message" *ngIf="message.type === 'price'"></app-priceoffer-message>
+          <app-attachement-message [creator]="true" [message]="message" *ngIf="message.type === 'document'"></app-attachement-message>
         </div>
       </div>
       <div class="userwrap">
@@ -65,7 +67,7 @@
     <div class="actionbubbles">
       <app-appointmentpicker (sendAppointment)="sendAppointMent($event)" (closeAppointment)="showAppointmentPopup = false" [show]="showAppointmentPopup" ></app-appointmentpicker>
       <app-priceoffer [show]="showPriceOfferPopup" (sendPriceOffer)="sendPriceOffer($event)" (closePriceOffer)="showPriceOfferPopup = false"></app-priceoffer>
-      <app-file-uploader [show]="showFileUploaderPopup" (closeFileUpload)="showFileUploaderPopup = false"></app-file-uploader>
+      <app-file-uploader (sendFiles)="onSendFiles($event)" [show]="showFileUploaderPopup" (closeFileUpload)="showFileUploaderPopup = false"></app-file-uploader>
     </div>
    <div class="actionbar">
       <button [disabled]="disabled" [class.disabled]="disabled"  (click)="showPopover('Appointment')" class="btnappointment button btnstyle2 btnWithIcon"><span class="fa fa-calendar-alt"></span>Afspraak</button>

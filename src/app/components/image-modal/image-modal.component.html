@@ -5,13 +5,13 @@
       <div (click)="close($event)" class="close">
         <span class="fas fa-times"></span>
       </div>
-      <h2><span>{{selectedMedia.filename}}</span></h2>
+      <h2><span>{{selectedMedia.name}}</span></h2>
     </div>
     <div class="modalContent">
       <div class="contentContainer">
         <div class="imagewrap">
           <div class="currentImage card">
-            <img (click)="nextImage()" class="poster" src="{{ selectedMedia.filepath }}" alt="">
+            <img (click)="nextImage()" class="poster" src="{{ selectedMedia.path }}" alt="">
           </div>
         </div>
       </div>

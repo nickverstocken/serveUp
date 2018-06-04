@@ -1,0 +1,24 @@
+.modalContainer .modal{
+  width: auto !important;
+  max-width: 960px;
+  .contentContainer{
+
+  }
+  .currentImage{
+    max-height: calc(90vh - 80px) !important;
+  }
+  img{
+    width:auto !important;
+    height:auto !important;
+    max-width: 100% !important;
+    max-height: calc(90vh - 120px) !important;
+    object-fit: contain;
+
+  }
+}
+@media all and (max-width: 800px) {
+  .modalContainer .modal{
+    width: auto !important;
+    max-width:calc(100% - 15px);
+  }
+}
