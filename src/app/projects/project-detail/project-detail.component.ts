@@ -170,14 +170,13 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     const priceOffer = JSON.parse(event.message.message);
     switch (event.action){
       case 'cancelOwn':
-        console.log('cancelOwnRequest');
         this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.receiver_id, 'message_id': event.message.id, 'action': 'geannuleerd'}).subscribe(
           result => {
+            console.log(result);
             this.getOfferMessages(this.currentSelected);
           });
         break;
       case 'canceled':
-        console.log('cancelRequest');
         this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.sender_id, 'message_id': event.message.id, 'action': 'geweigerd'}).subscribe(
           result => {
             this.getOfferMessages(this.currentSelected);
@@ -187,9 +186,12 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
 
         this.serveUpService.actionPriceOffer(this.currentSelected, {'receiver_id': event.message.sender_id, 'message_id': event.message.id, 'action': 'geaccepteerd', 'price' : priceOffer.price, 'rate' : priceOffer.rate}).subscribe(
           result => {
-            const index = this.offerlist.indexOf(this.currentOffer);
-            this.offerlist[index].price_offer = priceOffer.price;
-            this.offerlist[index].rate = priceOffer.rate;
+            let offer = this.offerlist.filter( item => item.id == this.currentSelected)[0];
+            offer.price_offer = priceOffer.price;
+            offer.rate = priceOffer.rate;
+            this.currentOffer = offer;
+            this.currentOffer.price_offer = priceOffer.price;
+            this.currentOffer.rate = priceOffer.rate;
             this.getOfferMessages(this.currentSelected);
           });
         break;
@@ -208,5 +210,13 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
 
     }
     this.getOfferMessages(this.currentSelected);
+  }
+  hireService(){
+    this.serveUpService.hireOfferService(this.currentSelected).subscribe(result => {
+      console.log(result);
+    });
+  }
+  writeReview(){
+    console.log('write review');
   }
 }

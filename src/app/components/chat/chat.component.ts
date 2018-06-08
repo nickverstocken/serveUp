@@ -22,6 +22,8 @@ export class ChatComponent implements OnInit {
   @Input() offerId;
   @Input() loading = true;
   @Input() disabled = false;
+  @Input() showReviewbutton = false;
+  @Output() writeReview: EventEmitter<any> = new EventEmitter<any>();
   @Output() messageSend: EventEmitter<any> = new EventEmitter<any>();
   @Output() appointmentSend: EventEmitter<any> = new EventEmitter<any>();
   @Output() priceofferSend: EventEmitter<any> = new EventEmitter<any>();
@@ -187,4 +189,5 @@ export class ChatComponent implements OnInit {
     this.showFileUploaderPopup = false;
     this.clearChatMessage();
   }
+
 }

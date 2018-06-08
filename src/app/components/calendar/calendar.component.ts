@@ -22,7 +22,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   view = 'month';
   height;
   calendarOptions: Options;
-  visibleCalenders = ['personal'];
   events;
   user;
   queryPararms = {date: '', view: ''};

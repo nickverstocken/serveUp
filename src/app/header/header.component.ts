@@ -90,9 +90,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   logout(){
     this.pushersub.unsubscribe();
     this.auth.logout();
+    this.services = [];
     this.showSubnav = 'hideSubnav';
     this.mobileMenu = '';
-    this.router.navigate(['/home']);
   }
   srollToTop(){
     $('html,body').animate({ scrollTop: 0 }, 'fast');
@@ -125,7 +125,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   makeNotiRoute(notification){
     let to = '?read=' + notification.id;
     if(notification.type === this.NOTIFICATION_TYPES.request) {
-      to = 'inbox/' + notification.data.service_id + '/request/' + notification.data.offer_id;
+      to = 'inbox';
     }
     if(notification.type === this.NOTIFICATION_TYPES.action){
       if(notification.data.action === 'accepted'){

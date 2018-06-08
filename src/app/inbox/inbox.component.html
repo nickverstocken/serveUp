@@ -8,6 +8,7 @@
   </app-tabs>
 
   <ng-template #firstRef>
+    <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewSucces($event)"  [offerId]="selectedOffer.id" [show]="showReviewPop" [user]="selectedOffer.request.user" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
     <div class="requestWrap">
       <div class="requestNavigation" [class.collapse]="!offerlistopened">
         <ul *ngIf="offerList">
@@ -40,12 +41,18 @@
                 </div>
                 <div class="offerStatus">
                   <div class="status">
+                    <span *ngIf="offer.status === 'hired'" class="green">
+           Aangenomen
+         </span>
+                    <span *ngIf="offer.status === 'not_hired'" class="red">
+           Helaas, niet aangenomen
+         </span>
                   </div>
                   <div class="price_est">€ {{offer.price_offer ? offer.price_offer : offer.service.price_estimate}} / {{offer.rate ? offer.rate : offer.service.rate}}</div>
                 </div>
               </div>
             </a>
-            <div class="actions" *ngIf="offer.accepted == 0">
+            <div class="actions" *ngIf="offer.accepted == 0 && offer.status !== 'not_hired'">
               <a (click)="updateRequest(offer, 'accept')" class="green"><span class="fas fa-check"></span>Accepteer</a>
               <a (click)="updateRequest(offer, 'decline')" class="red"><span class="fas fa-times"></span>Wijs af</a>
             </div>
@@ -65,7 +72,9 @@
                    (messageSend)="sendOfferMessage($event)"
                    (priceofferSend)="sendPriceOffer($event)"
                    (priceOfferAction)="actionPriceOffer($event)"
-                   (sendFiles)="sendFiles($event)"></app-chat>
+                   (sendFiles)="sendFiles($event)"
+                    (writeReview)="writeReviewForService()"
+                    [showReviewbutton]="selectedOffer.status === 'hired'"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">
@@ -81,15 +90,16 @@
   </ng-template>
 
   <ng-template #seconRef>
+    <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewSucces($event)" [offerId]="selectedOffer.id" [show]="showReviewPop" [service]="selectedOffer.service" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
     <div class="requestWrap">
       <div class="requestNavigation" [class.collapse]="!offerlistopened">
         <ul *ngIf="offerList">
           <li *ngFor="let offer of offerList">
             <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id">
               <div class="userPicture">
-                <img *ngIf="offer.service.user.picture_thumb" src="{{offer.service.user.picture_thumb}}"/>
-                <div *ngIf="!offer.service.user.picture_thumb" class="defaultLogo">
-                  <span>{{offer.service.user.fname.charAt(0)}}</span>
+                <img *ngIf="offer.service.logo" src="{{offer.service.logo}}"/>
+                <div *ngIf="!offer.service.logo" class="defaultLogo">
+                  <span class="far fa-image"></span>
                 </div>
               </div>
               <div class="userInfo">
@@ -119,8 +129,14 @@
                     <span *ngIf="offer.status === 'accepted'" class="green">
            Geaccepteerd
          </span>
+                    <span *ngIf="offer.status === 'hired'" class="green">
+           Aangenomen
+         </span>
                     <span *ngIf="offer.status === 'declined'" class="red">
            Geweigerd
+         </span>
+                    <span *ngIf="offer.status === 'not_hired'" class="red">
+           Niet aangenomen
          </span>
                   </div>
 
@@ -143,7 +159,9 @@
                   (messageSend)="sendOfferMessage($event)"
                   (priceofferSend)="sendPriceOffer($event)"
                   (priceOfferAction)="actionPriceOffer($event)"
-                  (sendFiles)="sendFiles($event)"></app-chat>
+                  (sendFiles)="sendFiles($event)"
+                  (writeReview)="writeReviewForUser()"
+                  [showReviewbutton]="selectedOffer.status === 'hired'"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">

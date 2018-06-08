@@ -151,7 +151,7 @@ input[type="checkbox"]{
 }
 a{
   cursor: pointer;
-  color:$blue;
+  color:$blue2;
   &:hover, &:focus{
     outline:none;
     text-decoration: underline;
@@ -674,11 +674,13 @@ display:flex;
   border-radius: 50%;
   width:32px;
   height:32px;
-  background: $orange;
+  background: #fff;
+  border:2px solid $red;
+  font-weight: 700;
+  color:$red;
   display: flex;
   align-items: center;
   justify-content: center;
-  color:#fff;
 }
 .cardsWrap{
   display: grid;

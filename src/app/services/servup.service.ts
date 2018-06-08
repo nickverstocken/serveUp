@@ -10,7 +10,6 @@ export class ServupService {
   public selectedService = this.selectedServiceSubject.asObservable().distinctUntilChanged();
   public serviceAddedSubj = new BehaviorSubject<any>(null);
   public addedService = this.serviceAddedSubj.asObservable().distinctUntilChanged();
-
   constructor(private api: ApiService) {
   }
 
@@ -119,6 +118,10 @@ export class ServupService {
   saveAttachements(id, files): Observable<any> {
     return this.api.post(`/offer/${id}/attachements`, files);
   }
+  hireOfferService(id): Observable<any> {
+    return this.api.put(`/offer/${id}/hireservice`);
+  }
+
   //notification
   getNotifications(): Observable<any> {
     return this.api.get(`/notifications`).retry(1);
@@ -150,5 +153,10 @@ export class ServupService {
   }
   getAppointment(id){
     return this.api.get(`/appointment/${id}`);
+  }
+
+  //reviews
+  saveReview(offerid, fields){
+    return this.api.post(`/offer/${offerid}/review`, fields);
   }
 }

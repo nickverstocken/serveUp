@@ -1,0 +1,56 @@
+<a (click)="close($event)" class="overlay" [class.opened]="show"></a>
+<div [class.opened]="show" class="modalContainer">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="close($event)" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2 *ngIf="user && !service"><span>Review {{user.fname}} {{user.name}}</span></h2>
+      <h2 *ngIf="service && !user"><span>Review {{service.name}}</span></h2>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <div class="card">
+          <div class="flexwrap">
+            <div class="picture" *ngIf="user && !service">
+              <div class="userPicture">
+                <img *ngIf="user.picture_thumb" src="{{user.picture_thumb}}"/>
+                <div *ngIf="!user.picture_thumb" class="defaultLogo">
+                  <span>{{user.fname.charAt(0)}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="picture" *ngIf="service && !user">
+              <div class="userPicture">
+                <img *ngIf="service.logo" src="{{service.logo}}"/>
+                <div *ngIf="!service.logo" class="defaultLogo">
+                  <span class="far fa-image"></span>
+                </div>
+              </div>
+            </div>
+            <div class="subtitle reviewstar">
+              <h3>Hoe zou je de hele ervaring met
+                <span *ngIf="user && !service"> {{user.fname}} {{user.name}}</span>
+                <span *ngIf="service && !user"> {{service.name}}</span>
+                beoordelen?
+              </h3>
+              <div class="reviewScore" (mouseleave)="resetRating()">
+                <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" (click)="setRating(i+1)" [class.filled]="hovered >= i+1" (mouseenter)="setHovered(i+1)"></span>
+                <span class="reviewCount">{{currentRatingValue}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="writereview">
+            <h3>Beschrijf je ervaring</h3>
+            <textarea [(ngModel)]="reviewText"></textarea>
+          </div>
+
+          <div class="editactions">
+            <button (click)="close()" class="button">Annuleer</button>
+            <button (click)="saveReview()" class="button" [disabled]="lastRating === 0 || !reviewText.trim() || !offerId" [class.disabled]="lastRating === 0 || !reviewText.trim() || !offerId">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

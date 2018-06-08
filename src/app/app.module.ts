@@ -84,6 +84,8 @@ import { EventPopupComponent } from './components/calendar/event-popup/event-pop
 import { PriceofferMessageComponent } from './components/chat/priceoffer-message/priceoffer-message.component';
 import { FileUploaderComponent } from './components/chat/file-uploader/file-uploader.component';
 import { AttachementMessageComponent } from './components/chat/attachement-message/attachement-message.component';
+import { WriteReviewComponent } from './reviews/write-review/write-review.component';
+import { CategoryComponent } from './category/category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,7 +142,9 @@ import { AttachementMessageComponent } from './components/chat/attachement-messa
     EventPopupComponent,
     PriceofferMessageComponent,
     FileUploaderComponent,
-    AttachementMessageComponent
+    AttachementMessageComponent,
+    WriteReviewComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

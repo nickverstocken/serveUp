@@ -9,6 +9,7 @@ import {SearchDetailComponent} from './search-service/search-detail/search-detai
 import {InboxComponent} from './inbox/inbox.component';
 import {AccountComponent} from './account/account.component';
 import {EventCalendarComponent} from './event-calendar/event-calendar.component';
+import {CategoryComponent} from './category/category.component';
 
 const appRoutes: Routes = [
   // otherwise redirect to home
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
   { path: 'home', component: LandingComponent},
   { path: '', component: SearchServiceComponent},
   { path: 'search/:id', component: SearchDetailComponent},
+  { path: 'category/:id', component: CategoryComponent},
   { path: 'projects', component: ProjectsComponent},
   { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
   { path: 'profile', component: AccountComponent},

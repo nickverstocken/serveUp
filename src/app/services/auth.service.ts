@@ -9,6 +9,7 @@ import {User} from '../models/User';
 import {ApiService} from './api.service';
 import {tokenNotExpired} from 'angular2-jwt';
 import {Router} from '@angular/router';
+import {ServupService} from './servup.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private apiService: ApiService, private router: Router) {
+  constructor(private apiService: ApiService, private serveUpService:ServupService, private router: Router) {
   }
 
   populate() {
@@ -47,10 +48,12 @@ export class AuthService {
   }
 
   logout(): void {
+    this.serveUpService.setSelectedService(-1);
     localStorage.removeItem('token');
     localStorage.removeItem('selectedService');
     this.currentUserSubject.next(new User());
     this.isAuthenticatedSubject.next(false);
+
   }
 
   tokenExpiration() {

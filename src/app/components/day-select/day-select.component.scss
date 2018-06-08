@@ -38,8 +38,8 @@
         align-items: center;
         justify-content: center;
         &.selected{
-          background:$blue;
-          color:#fff;
+          border:1px solid $blue;
+          color:$blue;
       }
       }
       p{

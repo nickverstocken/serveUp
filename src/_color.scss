@@ -1,17 +1,18 @@
 @import "~@ctrl/ngx-emoji-mart/picker";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import "~fullcalendar/dist/fullcalendar.css";
-$orange:#F67600;
-$blue:#2196f3;
-$yellow:#FBB80F;
+$orange:#FC636B;
+$blue:#FC636B;
+$blue2:#5EC7DE;
+$yellow:#FFB900;
 $green:#A6DD66;
-$red:#E67C73;
-$titleColor:#2C3138;
+$red:#FC636B;
+$titleColor:#2E3C54;
 $textColor:#666;
 $backgroundColor:#F9F9F9;
 $borderColor:#e7e7e7;
-$messageBubbleReceived:lighten($blue, 40%);
-$messageBubbleSend: lighten($green, 25%);
+$messageBubbleReceived:#E0ECF8;
+$messageBubbleSend: #F6F7FB;
 $fontFamily:'Nunito', sans-serif;
 $borderRadius:2px;
 
@@ -19,6 +20,7 @@ $cat3: #009688;
 $cat4: #3F51B5;
 $cat5: #E91E63;
 
+$defaultprofilebg: #CCD6DD;
 
 $facebook: #3b5998;
 $twitter: #1da1f2;

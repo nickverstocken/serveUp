@@ -24,6 +24,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
   offerlistopened = true;
   mobile = false;
   innerWidth;
+  showReviewPop = false;
   @ViewChild('tabs') tabs: TabsComponent;
   @ViewChild('chatter') chatter: ChatComponent;
 
@@ -71,6 +72,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
               this.filter = 'requests';
             }
           }
+          this.showReviewPop = false;
           if (this.filter !== 'personal') {
             this.getServiceMessages();
           } else {
@@ -88,9 +90,11 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   getRequestMessages() {
+
     this.serveUpService.getAllOffers().subscribe(
       result => {
         this.offerList = result.offers;
+
         if (this.offerList.length > 0) {
           this.getOfferMessages(this.offerList[0].id);
         }
@@ -273,5 +277,14 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   toggleOfferlist() {
       this.offerlistopened ? this.offerlistopened = false : this.offerlistopened = true;
+  }
+  writeReviewForUser(){
+    this.showReviewPop = true;
+  }
+  writeReviewForService(){
+    this.showReviewPop = true;
+  }
+  reviewSucces(review){
+    this.showReviewPop = false;
   }
 }

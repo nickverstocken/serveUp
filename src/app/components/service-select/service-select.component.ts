@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {Service} from '../../models/Service';
 import {ServupService} from '../../services/servup.service';
 
@@ -9,15 +9,16 @@ declare var $: any;
   templateUrl: './service-select.component.html',
   styleUrls: ['./service-select.component.scss']
 })
-export class ServiceSelectComponent implements OnInit {
+export class ServiceSelectComponent implements OnInit, OnDestroy {
   @Input() services: Service[];
   @Input() id =  'headerServiceSelect';
   @Output() selectedService: EventEmitter<Service> = new EventEmitter();
   constructor(private serveUpService: ServupService) {
   }
-
+  ngOnDestroy(){
+    this.services = [];
+  }
   ngOnInit() {
-
     this.serveUpService.selectedService.subscribe(
       result => {
         const serviceId: Number = parseInt(result);

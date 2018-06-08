@@ -1,0 +1,53 @@
+.editactions{
+  padding-bottom: 0;
+  margin-top: 15px;
+}
+.modal{
+  width:100%;
+  max-width: 500px;
+
+  .card{
+    h3{
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 0;
+      padding-bottom: 10px;
+      border: 0;
+    }
+  }
+
+}
+.userPicture{
+  margin-right: 15px;
+  img{
+    width:65px;
+    height:65px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .defaultLogo{
+    width:60px;
+    height:60px;
+    font-size: 30px;
+  }
+}
+.reviewstar{
+  flex:1 auto;
+}
+.flexwrap{
+  display: flex;
+  align-items: center;
+}
+.reviewScore{
+  .fa-star{
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+.writereview{
+  margin-top: 25px;
+  textarea{
+    height:150px;
+    padding: 15px;
+  }
+}

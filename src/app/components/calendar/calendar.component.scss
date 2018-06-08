@@ -87,11 +87,11 @@ ng-fullcalendar {
 /deep/ .cat2 {
   .mat-checkbox-checked.mat-accent {
     .mat-checkbox-background {
-      background: $red !important;
+      background: $blue2 !important;
     }
   }
   .mat-checkbox-frame {
-    border-color: $red !important;
+    border-color: $blue2 !important;
   }
 }
 
@@ -120,11 +120,11 @@ ng-fullcalendar {
 /deep/ .cat5 {
   .mat-checkbox-checked.mat-accent {
     .mat-checkbox-background {
-      background: $cat5 !important;
+      background: $yellow !important;
     }
   }
   .mat-checkbox-frame {
-    border-color: $cat5;
+    border-color: $yellow;
   }
 }
 

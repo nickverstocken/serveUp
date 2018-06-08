@@ -16,15 +16,16 @@
       <div class="priceBigWrap">
         <div class="priceBig">
           <div class="price">
-            <span class="valuta">€</span><span class="number">{{currentService.price_estimate}}</span>
+            <span class="valuta">€</span><span class="number">{{currentOffer.price_offer ? currentOffer.price_offer : currentService.price_estimate}}</span>
           </div>
           <div class="rate">
-            <span>{{currentService.rate}}</span>
+            <span>{{currentOffer.rate ? currentOffer.rate : currentService.rate}}</span>
           </div>
         </div>
       </div>
       <div class="action">
-        <button [disabled]="currentOffer.status === 'declined'" [class.disabled]="currentOffer.status === 'declined'" class="button buttonbig fullWidth">Huur in</button>
+        <button *ngIf="currentOffer.status !== 'hired'" (click)="hireService()" [disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired'" [class.disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired'" class="button buttonbig fullWidth">Huur in</button>
+        <button *ngIf="currentOffer.status == 'hired'" (click)="writeReview()" [disabled]="currentOffer.status !== 'hired'" [class.disabled]="currentOffer.status !== 'hired'" class="button buttonbig fullWidth">Schrijf een review</button>
       </div>
     </div>
     <div [class.opened]="chatterOpen" class="chatBlock" *ngIf="currentService">

@@ -54,6 +54,10 @@
       </div>
     </div>
   </div>
+  <div *ngIf="showReviewbutton"  class="reviewSection">
+    <button (click)="writeReview.emit()" class="button btnWithIcon"><span class="far fa-star"></span> Schrijf een review
+    </button>
+  </div>
   <div class="messageInput">
 
 <!--    <div class="emojis" [hidden]="!showemojis">
@@ -62,7 +66,6 @@
     <div class="textInput">
       <textarea [disabled]="disabled" [class.disabled]="disabled" id="textarea" [(ngModel)]="chatmessage.message" (keydown)="autoGrow($event)" (keyup)="keyupfunction($event)" placeholder="Schrijf een bericht..."></textarea>
       <a class="emoji" (click)="showEmojis()"><span class="far fa-smile"></span></a>
-      <button class="button" id="sendMessage"><span class="far fa-paper-plane"></span></button>
     </div>
     <div class="actionbubbles">
       <app-appointmentpicker (sendAppointment)="sendAppointMent($event)" (closeAppointment)="showAppointmentPopup = false" [show]="showAppointmentPopup" ></app-appointmentpicker>

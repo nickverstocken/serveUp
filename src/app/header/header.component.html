@@ -95,7 +95,9 @@
               Nieuw verzoek van <strong>{{noti.data.user}}</strong>
             </div>
             <div *ngIf="noti.type === NOTIFICATION_TYPES.action">
-              Heeft je verzoek <strong>{{noti.data.action === 'accepted' ? 'geaccepteerd' : (noti.data.action === 'declined' ? 'geweigerd' : '')}}</strong>
+              <span *ngIf="noti.data.action !== 'hired' && noti.data.action !== 'not_hired'">Heeft je verzoek <strong>{{noti.data.action === 'accepted' ? 'geaccepteerd' : (noti.data.action === 'declined' ? 'geweigerd' : '')}}</strong></span>
+              <span *ngIf="noti.data.action === 'hired'"><strong>PROFICIAT</strong> je bent aangenomen door {{noti.data.user}}</span>
+              <span *ngIf="noti.data.action === 'not_hired'"><strong>Helaas, </strong> je bent niet aangenomen door {{noti.data.user}}</span>
             </div>
           </div>
         </div>

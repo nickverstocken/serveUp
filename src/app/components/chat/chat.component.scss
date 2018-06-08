@@ -9,20 +9,12 @@
   background-image: url("/assets/images/chatbg.png");
   background-repeat: no-repeat;
   background-size: cover;
-
+  position: relative;
   .messageInput{
     position: relative;
     width:100%;
     margin-top: auto;
     line-height: 1;
-    #sendMessage{
-      bottom:0;
-      border-radius: 0;
-      right:0;
-      height: 42px;
-      width: 45px;
-      align-self: flex-end;
-    }
     .textInput{
       display: flex;
       position: relative;
@@ -36,9 +28,9 @@
       line-height: 16px;
       padding:13px 15px;
       height:43px;
+      padding-right: 30px;
       min-height:42px;
       max-height: 100px;
-      padding-right: 43px;
       transition: none;
       &:focus{
         border-color:$borderColor;
@@ -160,7 +152,7 @@
 .emoji{
   font-size: 25px;
   position: absolute;
-  right:55px;
+  right:15px;
   margin-top: 1px;
   top:50%;
   transform: translateY(-50%);
@@ -175,11 +167,7 @@
   border-top: 1px solid $borderColor;
   background: #fff;
   display: flex;
-  flex-wrap: wrap;
   position: relative;
-  span{
-    color:$blue;
-  }
   .button{
     flex:1 auto;
     border:0;
@@ -190,6 +178,7 @@
     border-radius: 0;
     font-size: 14px;
     font-weight: 400;
+    white-space: nowrap;
   }
 }
 .dateMessageWrap{
@@ -246,8 +235,18 @@
   p{
     text-align: center;
     font-size: 14px;
-    color:$orange;
+    color:$titleColor;
     font-style: italic;
   }
 
+}
+.reviewSection{
+  padding:20px;
+  text-align: center;
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.4);
+  top:0px;
+  width: 100%;
 }

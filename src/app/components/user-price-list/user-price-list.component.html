@@ -14,14 +14,20 @@
           <span class="reviewCount">7</span>
         </div>
         <div class="status {{offer.status}}">
-         <span *ngIf="offer.status === 'awaiting'" class="orange">
+           <span *ngIf="offer.status === 'awaiting'" class="orange">
            Wachten op antwoord
          </span>
           <span *ngIf="offer.status === 'accepted'" class="green">
            Geaccepteerd
          </span>
+          <span *ngIf="offer.status === 'hired'" class="green">
+           Aangenomen
+         </span>
           <span *ngIf="offer.status === 'declined'" class="red">
            Geweigerd
+         </span>
+          <span *ngIf="offer.status === 'not_hired'" class="red">
+           Niet aangenomen
          </span>
         </div>
       </div>
