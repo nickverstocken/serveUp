@@ -38,7 +38,7 @@
   </div>
   <div class="categoriesWrap">
     <div class="cardsWrap row">
-      <div *ngFor="let cat of categories" class="card imagecard">
+      <div routerLink="/category/{{cat.id}}" *ngFor="let cat of categories" class="card imagecard">
         <div class="cardHead">
           <img src="{{cat.picture + '.jpg'}}"/>
         </div>

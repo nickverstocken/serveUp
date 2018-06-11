@@ -10,8 +10,7 @@
       <div class="userInfo">
         <h3>{{offer.service.name}}</h3>
         <div class="reviewScore">
-          <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-          <span class="reviewCount">7</span>
+          <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="offer.service.rating >= i+1"></span>
         </div>
         <div class="status {{offer.status}}">
            <span *ngIf="offer.status === 'awaiting'" class="orange">

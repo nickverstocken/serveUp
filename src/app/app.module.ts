@@ -48,9 +48,6 @@ import {ProjectDetailComponent} from './projects/project-detail/project-detail.c
 import {ChatComponent} from './components/chat/chat.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserPriceListComponent} from './components/user-price-list/user-price-list.component';
-import {ReviewsComponent} from './components/reviews/reviews.component';
-import {ReviewItemComponent} from './components/reviews/review-item/review-item.component';
-import {UserProfileComponent} from './user-profile/user-profile.component';
 import {ServiceSelectComponent} from './components/service-select/service-select.component';
 import {AutofillCitiesComponent} from './components/autofill-cities/autofill-cities.component';
 import {LoaderComponent} from './components/loader/loader.component';
@@ -66,7 +63,7 @@ import { InboxComponent } from './inbox/inbox.component';
 import { AccountComponent } from './account/account.component';
 import { AppointmentpickerComponent } from './components/chat/appointmentpicker/appointmentpicker.component';
 import { PriceofferComponent } from './components/chat/priceoffer/priceoffer.component';
-import { AgmCoreModule, AgmCircle } from '@agm/core';
+import { AgmCoreModule } from '@agm/core';
 import { MapsearchComponent } from './components/mapsearch/mapsearch.component';
 import { AppointmentMessageComponent } from './components/chat/appointment-message/appointment-message.component';
 import { ServiceDetailsComponent } from './account/service-details/service-details.component';
@@ -86,6 +83,13 @@ import { FileUploaderComponent } from './components/chat/file-uploader/file-uplo
 import { AttachementMessageComponent } from './components/chat/attachement-message/attachement-message.component';
 import { WriteReviewComponent } from './reviews/write-review/write-review.component';
 import { CategoryComponent } from './category/category.component';
+import { ReviewItemComponent } from './reviews/review-item/review-item.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserDetailsComponent } from './account/user-details/user-details.component';
+import {EqualValidator } from './directives/validateEqual.directive';
+import { ServiceProfileComponent } from './service-profile/service-profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,9 +114,6 @@ import { CategoryComponent } from './category/category.component';
     ChatComponent,
     ProfileComponent,
     UserPriceListComponent,
-    ReviewsComponent,
-    ReviewItemComponent,
-    UserProfileComponent,
     ServiceSelectComponent,
     AutofillCitiesComponent,
     NumbermaskDirective,
@@ -144,7 +145,13 @@ import { CategoryComponent } from './category/category.component';
     FileUploaderComponent,
     AttachementMessageComponent,
     WriteReviewComponent,
-    CategoryComponent
+    CategoryComponent,
+    ReviewItemComponent,
+    ReviewsComponent,
+    UserProfileComponent,
+    UserDetailsComponent,
+    EqualValidator,
+    ServiceProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@
   <button [class.open]="mobile" [class.hidden]="chatterOpen" (click)="openChatter()" class="messagesFloatOpen"><span class="far fa-comments"></span></button>
   <a (click)="closeOverview()" id="overlayProjectDetails" [class.hidden]="!pricelistopened"  class="overlay"></a>
   <div [class.chatterOpen]="chatterOpen" class="middleFixed" *ngIf="currentService">
-    <app-profile [service]="currentService" [user]="currentService.user" class="profile"></app-profile>
+    <app-profile [reviews]="reviews" [reviewMeta]="reviewMeta" (loadmoreReviews)="loadMoreReviews($event)" [service]="currentService" [user]="currentService.user" class="profile"></app-profile>
   </div>
   <div class="rightAsside">
     <div class="priceBlock" *ngIf="currentService">
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="action">
-        <button *ngIf="currentOffer.status !== 'hired'" (click)="hireService()" [disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired'" [class.disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired'" class="button buttonbig fullWidth">Huur in</button>
+        <button *ngIf="currentOffer.status !== 'hired'" (click)="hireService()" [disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired' || currentOffer.status === 'awaiting'" [class.disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired' || currentOffer.status === 'awaiting'" class="button buttonbig fullWidth">Huur in</button>
         <button *ngIf="currentOffer.status == 'hired'" (click)="writeReview()" [disabled]="currentOffer.status !== 'hired'" [class.disabled]="currentOffer.status !== 'hired'" class="button buttonbig fullWidth">Schrijf een review</button>
       </div>
     </div>
@@ -43,4 +43,4 @@
     </div>
   </div>
 </div>
-
+<app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewSucces($event)"  [offerId]="currentOffer.id" [show]="showReviewPop" [service]="currentOffer.service" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>

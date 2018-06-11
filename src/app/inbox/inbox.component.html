@@ -2,9 +2,9 @@
   <button *ngIf="mobile && !offerlistopened" id="overview" (click)="toggleOfferlist()"><span class="fas fa-arrow-left"></span></button>
   <app-tabs *ngIf="filter" #tabs [current]="filter" (tabClicked)="filterRequests($event)">
     <app-tab name="Persoonlijk" icon="fas fa-rocket" value="personal" [templateRef]="seconRef"></app-tab>
-    <app-tab *ngIf="user && user.role === 'service'" name="Verzoeken" icon="fas fa-rocket" value="requests" [templateRef]="firstRef"></app-tab>
-    <app-tab *ngIf="user && user.role === 'service'" name="Aanvaard" icon="fas fa-star" value="accepted" [templateRef]="firstRef"></app-tab>
-    <app-tab *ngIf="user && user.role === 'service'" name="Ingehuurd" icon="fas fa-check-circle" value="hired"  [templateRef]="firstRef"></app-tab>
+    <app-tab *ngIf="user && user.role === 'service' && user.service.length > 0" name="Verzoeken" icon="fas fa-rocket" value="requests" [templateRef]="firstRef"></app-tab>
+    <app-tab *ngIf="user && user.role === 'service' && user.service.length > 0" name="Aanvaard" icon="fas fa-star" value="accepted" [templateRef]="firstRef"></app-tab>
+    <app-tab *ngIf="user && user.role === 'service' && user.service.length > 0" name="Ingehuurd" icon="fas fa-check-circle" value="hired"  [templateRef]="firstRef"></app-tab>
   </app-tabs>
 
   <ng-template #firstRef>
@@ -14,7 +14,7 @@
         <ul *ngIf="offerList">
           <li *ngFor="let offer of offerList">
             <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id" [class.isrequest]="offer.accepted == 0">
-              <div class="userPicture">
+              <div routerLink="/profile/{{offer.request.user.id}}" class="userPicture">
                 <img *ngIf="offer.request.user.picture_thumb" src="{{offer.request.user.picture_thumb}}"/>
                 <div *ngIf="!offer.request.user.picture_thumb" class="defaultLogo">
                   <span>{{offer.request.user.fname.charAt(0)}}</span>

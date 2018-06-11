@@ -15,8 +15,16 @@ export class ServiceDetailsComponent implements OnInit {
   @Input() editting = false;
   @Input() showActions = true;
   @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
+  @Output() goToServiceReviews: EventEmitter<any> = new EventEmitter<any>();
   showSocialAdd = false;
   socialNetworks = ['facebook', 'twitter', 'linkedin', 'dribbble', 'instagram', 'youtube'];
+  ratingvalues = [
+    'Slecht',
+    'Kan beter',
+    'Gemiddeld',
+    'Goed',
+    'Zeer goed'
+  ];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -87,5 +95,8 @@ export class ServiceDetailsComponent implements OnInit {
   closeSocialNetworksPop(){
     this.showSocialAdd = false;
     this.resetSocialNetworks();
+  }
+  goToReviews(){
+    this.goToServiceReviews.emit();
   }
 }

@@ -1,3 +1,16 @@
-<p>
-  reviews works!
-</p>
+<div id="reviewsWrap" *ngIf="reviews">
+  <div *ngIf="reviews.length > 0">
+    <app-review-item *ngFor="let review of reviews" [review]="review"></app-review-item>
+  </div>
+  <div *ngIf="reviews.length <= 0">
+    <div class="reviewItem">
+      <p>
+        Er zijn nog geen reviews geschreven...
+      </p>
+    </div>
+
+  </div>
+  <div  *ngIf="meta" class="loadmorewrap">
+    <button [class.disabled]="this.meta.total_pages === this.meta.current_page" [disabled]="this.meta.total_pages === this.meta.current_page" (click)="loadMore()" class="button">Laad meer...</button>
+  </div>
+</div>

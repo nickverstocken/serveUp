@@ -1,4 +1,3 @@
-@import 'color';
 /* FULLCALENDAR */
 /* region fullcalendar */
 .fc-toolbar{
@@ -24,18 +23,14 @@
   padding: 0;
   color:#9a9a9a;
   text-align: right;
+  font-size: 20px;
 }
-.fc-head-container{
-  border-top:1px solid $borderColor !important;
-  border-left:1px solid $borderColor !important;
-}
+
 .fc-view-container{
   position: relative;
   top:70px;
 }
-.fc-highlight{
-  background:lighten($orange,35%)!important;
-}
+
 .fc-event {
   font-size: 12px;
   font-weight: 700;
@@ -62,26 +57,12 @@
   float:left;
   padding: 5px;
 }
-.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead{
-  border-color:$borderColor;
-}
-.fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-popover .fc-header{
-  background:$borderColor;
-}
+
 .fc-unthemed .fc-list-item td{
   font-size: 14px;
   font-weight: 400;
 }
-.fc-unthemed .fc-list-item:hover td{
-  cursor:pointer;
-  background:#f9f9f9;
-}
-.fc-list-heading:first-child td{
-  border-top:1px solid $borderColor !important;
-}
-.fc-list-view{
-  border-left:1px solid $borderColor !important;;
-}
+
 .fc-list-heading td{
   font-weight: 600;
 }
@@ -109,9 +90,7 @@
   background: 0;
   border-radius: 50% !important;
 }
-.fc-now-indicator{
-  border:0 solid $red;
-}
+
 .fc-prev-button .fc-icon, .fc-next-button .fc-icon{
   top:0px !important;
   margin:0 !important;
@@ -128,27 +107,12 @@
   font-size: 20px;
   font-family: "Font Awesome 5 Free";
 }
-.fc-unthemed td.fc-today{
-  background: $backgroundColor;
-}
+
 .fc-ltr .fc-axis{
   text-align: center;
   font-size: 10px;
 }
-a.fc-more{
-  color:$orange;
-  font-weight: 600;
-}
-.fc-more-cell{
-}
-.fc-prev-button:hover, .fc-next-button:hover{
-  background: $borderColor;
-  color:$titleColor;
-}
-.fc-state-active, .fc-state-down{
-  background: $blue;
-  color:#fff;
-}
+
 .fc-toolbar .fc-state-active, .fc-toolbar .ui-state-active{
   z-index:1 !important;
 }

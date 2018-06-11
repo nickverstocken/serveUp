@@ -1,17 +1,17 @@
-import {Component, OnInit, AfterContentInit, ViewChild, AfterViewInit, HostListener} from '@angular/core';
+import {Component, OnInit, AfterContentInit, ViewChild, AfterViewInit, HostListener, OnDestroy} from '@angular/core';
 import {ServupService} from '../services/servup.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {AuthService} from '../services/auth.service';
 import {TabsComponent} from '../components/tabs/tabs.component';
 import {ChatComponent} from '../components/chat/chat.component';
-
+import "rxjs/add/operator/takeWhile";
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
-export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
+export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy{
   sub;
   selectedServiceId;
   offerList;
@@ -25,6 +25,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
   mobile = false;
   innerWidth;
   showReviewPop = false;
+  alive = true;
   @ViewChild('tabs') tabs: TabsComponent;
   @ViewChild('chatter') chatter: ChatComponent;
 
@@ -41,7 +42,9 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
       this.offerlistopened = true;
     }
   }
-
+  ngOnDestroy(){
+      this.alive = false;
+  }
   ngAfterViewInit() {
 
 
@@ -58,7 +61,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
     this.auth.currentUser.subscribe(user => {
       if (user.id) {
         this.user = user;
-        this.route.queryParams.subscribe(params => {
+       this.route.queryParams.takeWhile(() => this.alive).subscribe(params => {
           this.messages = undefined;
           this.loadingMessages = true;
           this.selectedOffer = undefined;
@@ -86,12 +89,9 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   }
 
-  ngOnDestroy() {
-  }
-
   getRequestMessages() {
 
-    this.serveUpService.getAllOffers().subscribe(
+    this.serveUpService.getAllOffers().takeWhile(() => this.alive).subscribe(
       result => {
         this.offerList = result.offers;
 
@@ -103,14 +103,16 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   getServiceMessages() {
     if (this.user.role === 'service') {
-      this.serveUpService.selectedService.subscribe(data => {
+      this.serveUpService.selectedService.takeWhile(() => this.alive).subscribe(data => {
         this.selectedServiceId = data;
-        this.serveUpService.getServiceRequestList(this.selectedServiceId, this.filter).subscribe(result => {
-          this.offerList = result.offers;
-          if (this.offerList.length > 0) {
-            this.getOfferMessages(this.offerList[0].id);
-          }
-        });
+        if(this.selectedServiceId !== -1){
+          this.serveUpService.getServiceRequestList(this.selectedServiceId, this.filter).takeWhile(() => this.alive).subscribe(result => {
+            this.offerList = result.offers;
+            if (this.offerList.length > 0) {
+              this.getOfferMessages(this.offerList[0].id);
+            }
+          });
+        }
       });
     }
   }

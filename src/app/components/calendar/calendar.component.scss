@@ -69,6 +69,8 @@ ng-fullcalendar {
 }
 
 .visibleCalendarsList ul li {
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -87,11 +89,11 @@ ng-fullcalendar {
 /deep/ .cat2 {
   .mat-checkbox-checked.mat-accent {
     .mat-checkbox-background {
-      background: $blue2 !important;
+      background: $orange !important;
     }
   }
   .mat-checkbox-frame {
-    border-color: $blue2 !important;
+    border-color: $orange !important;
   }
 }
 
@@ -127,7 +129,6 @@ ng-fullcalendar {
     border-color: $yellow;
   }
 }
-
 /deep/ ng-fullcalendar {
   .fc-event {
     font-size: 12px;
@@ -159,6 +160,47 @@ ng-fullcalendar {
   .fc-event.cat5, .cat5 .fc-event-dot {
     background-color: $orange;
     border: 1px solid $orange;
+  }
+  .fc-prev-button:hover, .fc-next-button:hover{
+    background: $borderColor;
+    color:$titleColor;
+  }
+  .fc-state-active, .fc-state-down{
+    background: $blue;
+    color:#fff;
+  }
+  .fc-head-container{
+    border-top:1px solid $borderColor !important;
+    border-left:1px solid $borderColor !important;
+  }
+  .fc-highlight{
+    background:lighten($orange,35%)!important;
+  }
+  .fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead{
+    border-color:$borderColor;
+  }
+  .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-popover .fc-header{
+    background:$borderColor;
+  }
+  a.fc-more{
+    color:$orange;
+    font-weight: 600;
+  }
+  .fc-unthemed td.fc-today{
+    background: $backgroundColor;
+  }
+  .fc-now-indicator{
+    border:0 solid $red;
+  }
+  .fc-unthemed .fc-list-item:hover td{
+    cursor:pointer;
+    background:#f9f9f9;
+  }
+  .fc-list-heading:first-child td{
+    border-top:1px solid $borderColor !important;
+  }
+  .fc-list-view{
+    border-left:1px solid $borderColor !important;;
   }
 }
 

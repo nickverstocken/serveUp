@@ -30,22 +30,22 @@
               <div class="infouser">
                 <div class="user">
                   <div class="picture">
-                    <a *ngIf="personal">
+                    <a *ngIf="personal" routerLink="/profile/{{appointment.offer.service.user.id}}">
                       <span class="userImageThumb" *ngIf="appointment.offer.service.user.picture_thumb"> <img src="{{appointment.offer.service.user.picture_thumb}}" /></span>
                       <span class="userImageThumb" *ngIf="!appointment.offer.service.user.picture_thumb"><div
                         class="defaultProfile">{{appointment.offer.service.user.fname.charAt(0)}}</div></span>
                     </a>
-                    <a *ngIf="!personal">
+                    <a *ngIf="!personal" routerLink="/profile/{{appointment.offer.request.user.id}}">
                       <span class="userImageThumb" *ngIf="appointment.offer.request.user.picture_thumb"> <img src="{{appointment.offer.request.user.picture_thumb}}" /></span>
                       <span class="userImageThumb" *ngIf="!appointment.offer.request.user.picture_thumb"><div
                         class="defaultProfile">{{appointment.offer.request.user.fname.charAt(0)}}</div></span>
                     </a>
                   </div>
                   <div class="info">
-                <span *ngIf="personal">
+                <span *ngIf="personal"  routerLink="/profile/{{appointment.offer.service.user.id}}">
                   {{appointment.offer.service.user.fname}} {{appointment.offer.service.user.name}}
                 </span>
-                    <span *ngIf="!personal">
+                    <span *ngIf="!personal"  routerLink="/profile/{{appointment.offer.request.user.id}}">
                   {{appointment.offer.request.user.fname}} {{appointment.offer.request.user.name}}
                 </span>
                   </div>
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="withIconcardText">
-              <div class="label">
+              <div class="label" routerLink="/service/{{appointment.offer.service.id }}">
                 <span class="icon far fa-building"></span> <span>{{ appointment.offer.service.name }}</span>
               </div>
             </div>

@@ -20,4 +20,6 @@ export class User {
   role: string;
   service: Service[];
   updated_at: string;
+  rating: number;
+  number_ratings: number;
 }

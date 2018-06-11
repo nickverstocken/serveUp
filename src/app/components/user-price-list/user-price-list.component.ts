@@ -10,6 +10,13 @@ export class UserPriceListComponent implements OnInit {
   @Input() offerList: any;
   @Input() currentSelected: number;
   @Output() changeSelectedOffer: EventEmitter<any> = new EventEmitter<any>();
+  ratingvalues = [
+    'Slecht',
+    'Kan beter',
+    'Gemiddeld',
+    'Goed',
+    'Zeer goed'
+  ];
   constructor(private router: Router) { }
 
   ngOnInit() {

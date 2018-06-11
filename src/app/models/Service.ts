@@ -40,4 +40,6 @@ export class Service {
   standard_response: string;
   tags;
   user?: User;
+  rating: number;
+  number_ratings: number;
 }

@@ -8,6 +8,9 @@ import {Service} from '../models/Service';
 import {ServiceTravelComponent} from './service-travel/service-travel.component';
 import {ServiceDetailsComponent} from './service-details/service-details.component';
 import {ServicePriceComponent} from './service-price/service-price.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Review} from '../models/Review';
+import {ProfileComponent} from '../components/profile/profile.component';
 
 @Component({
   selector: 'app-account',
@@ -17,17 +20,25 @@ import {ServicePriceComponent} from './service-price/service-price.component';
 })
 export class AccountComponent implements OnInit, AfterViewInit {
   user: User;
-  disallowUpload = true;
   selectedService: Service;
   formuser;
+  formchangePass;
   formService;
   cardEdit;
   services = [];
   showServiceAdd = false;
+  subnav;
+  userReviews: Review[];
+  serviceReviews: Review[];
+  userMeta;
+  serviceMeta;
+
   @ViewChild('serviceTravel') serviceTravel: ServiceTravelComponent;
   @ViewChild('servicePrice') servicePrice: ServicePriceComponent;
   @ViewChild('serviceDetail') serviceDetail: ServiceDetailsComponent;
-  constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder) { }
+  @ViewChild('userProfile') userProfile: ProfileComponent;
+  @ViewChild('serviceProfile') serviceProfile: ProfileComponent;
+  constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.cardEdit = 'service-details';
@@ -36,13 +47,25 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.user = result;
         Object.assign(this.services, this.user.service);
         this.buildFormUser();
+        this.route.params.subscribe(param => {
+          this.subnav = param.subnav;
+          if(!this.subnav){
+            this.subnav = 'personal';
+          }
+          if((this.subnav === 'service' || this.subnav === 'service-profile') && this.user.role === 'user'){
+            this.router.navigate(['/account/personal']);
+          }
+          if(this.subnav === 'personal-profile'){
+            this.getUserReviews();
+          }
+        });
       }
     });
   }
   ngAfterViewInit() {
 
   }
-  saveUser(id) {
+  saveUser() {
     const frmData = this.assignFormData(this.formuser.value);
     frmData.append('city_id', this.formuser.controls.city.controls.id.value);
     this.serveUpService.updateUser(frmData).subscribe(
@@ -59,7 +82,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
 
   saveService() {
-    let frmData = this.assignFormData(this.formService.value);
+    const frmData = this.assignFormData(this.formService.value);
     frmData.append('city_id', this.formService.controls.city.controls.id.value);
     this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
       result => {
@@ -67,6 +90,14 @@ export class AccountComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  changePassword(){
+    const frmData = this.assignFormData(this.formchangePass.value);
+    this.serveUpService.changePass(frmData).subscribe(
+      result => {
+      });
+  }
+
   addService(service){
     let frmData = this.assignFormData(service);
     this.serveUpService.addService(frmData).subscribe(result => {
@@ -87,10 +118,15 @@ export class AccountComponent implements OnInit, AfterViewInit {
       address: [this.user.address, Validators.required],
       city: this.fb.group({
         id: [this.user.city_id, Validators.required],
-        name: [this.user.city.name, Validators.required],
+        name: [this.user.city.name, [Validators.required], ],
         zip: [this.user.city.zip, [Validators.required, Validators.minLength(4)]],
       }),
-      introduction: [this.user.introduction]
+      introduction: [this.user.introduction],
+    });
+    this.formchangePass = this.fb.group({
+      password: [null,  Validators.required],
+      new_password: [null,  [Validators.required, Validators]],
+      new_password_confirmation: [null,  [Validators.required]]
     });
   }
   buidFormService(){
@@ -120,16 +156,15 @@ export class AccountComponent implements OnInit, AfterViewInit {
       category_id: [this.selectedService.sub_category  ? this.selectedService.sub_category.category.id : null]
     });
   }
-  userPictureLoad(file) {
-    this.formuser.controls.picture.setValue(file.file);
-  }
-  cancelEditMode(formid, model){
-    this[formid].reset(this[model]);
-    this.cardEdit = undefined;
-  }
+
   setService(service: Service) {
     this.selectedService = service;
     this.buidFormService();
+    console.log('get reviews');
+    if(this.subnav === 'service-account'){
+      console.log('service reviews');
+      this.getServiceReviews();
+    }
     if(this.serviceTravel){
       this.serviceTravel.setLatLng(this.selectedService.city.lat, this.selectedService.city.lng);
     }
@@ -165,5 +200,38 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
   showAddService(){
     this.showServiceAdd = true;
+  }
+  upgradeAccount(){
+
+  }
+  loadMoreUserReviews(page){
+    this.serveUpService.getUserReviews(this.user.id, page).subscribe(result => {
+      this.userReviews = this.userReviews.concat(result.reviews.data);
+      this.userMeta = result.reviews.meta.pagination;
+    });
+  }
+  loadMoreServiceReviews(page){
+    this.serveUpService.getServiceReviews(this.selectedService.id, page).subscribe(result => {
+      this.serviceReviews = this.serviceReviews.concat(result.reviews.data);
+      this.serviceMeta = result.reviews.meta.pagination;
+    });
+  }
+  getServiceReviews(){
+    this.serveUpService.getServiceReviews(this.selectedService.id).subscribe(resultReviews => {
+      this.serviceReviews = resultReviews.reviews.data;
+      this.serviceMeta = resultReviews.reviews.meta.pagination;
+    });
+  }
+  getUserReviews(){
+    this.serveUpService.getUserReviews(this.user.id).subscribe(resultReviews => {
+      this.userReviews = resultReviews.reviews.data;
+      this.userMeta = resultReviews.reviews.meta.pagination;
+    });
+  }
+  goToUserReviews(){
+    this.router.navigate(['/account/personal-profile']);
+  }
+  goToServiceReviews(){
+    this.router.navigate(['/account/service-profile']);
   }
 }

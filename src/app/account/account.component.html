@@ -1,103 +1,107 @@
-<div *ngIf="user"  id="accountWrap">
+<div *ngIf="user" id="accountWrap">
   <div class="columnLayout">
     <div class="left">
-      <form [formGroup]="formuser">
       <div class="usercard">
         <div class="userblock">
-        <div *ngIf="cardEdit !== 'formuser'" class="actions">
-          <a (click)="cardEdit = 'formuser'"><span class="fa fa-pencil-alt"></span></a>
-        </div>
-        <div class="imgUpload">
-          <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
-                              [disabled]="cardEdit !== 'formuser'" [image]="user.picture"
-                              [options]="{width: '100px', height: '100px', 'border-radius': '50%', 'border-width' : '2px'}"></app-image-uploader>
-        </div>
-
-        <!-- EDIT TEMPLATE -->
-        <div class="username edit" *ngIf="cardEdit === 'formuser'">
-          <input [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
-                 formControlName="fname" class="editable" value="Nick" id="fname"
-                 placeholder="Voornaam"/>
-          <input [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
-                 formControlName="name" class="editable" id="name" placeholder="Achternaam"/>
-          <input [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
-                 formControlName="email" class="editable" readonly id="email" placeholder="Email"/>
-          <input [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
-                 formControlName="address" class="editable" id="address" placeholder="Adres"/>
-          <div class="autofill" [formGroupName]="'city'">
-            <app-autofill-cities [id]="'userCity'" [readonly]="false" [group]="formuser.controls['city']"></app-autofill-cities>
+          <div class="userPicture">
+            <img *ngIf="user.picture" src="{{user.picture}}"/>
+            <div *ngIf="!user.picture" class="defaultLogo">
+              <span>{{user.fname.charAt(0)}}</span>
+            </div>
           </div>
 
-          <textarea formControlName="introduction" id="introduction" class="editable"
-                    placeholder="Stel jezelf kort voor..."></textarea>
-          <div class="editactions">
-            <button (click)="cancelEditMode('formuser', 'user')" class="button">Annuleer</button>
-            <button [disabled]="!formuser.valid" (click)="saveUser('formuser')" type="submit" class="button">Opslaan
-            </button>
+          <div class="username">
+            <h1>{{user.fname}} {{user.name}}</h1>
+            <div class="place">
+              <small>{{user.city.zip}}, {{user.city.name}}</small>
+            </div>
+            <div class="bio">
+              <h3>Over mezelf</h3>
+              <p *ngIf="user.introduction">{{user.introduction}}</p>
+              <p *ngIf="!user.introduction">Geen introductie beschikbaar...</p>
+            </div>
           </div>
-        </div>
-        <!-- END EDIT TEMPLATE -->
-
-        <div class="username" *ngIf="cardEdit !== 'formuser'">
-          <h1>{{formuser.controls.fname.value}} {{formuser.controls.name.value}}</h1>
-          <div class="place">
-            <small>{{formuser.controls.city.controls.zip.value}}, {{formuser.controls.city.controls.name.value}}</small>
-          </div>
-          <div class="bio">
-            <h3>Over mezelf</h3>
-            <p *ngIf="formuser.controls.introduction.value">{{formuser.controls.introduction.value}}</p>
-            <p *ngIf="!formuser.controls.introduction.value">Je hebt niets te zeggen...</p>
-          </div>
-        </div>
           <div class="addService">
-            <button (click)="showAddService()" class="button btnstyle2 fullWidth">Voeg een service toe</button>
+            <button *ngIf="user.service.length < 5 && user.role == 'service'" (click)="showAddService()"
+                    class="button btnstyle2 fullWidth">Voeg een service toe
+            </button>
+            <button *ngIf="user.role == 'user'" (click)="upgradeAccount()"
+                    class="button btnstyle2 fullWidth">Upgrade account
+            </button>
           </div>
         </div>
         <div class="serviceSelectWrap">
           <div class="serviceSelectProfile">
-            <app-service-select (selectedService)="setService($event)" [id]="'selectserviceprofile'" [services]="services"></app-service-select>
+            <app-service-select *ngIf="user.service.length > 0 && user.role == 'service'"
+                                (selectedService)="setService($event)" [id]="'selectserviceprofile'"
+                                [services]="services"></app-service-select>
           </div>
         </div>
       </div>
-      </form>
 
 
       <div class="submenuprofile">
         <ul>
-          <li class="current">
-            <a>Service instellingen</a>
-          </li>
-          <li>
+          <li [class.current]="subnav === 'personal'" routerLink="/account/personal">
             <a>Persoonlijke instellingen</a>
           </li>
-          <li>
-            <a>Service reviews</a>
+          <li *ngIf="user.service.length > 0 && user.role == 'service'" routerLink="/account/service"
+              [class.current]="subnav === 'service'">
+            <a>Service instellingen</a>
           </li>
-          <li>
-            <a>Persoonlijke reviews</a>
+          <li [class.current]="subnav === 'personal-profile'" routerLink="/account/personal-profile">
+            <a>Persoonlijke account</a>
+          </li>
+          <li (click)="getServiceReviews()" *ngIf="user.service.length > 0 && user.role == 'service'" [class.current]="subnav === 'service-profile'"
+              routerLink="/account/service-profile">
+            <a>Service account</a>
           </li>
         </ul>
       </div>
 
     </div>
-    <div class="right serviceSettings" *ngIf="user.service.length > 0">
-      <div class="card details row-span-2">
-        <app-service-details #serviceDetail class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-details>
+    <div *ngIf="subnav === 'service'">
+      <div class="right serviceSettings" *ngIf="user.service.length > 0 && user.role == 'service'">
+        <div class="card details row-span-2">
+          <app-service-details (goToServiceReviews)="goToServiceReviews()" #serviceDetail class="componentwrap" [formservice]="formService"
+                               [service]="selectedService" (saveService)="saveService()"></app-service-details>
+        </div>
+        <div class="card description col-span-2">
+          <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService"
+                                   (saveService)="saveService()"></app-service-description>
+        </div>
+        <div class="card">
+          <app-service-travel class="componentwrap" #serviceTravel [service]="selectedService"
+                              [formservice]="formService" (saveService)="saveService()"></app-service-travel>
+        </div>
+        <div class="card">
+          <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService"
+                                      (saveService)="saveService()"></app-service-business-hours>
+        </div>
+        <div class="card servicepricecard">
+          <app-service-price #servicePrice class="componentwrap" [service]="selectedService" [formservice]="formService"
+                             (saveService)="saveService()"></app-service-price>
+        </div>
       </div>
-      <div class="card description col-span-2">
-        <app-service-description class="componentwrap" [formservice]="formService" [service]="selectedService" (saveService)="saveService()"></app-service-description>
-      </div>
-      <div class="card">
-        <app-service-travel class="componentwrap" #serviceTravel [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-travel>
-      </div>
-      <div class="card">
-        <app-service-business-hours class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-business-hours>
-      </div>
-      <div class="card servicepricecard">
-       <app-service-price #servicePrice class="componentwrap" [service]="selectedService" [formservice]="formService" (saveService)="saveService()"></app-service-price>
-      </div>
-
     </div>
+
+    <div class="userSettings" *ngIf="subnav === 'personal'">
+      <div class="inneruser">
+        <div class="card userdetails">
+          <app-user-details (goToUserReviews)="goToUserReviews()" [user]="user" [formuser]="formuser" [passform]="formchangePass" (changePassword)="changePassword()" (saveUser)="saveUser()"></app-user-details>
+        </div>
+      </div>
+    </div>
+
+    <div class="right serviceprofile" *ngIf="subnav === 'service-profile'">
+        <app-profile #serviceProfile (loadmoreReviews)="loadMoreServiceReviews($event)"  *ngIf="selectedService" [reviewMeta]="serviceMeta" [reviews]="serviceReviews" [service]="selectedService" [user]="user"></app-profile>
+    </div>
+
+    <div class="right serviceprofile" *ngIf="subnav === 'personal-profile'">
+      <app-profile #userProfile (loadmoreReviews)="loadMoreUserReviews($event)" [reviewMeta]="userMeta" [reviews]="userReviews" [user]="user"></app-profile>
+    </div>
+
   </div>
 </div>
-<app-add-service-modal (onAdd)="addService($event)" *ngIf="showServiceAdd" (onclose)="showServiceAdd = false" [show]="showServiceAdd"></app-add-service-modal>
+<app-add-service-modal (onAdd)="addService($event)" *ngIf="showServiceAdd" (onclose)="showServiceAdd = false"
+                       [show]="showServiceAdd"></app-add-service-modal>

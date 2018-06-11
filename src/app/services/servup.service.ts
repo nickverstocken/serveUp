@@ -32,6 +32,10 @@ export class ServupService {
     return this.api.get(`/categories?include=${includes}`);
   }
 
+  getCategory(id): Observable<any> {
+    return this.api.get(`/categories/${id}`);
+  }
+
   searchCategories(searchTerm): Observable<any> {
     return this.api.get(`/subcategories?search=${searchTerm}`);
   }
@@ -62,6 +66,9 @@ export class ServupService {
   changePass(form): Observable<any> {
     return this.api.post('/user/changepassword', form);
   }
+  getUser(id): Observable<any> {
+    return this.api.get(`/user/${id}`);
+  }
 
   //service
   updateService(id, form): Observable<any> {
@@ -73,6 +80,9 @@ export class ServupService {
   }
   addService(form): Observable<any> {
     return this.api.post(`/service/save`, form);
+  }
+  getService(id): Observable<any> {
+    return this.api.get(`/service/${id}`);
   }
   //request
   saveRequest(form): Observable<any> {
@@ -158,5 +168,19 @@ export class ServupService {
   //reviews
   saveReview(offerid, fields){
     return this.api.post(`/offer/${offerid}/review`, fields);
+  }
+  getUserReviews(userId, page?){
+    let pageurl = '';
+    if(page){
+      pageurl = `?page=${page}`;
+    }
+    return this.api.get(`/user/${userId}/reviews${pageurl}`);
+  }
+  getServiceReviews(serviceId, page?){
+    let pageurl = '';
+    if(page){
+      pageurl = `?page=${page}`;
+    }
+    return this.api.get(`/service/${serviceId}/reviews${pageurl}`);
   }
 }

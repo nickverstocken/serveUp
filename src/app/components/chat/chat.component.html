@@ -3,7 +3,7 @@
     <div *ngFor="let message of messages">
       <div *ngIf="message.receiver_id=== user.id && message.type !== 'info' && offerId == message.message_id"  class="message">
         <div class="userwrap">
-          <div class="userPicture">
+          <div routerLink="/profile/{{message.sender.id}}"  class="userPicture">
             <img *ngIf="message.sender.picture_thumb" src="{{message.sender.picture_thumb}}"/>
             <div *ngIf="!message.sender.picture_thumb" class="defaultLogo">
               <span>{{message.sender.fname.charAt(0)}}</span>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="userwrap">
-        <div class="userPicture">
+        <div routerLink="/profile/{{message.sender.id}}"  class="userPicture">
           <img *ngIf="message.sender.picture_thumb" src="{{message.sender.picture_thumb}}"/>
           <div *ngIf="!message.sender.picture_thumb" class="defaultLogo">
             <span>{{message.sender.fname.charAt(0)}}</span>
@@ -55,7 +55,7 @@
     </div>
   </div>
   <div *ngIf="showReviewbutton"  class="reviewSection">
-    <button (click)="writeReview.emit()" class="button btnWithIcon"><span class="far fa-star"></span> Schrijf een review
+    <button (click)="writeReview.emit()" class="button btnstyle2 btnWithIcon"><span class="far fa-star"></span> Schrijf een review
     </button>
   </div>
   <div class="messageInput">

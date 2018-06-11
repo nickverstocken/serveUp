@@ -14,10 +14,9 @@
     </div>
     <div class="namereview">
       <h2>{{service.name}}</h2>
-      <div class="reviewScore">
-        <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
-        class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-        <span class="reviewCount">7</span>
+      <div class="reviewScore" (click)="srcollToReviews()">
+        <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="service.rating >= i+1"></span>
+        <span class="reviewCount">{{service.number_ratings}}</span>
       </div>
     </div>
   </div>
@@ -62,9 +61,49 @@
   </div>
   <div id="reviews" class="details">
     <h2>Reviews</h2>
-    <app-reviews></app-reviews>
+      <app-reviews (loadmore)="loadMore($event)" [reviews]="reviews" [meta]="reviewMeta"></app-reviews>
   </div>
 </div>
 <div *ngIf="user && !service">
-  <h1>Gebruikers profiel</h1>
+  <div id="topPart" class="usertoppart">
+
+    <div class="profilePicture">
+      <div class="profilePictureImage">
+        <img *ngIf="user.picture"
+             src="{{user.picture}}" alt="{{user.fname + ' profile picture'}}"/>
+        <img *ngIf="!user.picture" src="assets/images/defaultProfile.jpg"/>
+      </div>
+    </div>
+    <div class="namereview">
+      <h2>{{user.fname}} {{user.name}}</h2>
+      <div class="reviewScore" (click)="srcollToReviews()">
+        <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="user.rating >= i+1"></span>
+        <span class="reviewCount">{{user.number_ratings}}</span>
+      </div>
+    </div>
+  </div>
+  <div id="aboutDetails" class="details">
+    <div id="about">
+      <h2>Over</h2>
+      <p id="abouttext" *ngIf="user.introduction">
+        {{user.introduction}}
+      </p>
+      <p id="abouttext" *ngIf="!user.introduction">
+        Geen introductie beschikbaar...
+      </p>
+    </div>
+  </div>
+  <div id="contactDetails" class="details">
+    <h2>Contact</h2>
+    <div class="listContact">
+      <ul>
+        <li  *ngIf="user.address"><span class="fas fa-map-pin"></span><span class="label">Adres </span><span class="text">{{user.address}}, {{user.city.zip}} {{user.city.name}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="reviews" class="details">
+    <h2>Reviews</h2>
+    <app-reviews (loadmore)="loadMore($event)" [reviews]="reviews" [meta]="reviewMeta"></app-reviews>
+  </div>
 </div>

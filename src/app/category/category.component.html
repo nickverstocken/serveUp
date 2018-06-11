@@ -1,3 +1,18 @@
-<p>
-  category works!
-</p>
+<div class="categoriesWrap" *ngIf="category">
+  <div class="banner">
+    <img [src]="category.picture + '_bg.jpg'" alt="heroImage">
+    <div class="bannerContent">
+      <div class="center-block">
+        <h1>
+          {{category.name }}
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="subcatswrap">
+    <div routerLink="/search/{{subcat.id}}" class="subcat card" *ngFor="let subcat of category.subcategories">
+      <a><h3>{{subcat.name}}</h3></a>
+    </div>
+  </div>
+</div>
+

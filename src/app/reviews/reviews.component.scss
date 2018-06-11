@@ -1,0 +1,14 @@
+@import '../../color';
+.loadmorewrap{
+  text-align: center;
+  padding:15px;
+  background: $backgroundColor;
+  margin-left: -35px;
+  margin-right: -35px;
+}
+.reviewItem{
+  padding-top:25px;
+  padding-bottom: 25px;
+  border-top: 1px solid $borderColor;
+  text-align: center;
+}

@@ -134,6 +134,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       if(notification.data.action === 'declined'){
         to = 'projects';
       }
+      if(notification.data.action === 'hired'){
+        to = 'inbox?filter=hired';
+      }
     }
     return '/' + to;
   }

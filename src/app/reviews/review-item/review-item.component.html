@@ -1,0 +1,31 @@
+<div class="reviewItem">
+  <div class="reviewHead">
+    <div class="profilePicture">
+      <div class="profilePictureImage">
+        <div class="userPicture" routerLink="/profile/{{review.reviewer.id}}">
+          <img *ngIf="review.reviewer.picture_thumb" src="{{review.reviewer.picture_thumb}}"/>
+          <div *ngIf="!review.reviewer.picture_thumb" class="defaultLogo">
+            <span>{{review.reviewer.fname.charAt(0)}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="imageDate">
+      <div class="username">
+        <h4 routerLink="/profile/{{review.reviewer.id}}">{{review.reviewer.fname}} {{review.reviewer.name}}</h4>
+      </div>
+      <div class="rate">
+        <span>{{review.created_at | date:'EEEE d MMM, y' }}</span>
+      </div>
+    </div>
+    <div class="reviewScore">
+      <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="review.rating >= i+1"></span>
+
+    </div>
+  </div>
+  <div class="reviewBody">
+    <p class="reviewText">
+      {{review.comment}}
+    </p>
+  </div>
+</div>

@@ -4,7 +4,9 @@
 //  overflow: auto;
 
 }
-
+#abouttext{
+  text-align: center;
+}
 .profileBanner {
   img {
     width: 100%;
@@ -12,7 +14,12 @@
     object-fit: cover;
   }
 }
-
+.usertoppart{
+  .profilePicture {
+    margin-top: 0px;
+    padding-top: 15px;
+  }
+}
 .profilePicture {
   margin-top: -75px;
 }

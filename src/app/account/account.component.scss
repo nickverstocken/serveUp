@@ -1,5 +1,7 @@
 @import '../../color';
-
+li{
+  outline:none;
+}
 #accountWrap{
   max-width: 1200px;
   margin: 0 auto;
@@ -31,6 +33,10 @@
       grid-gap: 15px;
       grid-template-columns: repeat(auto-fit, minmax(244px, 2fr));
       grid-auto-flow: row;
+      &.serviceprofile{
+        padding:0;
+        background: #fff;
+      }
     }
   }
   .usercard{
@@ -64,6 +70,19 @@
   }
   .imgUpload{
     align-self: center;
+  }
+  .card .userPicture, .usercard .userPicture, .usercard .userPicture .defaultLogo{
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    margin: 0 auto;
+    img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+    }
   }
   input, textarea, app-autofill-cities {
     margin-bottom: 5px;
@@ -143,7 +162,6 @@
         color:$titleColor;
       }
     }
-
   }
   .card{
     background: #fff;
@@ -172,9 +190,6 @@
         outline:0;
         border-radius: $borderRadius;
       }
-    }
-    &.details{
-
     }
   }
   .col-span-2{
@@ -215,6 +230,24 @@
   .addService{
     text-align: center;
     margin-top: 15px;
+  }
+  .userSettings{
+    flex: 1 auto;
+    max-height: 100%;
+    overflow: auto;
+    border-right: 1px solid $borderColor;
+    background: $backgroundColor;
+
+    .inneruser{
+
+    }
+    .card{
+      height: auto;
+      margin: 15px;
+      &.description{
+        flex:1 auto;
+      }
+    }
   }
 }
 

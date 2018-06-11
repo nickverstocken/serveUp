@@ -13,13 +13,15 @@ export class ServiceSelectComponent implements OnInit, OnDestroy {
   @Input() services: Service[];
   @Input() id =  'headerServiceSelect';
   @Output() selectedService: EventEmitter<Service> = new EventEmitter();
+  sub;
   constructor(private serveUpService: ServupService) {
   }
   ngOnDestroy(){
     this.services = [];
+    this.sub.unsubscribe();
   }
   ngOnInit() {
-    this.serveUpService.selectedService.subscribe(
+    this.sub = this.serveUpService.selectedService.subscribe(
       result => {
         const serviceId: Number = parseInt(result);
         if(serviceId !== -1){

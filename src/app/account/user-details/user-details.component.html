@@ -1,0 +1,101 @@
+<form class="servicedetail" [formGroup]="formuser">
+  <div class="flex-column">
+    <div class="flex-auto">
+      <div class="imgUpload">
+        <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
+                            [disabled]="!editting" [image]="user.picture"
+                            [options]="{width: '100px', height: '100px', 'border-radius': '50%', 'border-width' : '2px'}"></app-image-uploader>
+      </div>
+      <div class="servicename">
+        <h2 *ngIf="!editting">
+          {{formuser.controls['fname'].value}} {{formuser.controls['name'].value}}
+        </h2>
+        <div  *ngIf="editting" class="formbody">
+          <label>Voornaam*</label>
+          <input [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
+                 formControlName="fname" class="editable" value="Nick" id="fname"
+                 placeholder="Voornaam" [readonly]="!editting" />
+          <label>Naam*</label>
+          <input [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
+                 formControlName="name" class="editable" id="name" placeholder="Achternaam" [readonly]="!editting" />
+        </div>
+
+      </div>
+      <div *ngIf="!editting"  class="reviewScore" (click)="goToReviews()">
+        <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="user.rating >= i+1"></span>
+        <span class="reviewCount">{{user.number_ratings}}</span>
+      </div>
+      <div class="formbody">
+        <label>Email*</label>
+        <input [class.disabled]="!editting" [readonly]="!editting" [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
+               formControlName="email" class="editable" id="email" placeholder="Email"/>
+        <label>Adres*</label>
+        <input [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
+               formControlName="address"  class="editable" id="service_address" placeholder="Adres" [class.disabled]="!editting" [readonly]="!editting"  />
+        <div [formGroupName]="'city'">
+          <app-autofill-cities [id]="'userCity'" [readonly]="!editting"  [group]="formuser.controls['city']"></app-autofill-cities>
+        </div>
+        <label>Introductie</label>
+        <textarea formControlName="introduction" id="introduction" class="editable" [class.disabled]="!editting" [readonly]="!editting"
+                  placeholder="Stel jezelf kort voor..."></textarea>
+        <div class="changePassword">
+          <button (click)="showChangePass = true" [class.disabled]="!editting" [disabled]="!editting" class="button btnstyle2 fullWidth btnWithIcon"><span class="fas fa-key"></span> Wijzig wachtwoord</button>
+          <button routerLink="/profile/{{user.id}}" class="button btnstyle2 fullWidth btnWithIcon"><span class="fas fa-eye"></span> Bekijk profiel</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex-bottom editactions" *ngIf="showActions">
+      <button *ngIf="!editting" (click)="editting = true" class="button">Wijzig</button>
+      <div *ngIf="editting">
+        <button *ngIf="editting" (click)="cancelEdit()" class="button">Annuleer</button>
+        <button *ngIf="editting" (click)="save()" [disabled]="!formuser.valid"  class="button">Wijzig</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<a *ngIf="showChangePass" class="overlay" (click)="closeChangePass()" [class.opened]="showChangePass"></a>
+<div *ngIf="showChangePass" [class.opened]="showChangePass" class="modalContainer">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="closeChangePass()" class="close">
+        <span class="fas fa-times"></span>
+      </div>
+      <h2><span>Wijzig wachtwoord</span></h2>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <div class="card passCard">
+          <form [formGroup]="passform" >
+            <label>Huidig wachtwoord*</label>
+            <input [class.has-error]="!passform.controls['password'].valid && passform.controls['password'].touched"
+                   formControlName="password" class="editable" type="password" id="password"
+                   placeholder="Huidig wachtwoord" [class.disabled]="!editting" [readonly]="!editting" />
+            <label>Nieuw wachtwoord*</label>
+            <input
+              [class.has-error]="!passform.controls['new_password'].valid && passform.controls['new_password'].touched"
+              formControlName="new_password" validateEqual="new_password_confirmation" reverse="true" class="editable" id="new_password"
+              placeholder="Nieuw wachtwoord" type="password" [class.disabled]="!editting" [readonly]="!editting" />
+            <label>Bevestig nieuw wachtwoord*</label>
+            <input
+              [class.has-error]="!passform.controls['new_password_confirmation'].valid && passform.controls['new_password_confirmation'].touched"
+              formControlName="new_password_confirmation" validateEqual="new_password" reverse="true" class="editable" readonly id="new_password_confirmation"
+              placeholder="Herhaal nieuw wachtwoord" type="password" [class.disabled]="!editting" [readonly]="!editting" />
+
+          </form>
+          <div class="editactions">
+            <button (click)="closeChangePass()" class="button">Annuleer</button>
+            <button (click)="changePass()" [class.disabled]="!passform.valid"  class="button">OK</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="editPass">
+
+</div>-->
+

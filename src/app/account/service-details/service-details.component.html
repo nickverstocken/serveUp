@@ -15,11 +15,11 @@
                                                                      formControlName="name"  class="editable notvisible" placeholder="Naam*" [readonly]="!editting" >
       </h2>
     </div>
-    <div class="reviewScore">
-      <span class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span
-      class="fas fa-star filled"></span><span class="fas fa-star filled"></span><span class="fas fa-star half"></span>
-      <span class="reviewCount">7</span>
-    </div>
+
+      <div class="reviewScore" (click)="goToReviews()">
+        <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="service.rating >= i+1"></span>
+        <span class="reviewCount">{{service.number_ratings}}</span>
+      </div>
 
     <div class="formbody">
       <label>Adres*</label>
@@ -44,6 +44,9 @@
       </div>
       <div *ngIf="formservice.controls.social_networks.controls.length === 0">
         <small>Geen sociale netwerken toegevoegd.</small>
+      </div>
+      <div class="showprofile">
+        <button routerLink="/service/{{service.id}}" class="button btnstyle2 fullWidth btnWithIcon"><span class="fas fa-eye"></span> Bekijk profiel</button>
       </div>
     </div>
     </div>

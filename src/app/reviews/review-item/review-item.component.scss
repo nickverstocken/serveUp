@@ -1,4 +1,4 @@
-@import '../../../../color';
+@import '../../../color';
 .reviewItem{
   padding-top:25px;
   padding-bottom: 25px;
@@ -6,6 +6,7 @@
 }
 .reviewHead{
   display: flex;
+  align-items: center;
   margin-bottom: 15px;
 }
 .rate{
@@ -21,6 +22,9 @@ h4{
 }
 .imageDate{
   margin-right: 15px;
+  .username{
+    cursor:pointer;
+  }
 }
 .reviewScore{
   margin-left: auto;

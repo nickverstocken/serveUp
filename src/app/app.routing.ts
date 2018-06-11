@@ -10,6 +10,7 @@ import {InboxComponent} from './inbox/inbox.component';
 import {AccountComponent} from './account/account.component';
 import {EventCalendarComponent} from './event-calendar/event-calendar.component';
 import {CategoryComponent} from './category/category.component';
+import {ServiceProfileComponent} from './service-profile/service-profile.component';
 
 const appRoutes: Routes = [
   // otherwise redirect to home
@@ -20,8 +21,10 @@ const appRoutes: Routes = [
   { path: 'category/:id', component: CategoryComponent},
   { path: 'projects', component: ProjectsComponent},
   { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
-  { path: 'profile', component: AccountComponent},
-  {path: 'account', component: UserProfileComponent},
+  { path: 'profile/:id', component: UserProfileComponent},
+  { path: 'service/:id', component: ServiceProfileComponent},
+  {path: 'account', component: AccountComponent},
+  {path: 'account/:subnav', component: AccountComponent},
   { path: 'inbox', component: InboxComponent},
   { path: 'calendar', component: EventCalendarComponent },
   { path: '**', redirectTo: ''}
