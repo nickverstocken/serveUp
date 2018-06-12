@@ -1,19 +1,37 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ServupService} from '../../services/servup.service';
+import {PusherService} from '../../services/pusher.service';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-request-card',
   templateUrl: './request-card.component.html',
   styleUrls: ['./request-card.component.scss']
 })
-export class RequestCardComponent implements OnInit {
+export class RequestCardComponent implements OnInit, AfterViewInit {
   @Input() request;
   @Output() onDeleted: EventEmitter<any> = new EventEmitter<any>();
+  @Input() sender: User;
   editmode = false;
-
-  constructor(private servupService: ServupService) { }
+  chatSub;
+  receivedMsg;
+  constructor(private servupService: ServupService, private pusherService: PusherService) { }
 
   ngOnInit() {
+
+  }
+  ngAfterViewInit(){
+    this.chatSub = this.pusherService.chatChannel.bind('App\\Events\\MessageSent', result => {
+      console.log(result);
+      this.receivedMsg = result;
+      if(result.message_type === 'App\\Offer' && result.receiver.id === this.sender.id){
+        const offer = this.request.offers.filter(item => item.id === result.message_id)[0];
+        if(offer){
+          offer.new_messages += 1;
+        }
+
+      }
+    });
   }
   editMode(){
     if(!this.editmode){

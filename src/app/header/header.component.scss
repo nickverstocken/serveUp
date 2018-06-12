@@ -143,12 +143,14 @@
     z-index:4;
     margin: 0;
     padding: 0;
+    max-height: 300px;
+    overflow: auto;
     transform: translateY(0%);
     transition: all 0.2s ease;
-    &.hideSubnav, &.hideNoti{
+    @include boxShadowMedium;
+    &.hideSubnav, &.hideNoti, &.closed{
       transform: translateY(calc(-100% - 6px));
     }
-    @include boxShadowMedium;
     li{
       display: block;
       a {
@@ -175,12 +177,13 @@
   }
   .notiBadge{
     top:10px;
-    right:8px;
+    left:28px;
+    right:auto;
   }
   .icon{
     width:25px;
     height:25px;
-    font-size: 20px;
+    font-size: 22px;
     color:$textColor;
     border-radius: 50%;
     display: flex;
@@ -236,6 +239,14 @@
     }
   }
 }
+.subnav.messages{
+  .notificationText{
+    align-items: initial;
+    .notiText{
+      padding-top: 5px;
+    }
+  }
+}
 .notificationText{
   padding:10px 20px;
   border-bottom: 1px solid $borderColor;
@@ -265,6 +276,9 @@
 }
 
 @media all and (max-width:800px) {
+  .navigation{
+    padding-right: 10px;
+  }
   .menumobile{
     display: inline-block;
     padding:20px;
@@ -273,20 +287,22 @@
   .loggedIn{
     .logo{
       position: relative;
-      left:50%;
-      transform: translateX(calc(-50% - 54px));
       a{
-        justify-content: center;
+
       }
     }
   }
   .notification{
-    padding:20px;
+    padding:20px 10px;
     position: relative;
-    margin-left: auto;
+    &.autoleft{
+      margin-left: auto;
+    }
+
     .notiBadge{
       top:12px;
-      right:15px;
+      left:23px;
+      right:auto;
     }
   }
 

@@ -5,6 +5,7 @@ import {User} from '../models/User';
 import {environment} from '../../environments/environment.prod';
 import {ServupService} from '../services/servup.service';
 import {PusherService} from '../services/pusher.service';
+import {Chatmessage} from '../models/Chatmessage';
 
 declare var $: any;
 @Component({
@@ -31,10 +32,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   pushersub;
   currentUserSub;
   services = [];
+  showMessages = false;
+  messageCount;
+  messages: Chatmessage[];
   constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    this.hideAll();
     this.innerWidth = window.innerWidth;
     if (this.innerWidth <= 800) {
       this.mobile = true;
@@ -147,5 +152,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.unreadnoti = result.unread;
       this.router.navigate([route]);
     });
+  }
+  toggleMessages(){
+    this.showMessages = !this.showMessages;
+  }
+  hideAll(){
+    this.showNoti = 'hideNoti';
+    this.showSubnav = 'hideSubnav';
   }
 }

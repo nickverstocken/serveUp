@@ -147,6 +147,9 @@ export class ServupService {
   getMessages(id): Observable<any> {
     return this.api.get(`/offer/${id}/messages`);
   }
+  markMessagesAsRead(offerid): Observable<any> {
+    return this.api.get(`/offer/${offerid}/messages/markasread`);
+  }
 
   //appointment
   saveAppointMent(appointment): Observable<any> {

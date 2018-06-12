@@ -10,8 +10,11 @@
     </div>
   </div>
   <div class="subcatswrap">
-    <div routerLink="/search/{{subcat.id}}" class="subcat card" *ngFor="let subcat of category.subcategories">
-      <a><h3>{{subcat.name}}</h3></a>
+    <div routerLink="/search/{{subcat.id}}" class="subcat" *ngFor="let subcat of category.subcategories; let i = index">
+      <div class="block">
+        <a><h3>{{subcat.name}}</h3></a>
+      </div>
+
     </div>
   </div>
 </div>

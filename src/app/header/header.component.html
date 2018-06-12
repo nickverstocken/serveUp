@@ -13,15 +13,16 @@
       <i class="fas fa-bars"></i>
     </a>
     <div class="logo"><a href="">Serve Up!</a></div>
-    <a (click)="toggleNoti()"  class="notification" *ngIf="mobile"><span class="icon fas fa-bell"></span><span *ngIf="unreadnoti > 0" class="notiBadge">{{unreadnoti}}</span></a>
+    <a (click)="toggleMessages()" class="notification autoleft" *ngIf="mobile"><span class="icon fas fa-comments"></span><span class="notiBadge">5</span></a>
+    <a (click)="toggleNoti()"  class="notification" *ngIf="mobile"><span class="icon fas fa-bell"></span><span *ngIf="unreadnoti > 0 "  class="notiBadge">{{unreadnoti}}</span></a>
 
     <ul *ngIf="!mobile">
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
-      <li><a routerLink="/inbox">Inbox</a></li>
       <li><a routerLink="calendar">Mijn afspraken</a></li>
-      <li (click)="toggleNoti()" id="notification"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
-      <li (click)="toggleSubNav()" id="user"><a>
+      <li  id="notification" (click)="toggleMessages()"> <a class="notification autoleft"><span class="icon fas fa-comments"></span><span class="notiBadge">5</span></a></li>
+      <li (click)="toggleNoti()"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
+      <li (click)="toggleSubNav()" id="user" class="userHeader"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
         <span class="userImageThumb" *ngIf="!user.picture_thumb"><div
           class="defaultProfile">{{user.fname.charAt(0)}}</div></span>
@@ -46,7 +47,6 @@
       <li><a routerLink="account"><span class="lnr lnr-user"></span>Profiel</a></li>
       <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
       <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
-      <li ><a routerLink="/inbox"><span class="lnr lnr-inbox"></span>Inbox</a></li>
       <li><a routerLink="calendar"><span class="lnr lnr-calendar-full"></span>Mijn afspraken</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
@@ -54,7 +54,7 @@
 
   <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" [class.hidden]="mobileMenu !== 'opened'" class="overlay {{mobileMenu}}"></a>
 
-  <div *ngIf="!mobile" class="subnav {{showSubnav}}">
+  <div  (clickOutside)="showSubnav = 'hideSubnav'" [exclude]="'.userHeader'"  *ngIf="!mobile" class="subnav {{showSubnav}}">
     <div id="userInfo">
       <div id="info">
         <div class="userImageMedium">
@@ -79,8 +79,7 @@
       <button class="button btnstyle2" (click)="logout()">Uitloggen</button>
     </div>
   </div>
-  <div class="subnav {{showNoti}}">
-
+  <div (clickOutside)="showNoti = 'hideNoti'" [exclude]="'.fa-bell,.notiBadge'" class="subnav {{showNoti}}">
     <div *ngIf="unreadnoti > 0">
       <div (click)="markasReadAndRedirect(noti)" class="notificationText" *ngFor="let noti of notifications">
         <div class="user">
@@ -112,4 +111,24 @@
       </div>
     </div>
   </div>
+
+  <div (clickOutside)="showMessages = false" [exclude]="'.fa-comments,.notiBadge'" class="subnav messages" [class.closed]="!showMessages">
+    <div>
+      <div routerLink="/inbox" class="notificationText">
+        <div class="user">
+          <!--<span class="userImageThumb" *ngIf="message.sender.picture"><img src="{{message.sender.picture}}"/></span>-->
+          <span class="userImageThumb"><div
+            class="defaultProfile">N</div></span>
+        </div>
+        <div class="notiText">
+          <h4>service of user</h4>
+          <div class="notiDescription">
+            Test
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 </header>

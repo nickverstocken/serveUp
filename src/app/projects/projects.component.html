@@ -4,7 +4,7 @@
     <div class="seperator"></div>
   </div>
   <div class="cardsWrap">
-      <app-request-card *ngFor="let request of requests" [request]="request" (onDeleted)="deletedReq($event)"></app-request-card>
+      <app-request-card *ngFor="let request of requests" [request]="request" [sender]="user" (onDeleted)="deletedReq($event)"></app-request-card>
   </div>
 </div>
 <div class="footer">

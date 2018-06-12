@@ -72,6 +72,11 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     });
 
   }
+  markMessagesAsRead(id){
+    this.serveUpService.markMessagesAsRead(id).subscribe(result => {
+
+    });
+  }
 
   ngAfterViewInit() {
     const links = document.getElementsByTagName('a');
@@ -86,6 +91,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
         this.currentOffer = result.offer;
         this.getOfferMessages(id);
         this.getServiceReviews(this.currentService.id);
+        this.markMessagesAsRead(id);
       },
       error => {
         if (error.status === 404) {

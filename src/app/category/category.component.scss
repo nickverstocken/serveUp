@@ -1,30 +1,39 @@
+@import "../../color";
 .banner{
   height:400px;
 }
 .subcatswrap{
   max-width: 1024px;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding-top: 25px;
+display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(250px, 1fr) );
+  border: 1px solid $borderColor;
+  grid-gap: 1px;
+  margin-top: 25px;
+  background: $borderColor;
   .subcat{
-    flex: 0 calc(33% - 16px);
     min-width: 200px;
     padding: 15px;
     white-space: nowrap;
+    outline: 0;
     overflow: hidden;
+    background: #fff;
     a{
       display: block;
       text-decoration: none;
     }
     h3{
-      font-weight: 300;
+      font-weight: 700;
+      font-size: 16px;
       margin: 0;
       overflow: hidden;
       max-width: 100%;
+      color:$titleColor;
       text-overflow: ellipsis;
+      &:hover{
+        color:$orange;
+        text-decoration: underline;
+      }
     }
   }
 }
