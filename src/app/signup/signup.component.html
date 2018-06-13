@@ -1,64 +1,99 @@
 <div id="signUpWrap">
-  <div class="title">
-    <h1>Registreer en bereik je doel!</h1>
-    <div class="seperator"></div>
-    <div class="smallInfo">
-      <small>{{smallText}}</small>
+  <div class="card">
+    <h2>{{smallText}}</h2>
+    <div id="chooserWrap" *ngIf="choice===''">
+      <div class="chooser">
+        <div routerLink="/register" [queryParams]="{ as: 'service' }" class="left">
+          <h2>Registreer als professional</h2>
+          <p>
+            Kom in contact met juiste klanten voor jouw service en bouw je klantenbestand uit.
+          </p>
+        </div>
+        <div class="seperatorMiddle">
+          <p>
+            of
+          </p>
+        </div>
+        <div routerLink="/register" [queryParams]="{ as: 'user' }" class="right">
+          <h2>Registreer als klant</h2>
+          <p>
+            Zoek en vindt direct de juist service voor jouw project en/of doel.
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-  <div>
+    <div *ngIf="choice === 'user' || choice === 'service'">
+      <form class="servicedetail" [formGroup]="formuser">
+        <div class="flex-column">
+          <div class="flex-auto">
+            <div class="page" *ngIf="page === 1">
 
-  </div>
-  <div id="chooserWrap" *ngIf="choice===''">
-    <div class="chooser">
-      <div class="left">
-        <h2>Ik wil mijn service uitbouwen</h2>
-        <p>
-          Kom in contact met juiste klanten voor jouw service en bouw je klantenbestand uit.
-        </p>
-        <button class="button" routerLink="/register" [queryParams]="{ as: 'service' }">Registreer als service</button>
-      </div>
-      <div class="seperatorMiddle">
-        <p>
-          of
-        </p>
-      </div>
-      <div class="right">
-        <h2>Ik zoek een service</h2>
-        <p>
-          Zoek en vindt direct de juist service voor jouw project en/of doel.
-        </p>
-        <button class="button" routerLink="/register" [queryParams]="{ as: 'user' }" >Registreer als klant</button>
-      </div>
+              <div class="imgUpload">
+                <app-image-uploader #userimgupload [id]="'userimgupld'" (fileload)="userPictureLoad($event)"
+                                    [options]="{width: '90px', height: '90px', 'border-radius': '50%', 'border-width' : '2px'}"></app-image-uploader>
+              </div>
+              <div class="form-group">
+                <input [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
+                       formControlName="fname" class="editable" id="fname"
+                       placeholder="Voornaam"/>
+              </div>
+              <div class="form-group">
+                <input [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
+                       formControlName="name" class="editable" id="name" placeholder="Achternaam"/>
+              </div>
+              <div class="form-group">
+                <input [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
+                       formControlName="email" class="editable" id="email" placeholder="Email"/>
+              </div>
+
+              <div class="buttons">
+                <button (click)="page = 2" class="button"
+                [class.disabled]="!formuser.controls['fname'].valid || !formuser.controls['name'].valid || !formuser.controls['email'].valid"
+                        [disabled]="!formuser.controls['fname'].valid || !formuser.controls['name'].valid || !formuser.controls['email'].valid"
+                >Volgende</button>
+              </div>
+
+            </div>
+            <div class="page" *ngIf="page === 2">
+              <div class="form-group">
+                <input [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
+                       formControlName="address" class="editable" id="service_address" placeholder="Adres"/>
+              </div>
+              <div class="form-group">
+                <div [formGroupName]="'city'">
+                  <app-autofill-cities [readonly]="false" [id]="'userCity'"
+                                       [group]="formuser.controls['city']"></app-autofill-cities>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea formControlName="introduction" id="introduction" class="editable"
+                          placeholder="Stel jezelf kort voor...">
+                </textarea>
+              </div>
+            </div>
+            <div class="page" *ngIf="page === 3">
+              <div class="form-group">
+                <input [class.has-error]="!formuser.controls['password'].valid && formuser.controls['password'].touched"
+                       formControlName="password" validateEqual="password_confirmation" reverse="true" class="editable"
+                       type="password" id="password"
+                       placeholder="Wachtwoord"/>
+              </div>
+              <div class="form-group">
+                <input
+                  [class.has-error]="!formuser.controls['password_confirmation'].valid && formuser.controls['password_confirmation'].touched"
+                  formControlName="password_confirmation" validateEqual="password" reverse="true" class="editable"
+                  id="password_confirmation"
+                  placeholder="Herhaal wachtwoord" type="password"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="title">
-      <h1>Heb je al een account?</h1>
-      <div class="seperator"></div>
-      <div class="smallInfo">
-        <small>Log in</small>
-      </div>
-    </div>
-    <div id="loginChooser" class="chooser">
-      <div class="left noBg">
-        <h2>Ready to go</h2>
-        <p>
-          Waar wacht je nog op? Log snel in!
-        </p>
-        <button class="button" routerLink="/home">Log in</button>
-      </div>
-    </div>
   </div>
-  <div *ngIf="choice === 'user'">
-    <app-stepper #stepperUser [completedHeaderText]="'Welkom bij Serve Up!'" [completedHeaderErrorText]="'Oei, dit is gênant...'"  [completedText]="'Bedankt om te registreren! Check gauw je email om deze te bevestigen en ga direct aan de slag'" [completedButtonErrorText]="'Probeer opnieuw'" [completedButtonText]="'Login'"
-                 [errorText]="'Er ging iets mis, probeer het later opnieuw'" [steps]="stepsUser" [lastSteptext]="'Registreer'" (lastStepCallBack)="register($event)"></app-stepper>
-  </div>
-  <div *ngIf="choice === 'service'">
-    <app-stepper #stepperService [completedHeaderText]="'Welkom bij Serve Up!'" [completedHeaderErrorText]="'Oei, dit is gênant...'" [completedText]="'Bedankt om te registreren! Check gauw je email om deze te bevestigen en ga direct aan de slag'" [completedButtonErrorText]="'Probeer opnieuw'" [completedButtonText]="'Login'"
-                 [errorText]="'Er ging iets mis, probeer het later opnieuw'"  [steps]="stepsService" [lastSteptext]="'Registreer'" (lastStepCallBack)="registerService($event)"></app-stepper>
-  </div>
+
+
 </div>
-<div class="footer">
-  <app-footer></app-footer>
-</div>
+
 
 

@@ -535,7 +535,6 @@ input.has-error{
       height:100%;
       left:0;
       top:0;
-      z-index: -1;
       background-repeat: no-repeat;
       background-size: cover;
       transition: all 0.2s ease;
@@ -547,6 +546,7 @@ input.has-error{
     }
     h2, p {
       color:#fff;
+      position: relative;
     }
     h2{
       margin:0;

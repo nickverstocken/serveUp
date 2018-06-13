@@ -31,8 +31,6 @@ export class AuthService {
               .subscribe(data => {
                 this.setAuth(data.user);
               });
-          }else{
-            this.router.navigate(['home']);
           }
       }
     });

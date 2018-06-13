@@ -143,13 +143,41 @@
     z-index:4;
     margin: 0;
     padding: 0;
-    max-height: 300px;
-    overflow: auto;
     transform: translateY(0%);
     transition: all 0.2s ease;
     @include boxShadowMedium;
+    &.noti{
+      max-height: 320px;
+      overflow: auto;
+    }
     &.hideSubnav, &.hideNoti, &.closed{
       transform: translateY(calc(-100% - 6px));
+    }
+
+    .subNavTabs{
+      ul{
+        display: flex;
+        padding: 0;
+        align-items: center;
+        li{
+          padding:7px 0px;
+          flex:0 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color:$textColor;
+          text-align: center;
+          cursor:pointer;
+          background: #fff;
+          border-bottom: 1px solid $borderColor;
+          &.current{
+            color:$blue;
+            font-weight: 700;
+          }
+          &:first-child{
+            border-right: 1px solid $borderColor;
+          }
+        }
+      }
     }
     li{
       display: block;
@@ -240,10 +268,67 @@
   }
 }
 .subnav.messages{
+  .notificationtextwrap{
+    height: 289px;
+    overflow: auto;
+    .user{
+      height:50px;
+    }
+    .notiHeader{
+      display: flex;
+
+      h4{
+        margin: 0;
+        font-weight: 700;
+        margin-top: 0px;
+        font-size: 14px;
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        padding-right: 15px;
+        text-overflow: ellipsis;
+        color:$titleColor;
+      }
+      span{
+        margin-left: auto;
+        font-size: 12px;
+        white-space: nowrap;
+        color:$textColor;
+      }
+    }
+    .notiDescription{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      p{
+        white-space: nowrap;
+        max-width: 100%;
+        padding-right: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        margin-bottom: 2px;
+      }
+      &.unread{
+        font-weight: 700;
+        font-style: italic;
+      }
+    }
+    .offerStatus{
+      font-weight: 700;
+      font-size: 12px;
+      margin-top:0px;
+      display: flex;
+      .price_est{
+        margin-left: auto;
+        color:$textColor;
+      }
+    }
+  }
   .notificationText{
-    align-items: initial;
     .notiText{
-      padding-top: 5px;
+      overflow: hidden;
+      flex:1 auto;
     }
   }
 }

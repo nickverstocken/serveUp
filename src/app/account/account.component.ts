@@ -103,10 +103,10 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.serveUpService.addService(frmData).subscribe(result => {
      this.user.service.push(result.service);
      this.services.push(result.service);
+     this.selectedService = result.service;
      this.serveUpService.serviceAddedSubj.next(result.service);
      this.serveUpService.setSelectedService(result.service.id);
      this.showServiceAdd = false;
-
     });
   }
   buildFormUser(){
@@ -120,6 +120,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
         id: [this.user.city_id, Validators.required],
         name: [this.user.city.name, [Validators.required], ],
         zip: [this.user.city.zip, [Validators.required, Validators.minLength(4)]],
+        lat: [this.user.city.lat],
+        lng: [this.user.city.lng]
       }),
       introduction: [this.user.introduction],
     });
@@ -160,9 +162,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   setService(service: Service) {
     this.selectedService = service;
     this.buidFormService();
-    console.log('get reviews');
     if(this.subnav === 'service-account'){
-      console.log('service reviews');
       this.getServiceReviews();
     }
     if(this.serviceTravel){

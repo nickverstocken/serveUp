@@ -45,7 +45,7 @@
       <div *ngIf="formservice.controls.social_networks.controls.length === 0">
         <small>Geen sociale netwerken toegevoegd.</small>
       </div>
-      <div class="showprofile">
+      <div  *ngIf="showActions" class="showprofile">
         <button routerLink="/service/{{service.id}}" class="button btnstyle2 fullWidth btnWithIcon"><span class="fas fa-eye"></span> Bekijk profiel</button>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { LOCALE_ID } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import {PusherService} from '../services/pusher.service';
 import {User} from '../models/User';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -15,7 +16,7 @@ export class ProjectsComponent implements OnInit {
   chatSub;
   receivedMsg;
   user: User;
-  constructor(private serveUpService: ServupService, private auth: AuthService) { }
+  constructor(private serveUpService: ServupService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.auth.currentUser.subscribe(result => {

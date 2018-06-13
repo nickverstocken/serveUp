@@ -1,30 +1,56 @@
-#signUpWrap{
-  padding:0px 15px;
-  margin-top: 60px;
-  padding-top: 30px;
-  max-width: 1024px;
-  margin:0 auto;
-}
-.title{
-  h1{
-    max-width: 900px;
-    margin:20px auto;
+@import '../../color';
+.card{
+  max-width: 500px;
+  padding:20px;
+  width: 100%;
+  margin: 10px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  h2{
+    margin-top: 0;
+    text-align: center;
   }
-  text-align: center;
-}
-#loginChooser{
-  margin-bottom: 20px;
 }
 
-#profileLabel{
+#signUpWrap{
+  padding: 15px;
+  min-height: calc(100vh - 60px);
+  margin-bottom: -50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/assets/images/signup_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /deep/ input{
+    padding: 10px 15px;
+  }
+  /deep/ .inputswrap.address input:first-child{
+    width:70px;
+  }
+  textarea{
+    height:150px;
+  }
+}
+.buttons{
+  text-align: right;
+}
+app-image-uploader{
+  display: block;
   text-align: center;
+  margin-bottom: 10px;
 }
-#profilePictureWrap{
-  margin-right: 35px;
-}
-#emailLabel{
-  float:left;
-}
-.has-error{
-  float: right;
+.chooser{
+  display: block;
+  text-align: center;
+  margin: 0;
+  .left,.right, .seperatorMiddle{
+    display:block;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+  .seperatorMiddle{
+    margin: 15px 0px;
+  }
 }

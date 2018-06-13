@@ -130,7 +130,6 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
     if (currentOffer) {
       currentOffer.latest_message = event;
     }
-
   }
 
   getOfferMessages(id) {

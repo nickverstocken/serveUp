@@ -22,7 +22,7 @@ export class CategoryComponent implements OnInit {
         this.serveUpService.getCategory(this.catId).subscribe(result => {
           this.category = result.category.data;
           this.category.subcategories = result.category.data.subcategories.data;
-          console.log(this.category);
+
           },
           error => {
             this.location.back();

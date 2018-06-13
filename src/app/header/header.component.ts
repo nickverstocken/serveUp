@@ -33,8 +33,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   currentUserSub;
   services = [];
   showMessages = false;
-  messageCount;
-  messages: Chatmessage[];
+  unreadmsg;
+  messages;
+  chatsub;
+  currentSubnavTab = 'personal_messages';
   constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
   }
   @HostListener('window:resize', ['$event'])
@@ -62,6 +64,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             this.notifications.push(result);
             this.unreadnoti += 1;
           });
+          this.chatsub = this.pusherService.chatChannel.bind('App\\Events\\MessageSent', result => {
+            if (result.receiver.id === this.user.id) {
+              this.unreadmsg +=1;
+              this.receivedMessage(result);
+            }
+          });
+          this.pusherService.chatChannel.bind('App\\Events\\MessageEditted', result => {
+            if (result.action === 'edit') {
+              this.getAllMessages();
+            }
+          });
+          this.getAllMessages();
           this.servupService.getNotifications().subscribe(
             result => {
               this.notifications = result.notifications;
@@ -83,6 +97,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.authenticated = data;
       });
 
+  }
+  getAllMessages(){
+    this.servupService.getAllMessages().subscribe(result => {
+      this.unreadmsg = result.unread;
+      this.messages = result.messages;
+    });
   }
   ngAfterViewInit() {
     this.sub = this.servupService.selectedService.subscribe(result => {
@@ -159,5 +179,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   hideAll(){
     this.showNoti = 'hideNoti';
     this.showSubnav = 'hideSubnav';
+  }
+
+  receivedMessage(event) {
+    let currentOffer = this.messages.service_messages.filter(message => message.id === event.message_id)[0];
+    if (!currentOffer) {
+      currentOffer = this.messages.personal_messages.filter(message => message.id === event.message_id)[0];
+    }
+    if(currentOffer){
+      currentOffer.latest_message = event;
+    }
+  }
+  markMessagesAllAsRead(type){
+    if(this.unreadmsg !== 0){
+      this.servupService.markMessagesAllAsRead().subscribe(result => {
+        this.unreadmsg = 0;
+        this.messages[type].map(item => item.latest_message.read_at = new Date());
+      });
+    }
+
+  }
+  selectServiceAndMarkAsRead(serviceId){
+    this.servupService.setSelectedService(serviceId);
+    this.markMessagesAllAsRead('service_messages');
   }
 }

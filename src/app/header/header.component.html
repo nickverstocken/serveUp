@@ -13,14 +13,14 @@
       <i class="fas fa-bars"></i>
     </a>
     <div class="logo"><a href="">Serve Up!</a></div>
-    <a (click)="toggleMessages()" class="notification autoleft" *ngIf="mobile"><span class="icon fas fa-comments"></span><span class="notiBadge">5</span></a>
+    <a (click)="toggleMessages()" class="notification autoleft" *ngIf="mobile"><span class="icon fas fa-comments"></span><span *ngIf="unreadmsg > 0" class="notiBadge">{{unreadmsg}}</span></a>
     <a (click)="toggleNoti()"  class="notification" *ngIf="mobile"><span class="icon fas fa-bell"></span><span *ngIf="unreadnoti > 0 "  class="notiBadge">{{unreadnoti}}</span></a>
 
     <ul *ngIf="!mobile">
       <li><a routerLink="/">Zoek</a></li>
       <li><a routerLink="projects">Projecten</a></li>
       <li><a routerLink="calendar">Mijn afspraken</a></li>
-      <li  id="notification" (click)="toggleMessages()"> <a class="notification autoleft"><span class="icon fas fa-comments"></span><span class="notiBadge">5</span></a></li>
+      <li  id="notification" (click)="toggleMessages()"> <a class="notification autoleft"><span class="icon fas fa-comments"></span><span *ngIf="unreadmsg > 0" class="notiBadge">{{unreadmsg}}</span></a></li>
       <li (click)="toggleNoti()"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
       <li (click)="toggleSubNav()" id="user" class="userHeader"><a>
         <span class="userImageThumb" *ngIf="user.picture_thumb"><img src="{{user.picture_thumb}}"/></span>
@@ -79,7 +79,7 @@
       <button class="button btnstyle2" (click)="logout()">Uitloggen</button>
     </div>
   </div>
-  <div (clickOutside)="showNoti = 'hideNoti'" [exclude]="'.fa-bell,.notiBadge'" class="subnav {{showNoti}}">
+  <div (clickOutside)="showNoti = 'hideNoti'" [exclude]="'.fa-bell,.notiBadge'" class="subnav noti {{showNoti}}">
     <div *ngIf="unreadnoti > 0">
       <div (click)="markasReadAndRedirect(noti)" class="notificationText" *ngFor="let noti of notifications">
         <div class="user">
@@ -112,20 +112,120 @@
     </div>
   </div>
 
-  <div (clickOutside)="showMessages = false" [exclude]="'.fa-comments,.notiBadge'" class="subnav messages" [class.closed]="!showMessages">
-    <div>
-      <div routerLink="/inbox" class="notificationText">
+  <div (clickOutside)="showMessages = false" [exclude]="'.fa-comments,.notiBadge'" class="subnav noti messages" [class.closed]="!showMessages">
+    <div *ngIf="user.role === 'service'" class="subNavTabs">
+      <ul>
+        <li (click)="currentSubnavTab = 'personal_messages'" [class.current]="currentSubnavTab === 'personal_messages'">
+          Persoonlijk
+        </li>
+        <li (click)="currentSubnavTab = 'service_messages'" [class.current]="currentSubnavTab === 'service_messages'">
+          Service
+        </li>
+      </ul>
+    </div>
+    <div class="notificationtextwrap" *ngIf="currentSubnavTab === 'personal_messages' && messages">
+      <div *ngFor="let message of messages.personal_messages" (click)="markMessagesAllAsRead('personal_messages')" routerLink="/inbox" [queryParams]="{filter: 'personal'}" class="notificationText {{message.status}}" >
         <div class="user">
-          <!--<span class="userImageThumb" *ngIf="message.sender.picture"><img src="{{message.sender.picture}}"/></span>-->
-          <span class="userImageThumb"><div
-            class="defaultProfile">N</div></span>
+          <span class="userImageThumb" *ngIf="message.service.logo">
+            <img src="{{message.service.logo}}"/>
+          </span>
+          <span class="userImageThumb" *ngIf="!message.service.logo">
+            <div class="defaultProfile"> <span class="far fa-image"></span></div>
+          </span>
         </div>
         <div class="notiText">
-          <h4>service of user</h4>
-          <div class="notiDescription">
-            Test
+          <div class="notiHeader">
+            <h4>{{message.service.name}}</h4><span>{{message.latest_message.created_at | timeAgo }}</span>
           </div>
 
+          <div class="notiDescription" [class.unread]="!message.latest_message.read_at && message.latest_message.sender_id !== user.id">
+            <p *ngIf="message.latest_message.type !== 'date' && message.latest_message.type !== 'price' && message.latest_message.type !== 'document'">
+              {{message.latest_message.message}}
+            </p>
+            <p *ngIf="message.latest_message.type === 'date'">
+              Nieuwe afspraak
+            </p>
+            <p *ngIf="message.latest_message.type === 'price'">
+              Nieuw prijsvoorstel
+            </p>
+            <p *ngIf="message.latest_message.type === 'document'">
+              Nieuwe bijlage(n)
+            </p>
+          </div>
+          <div class="offerStatus">
+            <div class="status">
+                                       <span *ngIf="message.status === 'awaiting'" class="orange">
+           Wachten op antwoord
+         </span>
+              <span *ngIf="message.status === 'accepted'" class="blue">
+           Geaccepteerd
+         </span>
+              <span *ngIf="message.status === 'hired'" class="green">
+           Aangenomen
+         </span>
+              <span *ngIf="message.status === 'declined'" class="red">
+           Geweigerd
+         </span>
+              <span *ngIf="message.status === 'not_hired'" class="red">
+           Niet aangenomen
+         </span>
+            </div>
+
+            <div class="price_est">€ {{message.price_offer ? message.price_offer : message.service.price_estimate}} / {{message.rate ? message.rate : message.service.rate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div  class="notificationtextwrap" *ngIf="currentSubnavTab === 'service_messages' && messages">
+      <div *ngFor="let message of messages.service_messages" (click)="selectServiceAndMarkAsRead(message.service.id)" routerLink="/inbox" [queryParams]="{filter: message.status}" class="notificationText {{message.status}}">
+        <div class="user">
+          <span class="userImageThumb" *ngIf="message.request.user.picture_thumb">
+            <img src="{{message.request.user.picture_thumb}}"/>
+          </span>
+          <span class="userImageThumb" *ngIf="!message.request.user.picture_thumb">
+            <div class="defaultProfile">{{message.request.user.fname.charAt(0)}}</div>
+          </span>
+        </div>
+        <div class="notiText">
+          <div class="notiHeader">
+            <h4>{{message.request.user.fname + ' ' + message.request.user.name}}</h4><span>{{message.latest_message.created_at | timeAgo }}</span>
+          </div>
+
+          <div class="notiDescription" [class.unread]="!message.latest_message.read_at && message.latest_message.sender_id !== user.id">
+            <p *ngIf="message.latest_message.type !== 'date' && message.latest_message.type !== 'price' && message.latest_message.type !== 'document'">
+              {{message.latest_message.message}}
+            </p>
+            <p *ngIf="message.latest_message.type === 'date'">
+              Nieuwe afspraak
+            </p>
+            <p *ngIf="message.latest_message.type === 'price'">
+              Nieuw prijsvoorstel
+            </p>
+            <p *ngIf="message.latest_message.type === 'document'">
+              Nieuwe bijlage(n)
+            </p>
+          </div>
+          <div class="offerStatus">
+            <div class="status">
+                                       <span *ngIf="message.status === 'awaiting'" class="orange">
+           Wachten op antwoord
+         </span>
+              <span *ngIf="message.status === 'accepted'" class="blue">
+           Geaccepteerd
+         </span>
+              <span *ngIf="message.status === 'hired'" class="green">
+           Aangenomen
+         </span>
+              <span *ngIf="message.status === 'declined'" class="red">
+           Geweigerd
+         </span>
+              <span *ngIf="message.status === 'not_hired'" class="red">
+           Niet aangenomen
+         </span>
+            </div>
+
+            <div class="price_est">€ {{message.price_offer ? message.price_offer : message.service.price_estimate}} / {{message.rate ? message.rate : message.service.rate}}</div>
+          </div>
         </div>
       </div>
     </div>

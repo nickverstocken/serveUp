@@ -61,7 +61,6 @@ export class ChatComponent implements OnInit {
           if (result.action === 'edit') {
             this.messageEditted.emit(result.message);
           }
-
         });
       });
 

@@ -11,7 +11,33 @@
     text-align: center;
   }
 }
+
+.banner{
+  .bannerContent{
+    align-items: center;
+  }
+  button.register{
+    margin-top:7px;
+  }
+  h1{
+    font-size: 55px;
+    margin-bottom: 15px;
+  }
+  h2.tagline{
+    margin: 0;
+    color:#fff;
+    text-shadow: 1px 1px #000;
+    font-weight: 400;
+    font-size: 30px;
+  }
+}
 @media all and (max-width: 800px) {
 
+  .banner{
+    h2.tagline{
+      margin-bottom: 25px;
+      text-align: center;
+    }
+  }
 }
 

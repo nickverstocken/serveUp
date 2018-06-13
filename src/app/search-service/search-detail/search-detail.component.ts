@@ -67,6 +67,8 @@ export class SearchDetailComponent implements OnInit {
         id: [this.user.city_id, Validators.required],
         name: [this.user.city.name, Validators.required],
         zip: [this.user.city.zip, [Validators.required, Validators.minLength(4)]],
+        lat: [this.user.city.lat],
+        lng: [this.user.city.lng]
       }),
       due_date: [null, Validators.required],
       description: [null, Validators.required]

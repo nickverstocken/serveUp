@@ -150,6 +150,12 @@ export class ServupService {
   markMessagesAsRead(offerid): Observable<any> {
     return this.api.get(`/offer/${offerid}/messages/markasread`);
   }
+  getAllMessages(): Observable<any> {
+    return this.api.get(`/messages`);
+  }
+  markMessagesAllAsRead(): Observable<any> {
+    return this.api.get(`/offer/messages/markallasread`);
+  }
 
   //appointment
   saveAppointMent(appointment): Observable<any> {
@@ -186,4 +192,5 @@ export class ServupService {
     }
     return this.api.get(`/service/${serviceId}/reviews${pageurl}`);
   }
+
 }

@@ -5,6 +5,8 @@ import {User} from '../models/User';
 import {ServupService} from '../services/servup.service';
 import {City} from '../models/City';
 import {StepperComponent} from '../components/stepper/stepper.component';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EmailValidator} from '../custom-validation/email.validator';
 
 declare var $: any;
 
@@ -17,151 +19,55 @@ export class SignupComponent implements OnInit {
   smallText = 'Maak een keuze';
   choice;
   sub;
-  user: User = new User;
-  stepsUser = [
-    {
-      'headerText': 'Persoonlijke Info',
-      'icon': 'lnr lnr-user',
-      'description': 'Vul het formulier in. Je kan altijd je antwoorden aanpassen in je profiel instellingen.',
-      'model': 'user',
-      'items': [
-        {'name': 'fname', 'label': 'Voornaam', 'validation': ['required'], 'class': 'evenLength', 'type': 'text', 'maxlength': 50},
-        {'name': 'name', 'label': 'Naam', 'validation': ['required'], 'class': 'evenLength', 'type': 'text', 'maxlength': 50},
-        {'name': 'email', 'label': 'Email', 'validation': ['required', 'email'], 'class': '', 'type': 'text', 'maxlength': 191},
-        {
-          'name': 'password',
-          'label': 'Wachtwoord',
-          'validation': ['required', 'password'],
-          'class': '',
-          'type': 'password',
-          'maxlength': 191
-        },
-        {
-          'name': 'password_confirmation',
-          'label': 'Bevestig wachtwoord',
-          'validation': ['required', 'password_confirmation'],
-          'class': '',
-          'type': 'password',
-          'maxlength': 191
-        }
-      ]
-    },
-    {
-      'headerText': 'Optionele info',
-      'icon': 'lnr lnr-thumbs-up',
-      'model': 'user',
-      'description': 'Vertel iets meer over jezelf en kies een profielfoto zodat je herkenbaar bent.',
-      'items': [
-        {'name': 'profile_picture', 'label': 'Profielfoto', 'class': 'small center', 'type': 'imageUpload'},
-        {'name': 'introduction', 'label': 'Vertel iets meer over jezelf', 'class': 'large', 'type': 'textarea', 'maxlength': 300},
-        {'name': 'address_name', 'label': 'Adres', 'class': 'large', 'type': 'text', 'maxlength': 191},
-        {'name': 'address_number', 'label': 'Nummer', 'class': 'small', 'type': 'text', 'maxlength': 10},
-        {'name': 'zip', 'label': 'Postcode', 'class': 'small', 'type': 'text', 'maxlength': 11},
-        {'name': 'city', 'label': 'Stad', 'class': 'large', 'type': 'text', 'readonly': true}
-      ]
-    }
-  ];
-  stepsService = [
-    {
-      'headerText': 'Persoonlijke Info',
-      'icon': 'lnr lnr-user',
-      'description': 'Vul het formulier in. Je kan altijd je antwoorden aanpassen in je profiel instellingen.',
-      'model': 'user',
-      'items': [
-        {'name': 'fname', 'label': 'Voornaam', 'validation': ['required'], 'class': 'evenLength', 'type': 'text', 'maxlength': 50},
-        {'name': 'name', 'label': 'Naam', 'validation': ['required'], 'class': 'evenLength', 'type': 'text', 'maxlength': 50},
-        {'name': 'email', 'label': 'Email', 'validation': ['required', 'email'], 'class': '', 'type': 'text', 'maxlength': 191},
-        {
-          'name': 'password',
-          'label': 'Wachtwoord',
-          'validation': ['required', 'password'],
-          'class': '',
-          'type': 'password',
-          'maxlength': 191
-        },
-        {
-          'name': 'password_confirmation',
-          'label': 'Bevestig wachtwoord',
-          'validation': ['required', 'password_confirmation'],
-          'class': '',
-          'type': 'password',
-          'maxlength': 191
-        }
-      ]
-    },
-    {
-      'headerText': 'Optionele info',
-      'icon': 'lnr lnr-thumbs-up',
-      'model': 'user',
-      'description': 'Vertel iets meer over jezelf en kies een profielfoto zodat je herkenbaar bent.',
-      'items': [
-        {'name': 'profile_picture', 'label': 'Profielfoto', 'class': 'small center', 'type': 'imageUpload'},
-        {'name': 'introduction', 'label': 'Vertel iets meer over jezelf', 'class': 'large', 'type': 'textarea', 'maxlength': 300},
-        {'name': 'address_name', 'label': 'Adres', 'class': 'large', 'type': 'text', 'maxlength': 191},
-        {'name': 'address_number', 'label': 'Nummer', 'class': 'small', 'type': 'text', 'maxlength': 10},
-        {'name': 'zip', 'label': 'Postcode', 'class': 'small', 'type': 'text', 'maxlength': 11},
-        {'name': 'city', 'label': 'Stad', 'class': 'large', 'type': 'text', 'readonly': true}
-      ]
-    },
-    {
-      'headerText': 'Service info',
-      'icon': 'lnr lnr-store',
-      'model': 'buisiness',
-      'description': 'Geef wat info over je service, hoe meer info hoe beter klanten je gaan vinden. Je kan meerdere services toevoegen bij instellingen',
-      'items': [
-        {'name': 'logo', 'label': 'Logo', 'class': 'small center', 'type': 'imageUpload'},
-        {'name': 'service_description', 'label': 'Service beschrijving', 'class': 'large', 'type': 'textarea', 'maxlength': 300},
-        {'name': 'service_adress', 'label': 'Adres', 'validation': ['required'], 'class': 'large', 'type': 'text', 'maxlength': 191},
-        {'name': 'service_adress_number', 'label': 'Nummer', 'validation': ['required'], 'class': 'small', 'type': 'text', 'maxlength': 10},
-        {'name': 'service_zip', 'label': 'Postcode', 'validation': ['required'], 'class': 'small', 'type': 'text', 'maxlength': 11},
-        {'name': 'service_city', 'label': 'Stad', 'validation': ['required'], 'class': 'large', 'type': 'text', 'readonly': true}
-      ]
-    },
-    {
-      'headerText': 'Info voor klanten',
-      'icon': 'lnr lnr-users',
-      'model': 'buisiness',
-      'description': 'Info zodat klanten je nog beter kunnen zoeken. ',
-      'items': [
-        {'name': 'service_hours', 'label': 'Werkdagen', 'class': '', 'type': 'dayselector'},
-        {'name': 'service_category', 'label': 'Categorie', 'class': '', 'type': 'select'},
-        {
-          'name': 'service_tags',
-          'label': 'Welke keywoorden horen bij je service (max 10)?',
-          'class': '',
-          'type': 'taginput',
-          'maxlength': 10
-        },
-        {'name': 'service_travel', 'label': 'Ga jij naar je klanten of komen zij naar u (of beide)?', 'class': '', 'type': 'travel'}
-      ]
-    }
-  ];
-
-  constructor(private route: ActivatedRoute, private router: Router, location: PlatformLocation, private serveUpService: ServupService) {
+  user = new User();
+  formuser;
+  page = 1;
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private serveUpService: ServupService) {
 
   }
 
   ngOnInit() {
 
     this.smallText = 'Maak een keuze';
+    this.buildFormUser();
     this.sub = this.route.queryParams
       .subscribe(params => {
         this.choice = params.as || '';
         if (this.choice === 'user') {
-          this.initVariables('Registreer als klant', 2);
+          this.initVariables('Registreer als klant');
           return;
         }
         if (this.choice === 'service') {
-          this.initVariables('Registreer als service', 4);
+          this.initVariables('Registreer als service');
           return;
         } else {
           this.smallText = 'Maak een keuze';
         }
       });
-
+    console.log(this.choice);
   }
 
-  initVariables(smallText, numberOfsteps) {
+  buildFormUser(){
+    this.formuser = this.fb.group({
+      fname: [null, Validators.required],
+      name: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email], EmailValidator.createValidator(this.serveUpService)],
+      picture: [null],
+      address: [null, Validators.required],
+      city: this.fb.group({
+        id: [null, Validators.required],
+        name: [null, [Validators.required], ],
+        zip: [null, [Validators.required, Validators.minLength(4)]],
+        lat: [null],
+        lng: [null]
+      }),
+      introduction: [null],
+      password: [null,  Validators.required],
+      password_confirmation: [null,  [Validators.required]],
+      role: [this.choice, [Validators.required]]
+    });
+  }
+  initVariables(smallText) {
     this.smallText = smallText;
   }
 
@@ -198,19 +104,12 @@ export class SignupComponent implements OnInit {
       }
     );
   }
-
-  registerService(model) {
-    console.log(model);
-
-  }
   assignFormData(model){
-    let frmData = new FormData();
-    for (let key in model) {
+    const frmData = new FormData();
+    for(const key in model) {
       frmData.append(key, model[key]);
     }
     return frmData;
-  }
-  ngAfterViewInit() {
   }
 
 }
