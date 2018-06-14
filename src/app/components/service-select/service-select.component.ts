@@ -34,9 +34,10 @@ export class ServiceSelectComponent implements OnInit, OnDestroy {
             localStorage.setItem('selectedService', '-1');
           }
         }else{
-          this.serveUpService.setSelectedService(this.services[0].id);
-          this.selectedService.emit(this.services[0]);
-
+          if(this.services.length > 0){
+            this.serveUpService.setSelectedService(this.services[0].id);
+            this.selectedService.emit(this.services[0]);
+          }
         }
       }
     )

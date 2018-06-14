@@ -47,7 +47,7 @@ export class MultipleImageUploaderComponent implements OnInit {
      this.imageClicked.emit(image);
     }
   }
-  editImages($event){
+  editImages(){
     if(this.edit){
       this.edit = false;
     }else{

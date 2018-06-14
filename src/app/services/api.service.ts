@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {environment} from '../../environments/environment.prod';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class ApiService {

@@ -34,28 +34,35 @@ export class AutofillCitiesComponent implements OnInit {
       });
   }
   fillInCity(event){
-    if(this.adressForm.controls.zip.value.toString().length > 0){
-      const value = $('#' + this.id + ' .rightAutoFill span')[0];
-      const valueId = $('#' + this.id + ' .cityid')[0];
-      this.adressForm.controls['id'].setValue(parseInt($(valueId).text()));
-      this.adressForm.controls['name'].setValue($(value).text());
-    }else{
-      this.adressForm.controls['name'].setValue('');
+    if(this.adressForm.controls.zip.value) {
+      if (this.adressForm.controls.zip.value.toString().length > 0) {
+        const value = $('#' + this.id + ' .rightAutoFill span')[0];
+        const valueId = $('#' + this.id + ' .cityid')[0];
+        this.adressForm.controls['id'].setValue(parseInt($(valueId).text()));
+        this.adressForm.controls['name'].setValue($(value).text());
+      } else {
+        this.adressForm.controls['name'].setValue('');
+      }
     }
 
   }
   fillAll(event){
-    if(this.adressForm.controls.zip.value.toString().length > 0 && this.adressForm.controls.name.value.length){
-      const valueZip = $('#' + this.id + ' .leftAutoFill span')[0];
-      const valueName = $('#' + this.id + ' .rightAutoFill span')[0];
-      const valueId = $('#' + this.id + ' .cityid')[0];
-      this.adressForm.controls['id'].setValue(parseInt($(valueId).text()));
-      this.adressForm.controls['name'].setValue($(valueName).text());
-      this.adressForm.controls['zip'].setValue(parseInt($(valueZip).text()));
-      this.showAutoFill = false;
+    if(this.adressForm.controls.zip.value){
+      if(this.adressForm.controls.zip.value.toString().length > 0 && this.adressForm.controls.name.value.length){
+        const valueZip = $('#' + this.id + ' .leftAutoFill span')[0];
+        const valueName = $('#' + this.id + ' .rightAutoFill span')[0];
+        const valueId = $('#' + this.id + ' .cityid')[0];
+        this.adressForm.controls['id'].setValue(parseInt($(valueId).text()));
+        this.adressForm.controls['name'].setValue($(valueName).text());
+        this.adressForm.controls['zip'].setValue(parseInt($(valueZip).text()));
+        this.showAutoFill = false;
+      }else{
+        event.preventDefault();
+      }
     }else{
       event.preventDefault();
     }
+
   }
   fillIn(city){
     this.adressForm.controls['id'].setValue(city.id);

@@ -1,8 +1,8 @@
-<a (click)="close($event)" class="overlay" [class.opened]="show"></a>
+<a (click)="close()" class="overlay" [class.opened]="show"></a>
 <div [class.opened]="show" class="modalContainer">
   <div class="modal">
     <div class="modalHeader">
-      <div (click)="close($event)" class="close">
+      <div (click)="close()" class="close">
         <span class="fas fa-times"></span>
       </div>
       <h2 *ngIf="user && !service"><span>Review {{user.fname}} {{user.name}}</span></h2>
