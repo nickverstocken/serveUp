@@ -41,6 +41,8 @@ export class SearchServiceComponent implements OnInit {
             this.categories = result.categories;
           }
         );
+      }else{
+        this.auth.populate();
       }
     });
 

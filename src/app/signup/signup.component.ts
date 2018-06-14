@@ -7,6 +7,7 @@ import {City} from '../models/City';
 import {StepperComponent} from '../components/stepper/stepper.component';
 import {FormBuilder, Validators} from '@angular/forms';
 import {EmailValidator} from '../custom-validation/email.validator';
+import {AuthService} from '../services/auth.service';
 
 declare var $: any;
 
@@ -22,12 +23,14 @@ export class SignupComponent implements OnInit {
   user = new User();
   formuser;
   page = 1;
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private serveUpService: ServupService) {
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private serveUpService: ServupService, private authService: AuthService) {
 
   }
 
   ngOnInit() {
-
+    if(this.authService.tokenExpiration()){
+      this.router.navigate(['/'])
+    }
     this.smallText = 'Maak een keuze';
     this.buildFormUser();
     this.sub = this.route.queryParams
@@ -44,7 +47,6 @@ export class SignupComponent implements OnInit {
           this.smallText = 'Maak een keuze';
         }
       });
-    console.log(this.choice);
   }
 
   buildFormUser(){
@@ -62,8 +64,8 @@ export class SignupComponent implements OnInit {
         lng: [null]
       }),
       introduction: [null],
-      password: [null,  Validators.required],
-      password_confirmation: [null,  [Validators.required]],
+      password: [null,  [Validators.required, Validators.minLength(6)]],
+      password_confirmation: [null,  [Validators.required, Validators.minLength(6)]],
       role: [this.choice, [Validators.required]]
     });
   }
@@ -76,18 +78,13 @@ export class SignupComponent implements OnInit {
   }
   @ViewChild('stepperUser') stepperUser: StepperComponent;
 
-  register(model) {
-
-    this.stepperUser.completed = true;
-    this.stepperUser.error = false;
-    console.log(model);
-    const frmData = this.assignFormData(model);
-    frmData.append('role', 'user');
-    frmData.append('address', model.address_name + ' ' + model.address_number);
-    console.log(frmData);
+  register() {
+    console.log(this.choice);
+    const frmData = this.assignFormData(this.formuser.value);
+    frmData.append('role', this.choice);
+    frmData.append('city_id', this.formuser.controls.city.controls.id.value);
     this.serveUpService.registerUser(frmData).subscribe(
       res => {
-        console.log(res);
         let mailData = new FormData();
         mailData.append('email', res.user.email);
         mailData.append('name', res.user.name);
@@ -95,12 +92,12 @@ export class SignupComponent implements OnInit {
         mailData.append('verification', res.verification);
         this.serveUpService.sendRegistrationMail(mailData).subscribe(
           mailres => {
-            console.log(mailres);
+            this.page = 4;
           }
         )
       },
       error => {
-        console.log(error);
+        this.page = -1;
       }
     );
   }
@@ -111,5 +108,10 @@ export class SignupComponent implements OnInit {
     }
     return frmData;
   }
-
+  setpage(nr){
+    this.page = nr;
+  }
+  userPictureLoad(file){
+    this.formuser.controls.picture.setValue(file.file);
+  }
 }

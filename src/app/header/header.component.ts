@@ -26,7 +26,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   selectedService = -1;
   NOTIFICATION_TYPES = {
     request: 'App\\Notifications\\NewOffer',
-    action: 'App\\Notifications\\OfferAction'
+    action: 'App\\Notifications\\OfferAction',
+    review: 'App\\Notifications\\NewReview'
   };
   sub;
   pushersub;
@@ -37,6 +38,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   messages;
   chatsub;
   currentSubnavTab = 'personal_messages';
+  ratingvalues = [
+    'Slecht',
+    'Kan beter',
+    'Gemiddeld',
+    'Goed',
+    'Zeer goed'
+  ];
   constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
   }
   @HostListener('window:resize', ['$event'])
@@ -162,6 +170,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       if(notification.data.action === 'hired'){
         to = 'inbox?filter=hired';
       }
+    }
+    if(notification.type === this.NOTIFICATION_TYPES.action){
+
     }
     return '/' + to;
   }

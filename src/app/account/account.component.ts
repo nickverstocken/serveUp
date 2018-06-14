@@ -11,7 +11,8 @@ import {ServicePriceComponent} from './service-price/service-price.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Review} from '../models/Review';
 import {ProfileComponent} from '../components/profile/profile.component';
-
+import {ToastServiceService} from '../services/toast-service.service';
+import {MatSnackBar} from '@angular/material';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -38,7 +39,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   @ViewChild('serviceDetail') serviceDetail: ServiceDetailsComponent;
   @ViewChild('userProfile') userProfile: ProfileComponent;
   @ViewChild('serviceProfile') serviceProfile: ProfileComponent;
-  constructor(private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
+  constructor(private snackbar: ToastServiceService, private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.cardEdit = 'service-details';
@@ -59,6 +60,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
             this.getUserReviews();
           }
         });
+      }else{
+        this.authService.populate();
       }
     });
   }
@@ -73,10 +76,11 @@ export class AccountComponent implements OnInit, AfterViewInit {
         if(result.success){
           this.cardEdit = '';
           Object.assign(this.user, result.user);
+          this.snackbar.sendNotification('Data succesvol opgeslagen!', 'Ok');
         }
       },
       (error) => {
-        /*this.handleErrors(id, error);*/
+        this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
       }
     );
   }
@@ -87,6 +91,10 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.serveUpService.updateService(this.selectedService.id, frmData).subscribe(
       result => {
         Object.assign(this.selectedService, result.service);
+        this.snackbar.sendNotification('Data succesvol opgeslagen!', 'Ok');
+      },
+      (error) => {
+        this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
       }
     );
   }

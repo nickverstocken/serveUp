@@ -25,7 +25,7 @@
       </div>
       <div class="action">
         <button *ngIf="currentOffer.status !== 'hired'" (click)="hireService()" [disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired' || currentOffer.status === 'awaiting'" [class.disabled]="currentOffer.status === 'declined' || currentOffer.status === 'not_hired' || currentOffer.status === 'hired' || currentOffer.status === 'awaiting'" class="button buttonbig fullWidth">Huur in</button>
-        <button *ngIf="currentOffer.status == 'hired'" (click)="writeReview()" [disabled]="currentOffer.status !== 'hired'" [class.disabled]="currentOffer.status !== 'hired'" class="button buttonbig fullWidth">Schrijf een review</button>
+        <button *ngIf="currentOffer.status == 'hired'" (click)="writeReview()" [disabled]="currentOffer.status !== 'hired' || currentOffer.service_reviewed === 1" [class.disabled]="currentOffer.status !== 'hired' || currentOffer.service_reviewed === 1" class="button buttonbig fullWidth">Schrijf een review</button>
       </div>
     </div>
     <div [class.opened]="chatterOpen" class="chatBlock" *ngIf="currentService">

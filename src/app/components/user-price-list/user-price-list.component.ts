@@ -22,6 +22,7 @@ export class UserPriceListComponent implements OnInit {
   ngOnInit() {
   }
   changeSelected(offer){
+    console.log('selection change');
     this.currentSelected = offer.id;
     this.changeSelectedOffer.emit(offer.id);
   }

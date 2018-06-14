@@ -23,17 +23,10 @@ export class AuthService {
 
   populate() {
 
-    this.isAuthenticated.subscribe(
-      result => {
-        if(!result){
-          if(localStorage.getItem('token')){
             this.apiService.get('/login/user?include=city,service')
               .subscribe(data => {
                 this.setAuth(data.user);
               });
-          }
-      }
-    });
   }
 
   login(fields) {
@@ -51,7 +44,7 @@ export class AuthService {
     localStorage.removeItem('selectedService');
     this.currentUserSubject.next(new User());
     this.isAuthenticatedSubject.next(false);
-
+    this.router.navigate(['/home']);
   }
 
   tokenExpiration() {

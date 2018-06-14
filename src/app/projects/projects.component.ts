@@ -5,6 +5,7 @@ import {AuthService} from '../services/auth.service';
 import {PusherService} from '../services/pusher.service';
 import {User} from '../models/User';
 import {Router} from '@angular/router';
+import {ToastServiceService} from '../services/toast-service.service';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -16,7 +17,7 @@ export class ProjectsComponent implements OnInit {
   chatSub;
   receivedMsg;
   user: User;
-  constructor(private serveUpService: ServupService, private auth: AuthService, private router: Router) { }
+  constructor(private snackbar: ToastServiceService, private serveUpService: ServupService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.auth.currentUser.subscribe(result => {
@@ -25,12 +26,17 @@ export class ProjectsComponent implements OnInit {
         this.serveUpService.getAllRequests().subscribe(
           result => {
             this.requests = result.requests;
+          },(error) => {
+            this.snackbar.sendNotification('Er is iets misgelopen!');
           });
+      }else{
+        this.auth.populate();
       }
     });
 
   }
   deletedReq(request){
     this.requests = this.requests.filter(req => req !== request);
+    this.snackbar.sendNotification('Verzoek succesvol verwijderd!');
   }
 }

@@ -1,3 +1,4 @@
+@import "../../../color";
 h2[contenteditable='true']{
   border:1px solid #ccc;
   outline:none;
@@ -5,4 +6,7 @@ h2[contenteditable='true']{
 h2{
   padding:3px;
   border:1px solid rgba(0,0,0,0);
+}
+.user img{
+  border:1px solid $borderColor;
 }

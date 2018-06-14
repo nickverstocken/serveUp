@@ -48,13 +48,24 @@
   <div id="qandaDetails" class="details">
     <h2>Extra info</h2>
     <div id="qanda">
-      <div class="qandaItem">
-        <h3><span>Q.</span>Wat zit er niet in de prijs?</h3>
-        <span> A. </span>
-        <p> Ik probeer van elk evenement een persoonlijke missie te maken zodat iedereen tevreden is!</p>
+      <div class="qandaItem" *ngIf="service.price_extras">
+        <h3>Wat zit er niet in de prijs?</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Naam</th><th>Prijs</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let price_extra of service.price_extras">
+            <td>{{price_extra.name}}</td><td>€ {{price_extra.price}}</td>
+          </tr>
+          </tbody>
+        </table>
+
       </div>
       <div class="qandaItem">
-        <h3><span>Q.</span>Openingsuren?</h3>
+        <h3>Openingsuren?</h3>
        <app-day-select [disabled]="true" [daysSelected]="service.business_hours"></app-day-select>
       </div>
     </div>

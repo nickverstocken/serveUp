@@ -8,7 +8,7 @@
   </app-tabs>
 
   <ng-template #firstRef>
-    <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewSucces($event)"  [offerId]="selectedOffer.id" [show]="showReviewPop" [user]="selectedOffer.request.user" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
+    <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewUserSucces($event)"  [offerId]="selectedOffer.id" [show]="showReviewPop" [user]="selectedOffer.request.user" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
     <div class="requestWrap">
       <div class="requestNavigation" [class.collapse]="!offerlistopened">
         <ul *ngIf="offerList">
@@ -73,8 +73,8 @@
                    (priceofferSend)="sendPriceOffer($event)"
                    (priceOfferAction)="actionPriceOffer($event)"
                    (sendFiles)="sendFiles($event)"
-                    (writeReview)="writeReviewForService()"
-                    [showReviewbutton]="selectedOffer.status === 'hired'"></app-chat>
+                    (writeReview)="writeReviewForUser()"
+                    [showReviewbutton]="selectedOffer.status === 'hired' && selectedOffer.user_reviewed !== 1"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">
@@ -160,8 +160,8 @@
                   (priceofferSend)="sendPriceOffer($event)"
                   (priceOfferAction)="actionPriceOffer($event)"
                   (sendFiles)="sendFiles($event)"
-                  (writeReview)="writeReviewForUser()"
-                  [showReviewbutton]="selectedOffer.status === 'hired'"></app-chat>
+                  (writeReview)="writeReviewForService()"
+                  [showReviewbutton]="selectedOffer.status === 'hired' && selectedOffer.service_reviewed !== 1"></app-chat>
         <div class="placeholder" *ngIf="!selectedOffer">
           <div>
               <span class="far fa-comments">

@@ -153,7 +153,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
   }
   cancelAppointment(appointment){
-    console.log(this.ucCalendar.fullCalendar('clientEvents', appointment.id));
     let receiver;
     if(!this.selectedAppPersonal){
         receiver = appointment.offer.request.user.id;

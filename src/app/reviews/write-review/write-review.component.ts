@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Media} from '../../models/Media';
 import {ServupService} from '../../services/servup.service';
+import {ToastServiceService} from '../../services/toast-service.service';
 
 @Component({
   selector: 'app-write-review',
@@ -28,7 +29,7 @@ export class WriteReviewComponent implements OnInit {
     'Zeer goed'
   ];
   reviewText = '';
-  constructor(private serveUpService: ServupService) {
+  constructor(private snackbar: ToastServiceService, private serveUpService: ServupService) {
   }
 
   ngOnInit() {
@@ -62,6 +63,9 @@ export class WriteReviewComponent implements OnInit {
     frmData.append('review', this.reviewText);
     this.serveUpService.saveReview(this.offerId, frmData).subscribe(result => {
       this.reviewSuccess.emit(result.review);
+      this.snackbar.sendNotification('Review succesvol opgeslagen!', 'Ok');
+    },(error) => {
+      this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
     });
   }
 }

@@ -55,8 +55,13 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
             if (this.currentRequest !== params['id']) {
               this.currentRequest = params['id'];
               this.serveUpService.getRequest(params['id']).subscribe(result => {
-                  this.currentSelected = params['offerid'];
+                  this.currentSelected = params['offerid'] || result.request.offers[0].id;
                   this.offerlist = result.request.offers;
+                  if(!params['offerid']){
+                    this.getSelectedOffer(this.currentSelected);
+                  }else{
+                    this.getSelectedOffer(params['offerid']);
+                  }
                 },
                 error => {
                   if (error.status === 404) {
@@ -64,10 +69,9 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
                   }
                 });
             }
-            if (this.currentSelected !== params['offerid']) {
-              this.getSelectedOffer(params['offerid']);
-            }
           });
+      }else{
+
       }
     });
 
@@ -133,6 +137,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     this.closeOverview();
     this.currentSelected = offerid;
     this.router.navigate(['project/' + this.currentRequest + '/offer/' + this.currentSelected]);
+    this.getSelectedOffer(this.currentSelected);
   }
 
   toggleUserPriceList() {
@@ -289,6 +294,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
 
   reviewSucces(event) {
     this.currentService.number_ratings += 1;
+    this.currentOffer.service_reviewed = 1;
     const review = new Review();
     review.comment = event.comment;
     review.rating = event.score;

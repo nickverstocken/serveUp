@@ -84,6 +84,8 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
 
         });
 
+      }else{
+        this.auth.populate();
       }
     });
 
@@ -287,5 +289,11 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
   }
   reviewSucces(review){
     this.showReviewPop = false;
+
+    this.selectedOffer.service_reviewed = 1;
+  }
+  reviewUserSucces(review){
+    this.showReviewPop = false;
+    this.selectedOffer.user_reviewed = 1;
   }
 }

@@ -6,6 +6,7 @@ import {ServupService} from '../../services/servup.service';
 import {SubCategory} from '../../models/SubCategory';
 import {FormBuilder,  Validators} from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import {ToastServiceService} from '../../services/toast-service.service';
 @Component({
   selector: 'app-search-detail',
   templateUrl: './search-detail.component.html',
@@ -21,7 +22,7 @@ export class SearchDetailComponent implements OnInit {
   today = new Date();
   mobile = false;
   innerWidth;
-  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService, private serveUpService: ServupService,  private fb: FormBuilder, private datePipe: DatePipe) {
+  constructor(private snackbar: ToastServiceService, private router: Router, private route: ActivatedRoute, private auth: AuthService, private serveUpService: ServupService,  private fb: FormBuilder, private datePipe: DatePipe) {
 
   }
   @HostListener('window:resize', ['$event'])
@@ -43,6 +44,8 @@ export class SearchDetailComponent implements OnInit {
         if(user.id){
           this.user = user;
           this.buildRequestForm();
+        }else{
+          this.auth.populate();
         }
       });
     this.route.params.map(params => params['id'])
@@ -94,7 +97,11 @@ export class SearchDetailComponent implements OnInit {
     frmData.append('title', this.subcat.name);
     this.serveUpService.saveRequest(frmData).subscribe(
       result => {
-        this.router.navigate(['projects']);
+        console.log(result);
+        this.snackbar.sendNotification('Verzoek succesvol verzonden!', 'Ok');
+        this.router.navigate([`project/${result.data.id}`]);
+      },(error) => {
+        this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
       });
   }
   assignFormData(model) {

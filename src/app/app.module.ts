@@ -8,7 +8,8 @@ import {
   MatSelectModule,
   MatStepperModule,
   MatIconModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import {BrowserModule} from '@angular/platform-browser';
@@ -33,6 +34,7 @@ import {ApiService} from './services/api.service';
 import {AuthService} from './services/auth.service';
 import {ServupService} from './services/servup.service';
 import {PusherService} from './services/pusher.service';
+import {ToastServiceService} from './services/toast-service.service';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {NumbermaskDirective} from './directives/numbermask.directive';
 import {searchZip, searchName, searchMultiplePipe} from './pipes/search';
@@ -89,6 +91,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserDetailsComponent } from './account/user-details/user-details.component';
 import {EqualValidator } from './directives/validateEqual.directive';
 import { ServiceProfileComponent } from './service-profile/service-profile.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -159,6 +162,7 @@ import { ServiceProfileComponent } from './service-profile/service-profile.compo
     FormsModule,
     ReactiveFormsModule,
     Routing,
+    MatSnackBarModule,
     HttpClientModule,
     ClickOutsideModule,
     MatNativeDateModule,
@@ -187,10 +191,12 @@ import { ServiceProfileComponent } from './service-profile/service-profile.compo
       provide: LOCALE_ID,
       useValue: 'nl-BE'
     },
+    AuthGuard,
     ApiService,
     AuthService,
     ServupService,
-    PusherService
+    PusherService,
+    ToastServiceService
   ],
   bootstrap: [AppComponent]
 })

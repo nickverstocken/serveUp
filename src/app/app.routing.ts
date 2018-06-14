@@ -11,22 +11,48 @@ import {AccountComponent} from './account/account.component';
 import {EventCalendarComponent} from './event-calendar/event-calendar.component';
 import {CategoryComponent} from './category/category.component';
 import {ServiceProfileComponent} from './service-profile/service-profile.component';
+import {AuthGuard} from './auth/auth.guard';
 
 const appRoutes: Routes = [
   // otherwise redirect to home
   { path: 'register', component: SignupComponent},
   { path: 'home', component: LandingComponent},
-  { path: '', component: SearchServiceComponent},
-  { path: 'search/:id', component: SearchDetailComponent},
-  { path: 'category/:id', component: CategoryComponent},
-  { path: 'projects', component: ProjectsComponent},
-  { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent},
-  { path: 'profile/:id', component: UserProfileComponent},
-  { path: 'service/:id', component: ServiceProfileComponent},
-  {path: 'account', component: AccountComponent},
-  {path: 'account/:subnav', component: AccountComponent},
-  { path: 'inbox', component: InboxComponent},
-  { path: 'calendar', component: EventCalendarComponent },
+  { path: '', component: SearchServiceComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'search/:id', component: SearchDetailComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'category/:id', component: CategoryComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'projects', component: ProjectsComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'project/:id', component: ProjectDetailComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'project/:id/offer/:offerid', component: ProjectDetailComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'profile/:id', component: UserProfileComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'service/:id', component: ServiceProfileComponent,  canActivate: [
+      AuthGuard
+    ]},
+  {path: 'account', component: AccountComponent,  canActivate: [
+      AuthGuard
+    ]},
+  {path: 'account/:subnav', component: AccountComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'inbox', component: InboxComponent,  canActivate: [
+      AuthGuard
+    ]},
+  { path: 'calendar', component: EventCalendarComponent,  canActivate: [
+      AuthGuard
+    ] },
   { path: '**', redirectTo: ''}
 ];
 
