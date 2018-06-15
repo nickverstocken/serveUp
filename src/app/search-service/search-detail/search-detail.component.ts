@@ -90,19 +90,23 @@ export class SearchDetailComponent implements OnInit {
         });
   }
   sendRequest(){
-    const frmData = this.assignFormData(this.formRequest.value);
-    frmData.append('ids', JSON.stringify(this.nearbyIds));
-    frmData.append('city_id', this.formRequest.controls.city.controls.id.value);
-    frmData.append('due_date',  this.datePipe.transform(this.formRequest.controls.due_date.value, 'yyyy-MM-dd'));
-    frmData.append('title', this.subcat.name);
-    this.serveUpService.saveRequest(frmData).subscribe(
-      result => {
-        console.log(result);
-        this.snackbar.sendNotification('Verzoek succesvol verzonden!', 'Ok');
-        this.router.navigate([`project/${result.data.id}`]);
-      },(error) => {
-        this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
-      });
+    if(this.nearbyCount > 0){
+      const frmData = this.assignFormData(this.formRequest.value);
+      frmData.append('ids', JSON.stringify(this.nearbyIds));
+      frmData.append('city_id', this.formRequest.controls.city.controls.id.value);
+      frmData.append('due_date',  this.datePipe.transform(this.formRequest.controls.due_date.value, 'yyyy-MM-dd'));
+      frmData.append('title', this.subcat.name);
+      this.serveUpService.saveRequest(frmData).subscribe(
+        result => {
+          this.snackbar.sendNotification('Verzoek succesvol verzonden!', 'Ok');
+          this.router.navigate([`project/${result.data.id}`]);
+        },(error) => {
+          this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
+        });
+    }else{
+      this.snackbar.sendNotification('Er zijn geen services in de buurt :(');
+    }
+
   }
   assignFormData(model) {
     const frmData = new FormData();

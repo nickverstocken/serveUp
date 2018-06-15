@@ -1,0 +1,30 @@
+<div class="login">
+  <div class="card">
+  <h2>Login</h2>
+    <form [formGroup]="formLogin" name="form" novalidate>
+      <div class="form-group">
+        <input formControlName="email" [class.has-error]="!formLogin.controls['email'].valid && formLogin.controls['email'].touched" [placeholder]="'Email'" id="email" type="email" class="form-control" name="email" />
+      </div>
+      <div class="form-group">
+        <input formControlName="password" [class.has-error]="!formLogin.controls['password'].valid && formLogin.controls['password'].touched" [placeholder]="'Wachtwoord'" id="password" type="password" class="form-control" name="password" required />
+        <div class="has-error">
+          <p>
+            {{errors}}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button [disabled]="!formLogin.valid" (click)="login()" class="button fullWidth">Login</button>
+      </div>
+      <div class="seperatorMiddle">
+        <p>
+          of
+        </p>
+      </div>
+      <div class="form-group">
+        <button routerLink="/register" class="button register btnstyle2 fullWidth">Registreer</button>
+      </div>
+    </form>
+  </div>
+</div>

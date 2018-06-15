@@ -48,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
                   }
                   return next.handle(this.addToken(req, auth.getToken()));
                 } else {
-                  this.router.navigate(['/home']);
+                  this.router.navigate(['/login']);
 
                   return Observable.throw(error);
                 }

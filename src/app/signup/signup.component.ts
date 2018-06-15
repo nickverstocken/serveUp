@@ -5,7 +5,7 @@ import {User} from '../models/User';
 import {ServupService} from '../services/servup.service';
 import {City} from '../models/City';
 import {StepperComponent} from '../components/stepper/stepper.component';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {EmailValidator} from '../custom-validation/email.validator';
 import {AuthService} from '../services/auth.service';
 
@@ -28,9 +28,6 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.authService.tokenExpiration()){
-      this.router.navigate(['/'])
-    }
     this.smallText = 'Maak een keuze';
     this.buildFormUser();
     this.sub = this.route.queryParams
@@ -48,7 +45,6 @@ export class SignupComponent implements OnInit {
         }
       });
   }
-
   buildFormUser(){
     this.formuser = this.fb.group({
       fname: [null, Validators.required],

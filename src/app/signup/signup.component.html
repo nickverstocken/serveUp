@@ -33,17 +33,22 @@
                                     [options]="{width: '90px', height: '90px', 'border-radius': '50%', 'border-width' : '2px'}"></app-image-uploader>
               </div>
               <div class="form-group">
-                <input [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
+                <input autocomplete="off" [class.has-error]="!formuser.controls['fname'].valid && formuser.controls['fname'].touched"
                        formControlName="fname" class="editable" id="fname"
                        placeholder="Voornaam"/>
               </div>
               <div class="form-group">
-                <input [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
+                <input autocomplete="off" [class.has-error]="!formuser.controls['name'].valid && formuser.controls['name'].touched"
                        formControlName="name" class="editable" id="name" placeholder="Achternaam"/>
               </div>
               <div class="form-group">
-                <input [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
+                <input autocomplete="off" [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
                        formControlName="email" class="editable" id="email" placeholder="Email"/>
+                <div class="has-error">
+                  <p *ngIf="formuser.get('email').hasError('emailTaken') && formuser.get('email').touched">
+                    Email is al in gebruik...
+                  </p>
+                </div>
               </div>
 
               <div class="buttons">
@@ -56,7 +61,7 @@
             </div>
             <div class="page" *ngIf="page === 2">
               <div class="form-group">
-                <input [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
+                <input autocomplete="off" [class.has-error]="!formuser.controls['address'].valid && formuser.controls['address'].touched"
                        formControlName="address" class="editable" id="service_address" placeholder="Adres"/>
               </div>
               <div class="form-group">
@@ -80,23 +85,32 @@
             </div>
             <div class="page" *ngIf="page === 3">
               <div class="form-group">
-                <input [class.has-error]="!formuser.controls['password'].valid && formuser.controls['password'].touched"
+                <input autocomplete="off" [class.has-error]="!formuser.controls['password'].valid && formuser.controls['password'].touched"
                        formControlName="password" validateEqual="password_confirmation" reverse="true" class="editable"
                        type="password" id="password"
                        placeholder="Wachtwoord"/>
+                <div class="has-error">
+                  <p *ngIf="formuser.get('password').hasError('minlength') && formuser.get('password').touched">
+                    Minimuum 6 karakters...
+                  </p>
+                </div>
               </div>
+
               <div class="form-group">
-                <input
+                <input autocomplete="off"
                   [class.has-error]="!formuser.controls['password_confirmation'].valid && formuser.controls['password_confirmation'].touched"
                   formControlName="password_confirmation" validateEqual="password" reverse="true" class="editable"
                   id="password_confirmation"
                   placeholder="Herhaal wachtwoord" type="password"/>
               </div>
-              <button (click)="setpage(2)" class="button">Vorige</button>
-              <button (click)="register()" class="button"
-                      [class.disabled]="!formuser.controls['password'].valid || !formuser.controls['password_confirmation'].valid"
-                      [disabled]="!formuser.controls['password'].valid || !formuser.controls['password_confirmation'].valid"
-              >Registreer</button>
+              <div class="buttons">
+                <button (click)="setpage(2)" class="button">Vorige</button>
+                <button (click)="register()" class="button"
+                        [class.disabled]="!formuser.controls['password'].valid || !formuser.controls['password_confirmation'].valid"
+                        [disabled]="!formuser.controls['password'].valid || !formuser.controls['password_confirmation'].valid"
+                >Registreer</button>
+              </div>
+
             </div>
             <div class="page" *ngIf="page === 4">
               <div class="info">

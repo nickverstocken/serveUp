@@ -2,33 +2,15 @@
   <img src="../../assets/images/herobg-sm.jpg" srcset="../../assets/images/herobg-md.jpg 1000w, ../../assets/images/herobg-lg.jpg 2000w" alt="heroImage">
   <div class="bannerContent">
     <div class="left">
-      <h1>
-        Welkom bij Serve Up!
+      <h1 class="logo">
+        Serve Up
       </h1>
       <h2 class="tagline">Vind lokale professionals voor al je projecten.</h2>
+      <div class="cta">
+        <button routerLink="/login" class="button btnstyle2">Login</button><button routerLink="/register" class="button">Registreer</button>
+      </div>
     </div>
-    <div class="right">
-      <h2>Login</h2>
-      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="f.submitted && email.invalid && (email.dirty || email.touched) ?  'has-error' : ''">
-          <label for="email">Email</label>
-          <input [placeholder]="(f.submitted && email.invalid && (email.dirty || email.touched)) ? 'Vul een correct email adres in a.u.b.' :'Email'" id="email" type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
-        </div>
-        <div class="form-group" [ngClass]="f.submitted && password.invalid && (password.dirty || password.touched) ? 'has-error' : ''">
-          <label for="password">Password</label>
-          <input [placeholder]="(f.submitted && password.invalid && (password.dirty || password.touched)) ? 'Vul je wachtwoord in a.u.b.' :'Wachtwoord'" id="password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-        </div>
-        <div class="has-error">
-          <p>
-            {{errors}}
-          </p>
-        </div>
-        <div class="form-group">
-          <button class="button">Login</button>
-          <button routerLink="/register" class="button register btnstyle2">Registreer</button>
-        </div>
-      </form>
-    </div>
+
   </div>
 </div>
 <div id="landingWrap">

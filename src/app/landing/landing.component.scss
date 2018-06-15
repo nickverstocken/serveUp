@@ -15,6 +15,13 @@
 .banner{
   .bannerContent{
     align-items: center;
+    justify-content: center;
+    h1.logo{
+      text-align: center;
+      color:$orange;
+      font-size: 70px !important;
+      text-shadow: 1px 1px #fff;
+    }
   }
   button.register{
     margin-top:7px;
@@ -26,9 +33,28 @@
   h2.tagline{
     margin: 0;
     color:#fff;
-    text-shadow: 1px 1px #000;
-    font-weight: 400;
+    text-shadow: 1px 1px $titleColor;
+    font-weight: 700;
+    text-align: center;
     font-size: 30px;
+  }
+}
+.banner img{
+  filter: brightness(40%);
+}
+.btnstyle2{
+  background: #fff;
+}
+.cta{
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .button{
+    min-width: 120px;
+    &:first-child{
+      margin-right: 15px;
+    }
   }
 }
 @media all and (max-width: 800px) {

@@ -18,15 +18,21 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private apiService: ApiService, private serveUpService:ServupService, private router: Router) {
+  constructor(private apiService: ApiService, private serveUpService: ServupService, private router: Router) {
   }
 
   populate() {
+    this.apiService.get('/login/user?include=city,service')
+      .subscribe(data => {
+        this.setAuth(data.user);
+      },
+        error => {
+        if(this.router.url !== '/home' && this.router.url !== '/register' && this.router.url !== '/register?as=user' && this.router.url !== '/register?as=service'){
+          this.router.navigate(['/login']);
+        }
 
-            this.apiService.get('/login/user?include=city,service')
-              .subscribe(data => {
-                this.setAuth(data.user);
-              });
+
+        });
   }
 
   login(fields) {

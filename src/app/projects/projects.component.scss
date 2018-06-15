@@ -16,6 +16,9 @@ app-request-card{
   height:100%;
   width:100% !important;
 }
+.none{
+  text-align: center;
+}
 @media all and (max-width: 502px) {
   app-request-card{
     display: block;

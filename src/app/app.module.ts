@@ -92,6 +92,7 @@ import { UserDetailsComponent } from './account/user-details/user-details.compon
 import {EqualValidator } from './directives/validateEqual.directive';
 import { ServiceProfileComponent } from './service-profile/service-profile.component';
 import { AuthGuard } from './auth/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -154,7 +155,8 @@ import { AuthGuard } from './auth/auth.guard';
     UserProfileComponent,
     UserDetailsComponent,
     EqualValidator,
-    ServiceProfileComponent
+    ServiceProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

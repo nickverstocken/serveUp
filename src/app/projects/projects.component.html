@@ -6,7 +6,10 @@
   <div class="cardsWrap">
       <app-request-card *ngFor="let request of requests" [request]="request" [sender]="user" (onDeleted)="deletedReq($event)"></app-request-card>
   </div>
-</div>
-<div class="footer">
-  <app-footer></app-footer>
+  <div class="none" *ngIf="requests.length === 0">
+    <h3>Je hebt nog geen project opgestart.</h3>
+    <div>
+      <button routerLink="/" class="button">Start nu met je volgende project</button>
+    </div>
+  </div>
 </div>
