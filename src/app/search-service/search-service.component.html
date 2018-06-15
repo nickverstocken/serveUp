@@ -40,7 +40,7 @@
     <div class="cardsWrap row">
       <div routerLink="/category/{{cat.id}}" *ngFor="let cat of categories" class="card imagecard">
         <div class="cardHead">
-          <img src="{{cat.picture + '.jpg'}}"/>
+          <img src="/assets/{{cat.picture + '.jpg'}}"/>
         </div>
         <div class="cardBody">
           <h2>{{cat.name}}</h2>

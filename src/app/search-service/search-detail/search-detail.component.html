@@ -1,5 +1,6 @@
-<div *ngIf="subcat" id="searchDetailWrap" [style.backgroundImage]="'url(' + subcat.category.picture + '_bg.jpg)'">
+<div *ngIf="subcat" id="searchDetailWrap" [style.backgroundImage]="'url(/assets/' + subcat.category.picture + '_bg.jpg)'">
 <div class="contentModal">
+
   <h1>{{nearbyCount}} {{subcat.plural}} in jouw buurt</h1>
   <div class="modalcenterfixed">
     <h2>Waar, wanneer en wat voor {{subcat.plural}} zoek je?</h2>
