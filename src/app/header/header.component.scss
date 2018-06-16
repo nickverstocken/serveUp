@@ -27,7 +27,7 @@
         padding:0px 15px;
         color:$titleColor;
         font-weight: 300;
-        &:hover, &:focus{
+        &:hover, &:focus, &.active{
           text-shadow: 0.5px 0px 0px #555, -0.5px 0px 0px #555;
           text-decoration: none;
         }

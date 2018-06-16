@@ -25,6 +25,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
   mobile = false;
   innerWidth;
   showReviewPop = false;
+  loading = true;
   alive = true;
   @ViewChild('tabs') tabs: TabsComponent;
   @ViewChild('chatter') chatter: ChatComponent;
@@ -71,9 +72,6 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
             this.filter = params.filter;
           } else {
             this.filter = 'personal';
-            if (user.role === 'service') {
-              this.filter = 'requests';
-            }
           }
           this.showReviewPop = false;
           if (this.filter !== 'personal') {
@@ -100,6 +98,12 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
         if (this.offerList.length > 0) {
           this.getOfferMessages(this.offerList[0].id);
         }
+      },
+      error => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       });
   }
 
@@ -113,13 +117,19 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
             if (this.offerList.length > 0) {
               this.getOfferMessages(this.offerList[0].id);
             }
-          });
+          },
+          error => {
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+            });
         }
       });
     }
   }
 
   filterRequests(val) {
+    this.loading = true;
     if(this.mobile){
       this.offerlistopened = true;
     }
@@ -141,7 +151,7 @@ export class InboxComponent implements OnInit, AfterContentInit, AfterViewInit, 
         this.selectedOffer = this.offerList.filter(offer => offer.id === parseInt(id, 10))[0];
       },
       error => {
-
+        this.loadingMessages = false;
       },
       () => {
         this.loadingMessages = false;

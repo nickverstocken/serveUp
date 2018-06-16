@@ -15,6 +15,7 @@ export class ServiceDetailsComponent implements OnInit {
   @Input() editting = false;
   @Input() showActions = true;
   @Output() saveService: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteService: EventEmitter<any> = new EventEmitter<any>();
   @Output() goToServiceReviews: EventEmitter<any> = new EventEmitter<any>();
   showSocialAdd = false;
   socialNetworks = ['facebook', 'twitter', 'linkedin', 'dribbble', 'instagram', 'youtube'];
@@ -32,6 +33,13 @@ export class ServiceDetailsComponent implements OnInit {
       for (let social of this.service.social_networks) {
         this.addSocialNetwork(social);
       }
+    }
+
+  }
+  delete(){
+    const r = confirm(`Weet u zeker dat u ${this.service.name} wilt verwijderen?`);
+    if (r === true) {
+      this.deleteService.emit(this.service);
     }
 
   }

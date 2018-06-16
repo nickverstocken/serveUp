@@ -17,9 +17,10 @@
     <a (click)="toggleNoti()"  class="notification" *ngIf="mobile"><span class="icon fas fa-bell"></span><span *ngIf="unreadnoti > 0 "  class="notiBadge">{{unreadnoti}}</span></a>
 
     <ul *ngIf="!mobile">
-      <li><a routerLink="/">Zoek</a></li>
-      <li><a routerLink="projects">Projecten</a></li>
-      <li><a routerLink="calendar">Mijn afspraken</a></li>
+      <li><a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Zoek</a></li>
+      <li><a  routerLink="projects"  [routerLinkActive]="['active']">Projecten</a></li>
+      <li><a routerLink="inbox" [routerLinkActive]="['active']">Inbox</a></li>
+      <li><a routerLink="calendar" [routerLinkActive]="['active']">Mijn afspraken</a></li>
       <li  id="notification" (click)="toggleMessages()"> <a class="notification autoleft"><span class="icon fas fa-comments"></span><span *ngIf="unreadmsg > 0" class="notiBadge">{{unreadmsg}}</span></a></li>
       <li (click)="toggleNoti()"><a class="notification"><span class="icon fas fa-bell"></span> <span *ngIf="unreadnoti > 0 " class="notiBadge">{{unreadnoti}}</span></a></li>
       <li (click)="toggleSubNav()" id="user" class="userHeader"><a>
@@ -44,15 +45,16 @@
         </div>
 
       </li>
-      <li><a routerLink="account"><span class="lnr lnr-user"></span>Profiel</a></li>
-      <li><a routerLink="/"><span class="lnr lnr-earth"></span>Zoek</a></li>
-      <li><a routerLink="projects"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
-      <li><a routerLink="calendar"><span class="lnr lnr-calendar-full"></span>Mijn afspraken</a></li>
+      <li><a routerLink="account" [routerLinkActive]="['active']"><span class="lnr lnr-user"></span>Profiel</a></li>
+      <li><a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']"><span class="lnr lnr-earth"></span>Zoek</a></li>
+      <li><a routerLink="projects" [routerLinkActive]="['active']"><span class="lnr lnr-pushpin"></span>Projecten</a></li>
+      <li><a routerLink="inbox" [routerLinkActive]="['active']">Inbox</a></li>
+      <li><a routerLink="calendar" [routerLinkActive]="['active']"><span class="lnr lnr-calendar-full"></span>Mijn afspraken</a></li>
       <li><a (click)="logout()"><span class="lnr lnr-exit"></span>Uitloggen</a></li>
     </ul>
   </nav>
 
-  <a *ngIf="mobile" (click)="openMobileMenu()" id="overlayHeader" [class.hidden]="mobileMenu !== 'opened'" class="overlay {{mobileMenu}}"></a>
+  <a *ngIf="mobile && mobileMenu === 'opened'" (click)="openMobileMenu()" id="overlayHeader" [class.hidden]="mobileMenu !== 'opened'" class="overlay {{mobileMenu}}"></a>
 
   <div  (clickOutside)="showSubnav = 'hideSubnav'" [exclude]="'.userHeader'"  *ngIf="!mobile" class="subnav {{showSubnav}}">
     <div id="userInfo">
@@ -99,6 +101,7 @@
               <span *ngIf="noti.data.action === 'not_hired'"><strong>Helaas, </strong> je bent niet aangenomen door {{noti.data.user}}</span>
             </div>
             <div *ngIf="noti.type === NOTIFICATION_TYPES.review">
+              <span>Je hebt een review gekregen!</span>
               <div class="reviewScore">
                 <span *ngFor="let rating of ratingvalues; let i=index;" class="fas fa-star" [class.filled]="noti.data.rating >= i+1"></span>
               </div>

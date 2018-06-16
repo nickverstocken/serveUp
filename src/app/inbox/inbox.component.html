@@ -11,7 +11,10 @@
     <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewUserSucces($event)"  [offerId]="selectedOffer.id" [show]="showReviewPop" [user]="selectedOffer.request.user" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
     <div class="requestWrap">
       <div class="requestNavigation" [class.collapse]="!offerlistopened">
-        <ul *ngIf="offerList">
+        <div *ngIf="loading">
+          <app-subloader></app-subloader>
+        </div>
+        <ul *ngIf="offerList && !loading">
           <li *ngFor="let offer of offerList">
             <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id" [class.isrequest]="offer.accepted == 0">
               <div routerLink="/profile/{{offer.request.user.id}}" class="userPicture">
@@ -93,7 +96,10 @@
     <app-write-review *ngIf="showReviewPop" (reviewSuccess)="reviewSucces($event)" [offerId]="selectedOffer.id" [show]="showReviewPop" [service]="selectedOffer.service" [fromuser]="user" (closePopup)="showReviewPop = false"></app-write-review>
     <div class="requestWrap">
       <div class="requestNavigation" [class.collapse]="!offerlistopened">
-        <ul *ngIf="offerList">
+        <div *ngIf="loading">
+          <app-subloader></app-subloader>
+        </div>
+        <ul *ngIf="offerList && !loading">
           <li *ngFor="let offer of offerList">
             <a (click)="changeSelected(offer)" [class.selected]="selectedOffer && selectedOffer.id == offer.id">
               <div class="userPicture">

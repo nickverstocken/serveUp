@@ -28,7 +28,10 @@ export class AuthService {
       },
         error => {
         if(this.router.url !== '/home' && this.router.url !== '/register' && this.router.url !== '/register?as=user' && this.router.url !== '/register?as=service'){
-          this.router.navigate(['/login']);
+          if(error.status === 401){
+            this.router.navigate(['/login']);
+          }
+
         }
 
 

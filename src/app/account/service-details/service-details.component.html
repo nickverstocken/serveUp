@@ -45,8 +45,13 @@
       <div *ngIf="formservice.controls.social_networks.controls.length === 0">
         <small>Geen sociale netwerken toegevoegd.</small>
       </div>
-      <div  *ngIf="showActions" class="showprofile">
+      <div  *ngIf="showActions" class="showprofile form-group">
         <button routerLink="/service/{{service.id}}" class="button btnstyle2 fullWidth btnWithIcon"><span class="fas fa-eye"></span> Bekijk profiel</button>
+      </div>
+      <div *ngIf="showActions" class="removebtn form-group">
+        <button (click)="delete()" class="btnstyle2 btnWithIcon button fullWidth red">
+          <span class="fas fa-trash-alt"></span><span>Verwijder service</span>
+        </button>
       </div>
     </div>
     </div>

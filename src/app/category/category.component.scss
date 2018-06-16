@@ -37,6 +37,22 @@ display: grid;
     }
   }
 }
+#overview{
+  position: fixed;
+  background: #fff;
+  color:$textColor;
+  border:0;
+  top:0px;
+  left:0px;
+  z-index:6;
+  margin-left: -1px;
+  border-radius: 0;
+  width:60px;
+  height:60px;
+  &:hover{
+    box-shadow: none;
+  }
+}
 @media all and (max-width: 800px) {
   .banner{
     height: 250px;

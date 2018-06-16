@@ -8,6 +8,7 @@ import {StepperComponent} from '../components/stepper/stepper.component';
 import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {EmailValidator} from '../custom-validation/email.validator';
 import {AuthService} from '../services/auth.service';
+import {ToastServiceService} from '../services/toast-service.service';
 
 declare var $: any;
 
@@ -23,7 +24,8 @@ export class SignupComponent implements OnInit {
   user = new User();
   formuser;
   page = 1;
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private serveUpService: ServupService, private authService: AuthService) {
+  loading = false;
+  constructor(private snackbar: ToastServiceService, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private serveUpService: ServupService, private authService: AuthService) {
 
   }
 
@@ -75,7 +77,7 @@ export class SignupComponent implements OnInit {
   @ViewChild('stepperUser') stepperUser: StepperComponent;
 
   register() {
-    console.log(this.choice);
+    this.loading = true;
     const frmData = this.assignFormData(this.formuser.value);
     frmData.append('role', this.choice);
     frmData.append('city_id', this.formuser.controls.city.controls.id.value);
@@ -89,11 +91,21 @@ export class SignupComponent implements OnInit {
         this.serveUpService.sendRegistrationMail(mailData).subscribe(
           mailres => {
             this.page = 4;
-          }
-        )
+          },
+          error => {
+            this.page = -1;
+              this.snackbar.sendNotification('Er ging iets mis bij het versturen van de bevestigingsemail...');
+          },
+          () => {
+            this.loading = false;
+          });
       },
       error => {
         this.page = -1;
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       }
     );
   }

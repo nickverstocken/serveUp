@@ -82,15 +82,18 @@ export class ChatComponent implements OnInit {
   keyupfunction(e) {
     this.autoGrow(e);
     if (e.keyCode === 13 && !e.shiftKey) {
+      this.sendMessage();
+    }
+  }
+  sendMessage(){
+    if(this.chatmessage.message){
       if (this.chatmessage.message.trim()) {
         this.messages.push(this.chatmessage);
         this.messageSend.emit({'chatmessage': this.chatmessage, 'index': this.messages.indexOf(this.chatmessage)});
         this.clearChatMessage();
       }
-
     }
   }
-
   scrollToBottom(): void {
     document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
   }
@@ -106,14 +109,6 @@ export class ChatComponent implements OnInit {
     this.textArea.style.height = (this.textArea.scrollHeight) + 'px';
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
-    }
-  }
-
-  showEmojis() {
-    if (this.showemojis) {
-      this.showemojis = false;
-    } else {
-      this.showemojis = true;
     }
   }
 

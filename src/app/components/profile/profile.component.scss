@@ -43,10 +43,9 @@ table{
   width: 150px;
   height: 150px;
   position: relative;
-  z-index: 1;
+  z-index: 0;
   background: $backgroundColor;
   border-radius: 50%;
-
   overflow: hidden;
   margin: 0 auto;
   img {

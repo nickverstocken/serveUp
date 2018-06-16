@@ -5,7 +5,7 @@ import {User} from '../../models/User';
 import {ServupService} from '../../services/servup.service';
 import {SubCategory} from '../../models/SubCategory';
 import {FormBuilder,  Validators} from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
 import {ToastServiceService} from '../../services/toast-service.service';
 @Component({
   selector: 'app-search-detail',
@@ -22,7 +22,8 @@ export class SearchDetailComponent implements OnInit {
   today = new Date();
   mobile = false;
   innerWidth;
-  constructor(private snackbar: ToastServiceService, private router: Router, private route: ActivatedRoute, private auth: AuthService, private serveUpService: ServupService,  private fb: FormBuilder, private datePipe: DatePipe) {
+  loading = true;
+  constructor(private snackbar: ToastServiceService, private router: Router, private route: ActivatedRoute, private auth: AuthService, private serveUpService: ServupService,  private fb: FormBuilder, private datePipe: DatePipe, private location: Location) {
 
   }
   @HostListener('window:resize', ['$event'])
@@ -57,9 +58,13 @@ export class SearchDetailComponent implements OnInit {
             this.getServicesNearbyCount();
           },
           error => {
+            this.loading = false;
             if(error.status === 404){
               this.router.navigate(['']);
             }
+          },
+          () => {
+            this.loading = false;
           }
         );
       });
@@ -99,11 +104,12 @@ export class SearchDetailComponent implements OnInit {
       this.serveUpService.saveRequest(frmData).subscribe(
         result => {
           this.snackbar.sendNotification('Verzoek succesvol verzonden!', 'Ok');
-          this.router.navigate([`project/${result.data.id}`]);
+          this.router.navigate([`projects/${result.data.id}`]);
         },(error) => {
           this.snackbar.sendNotification('Er is iets misgelopen!', 'Ok');
         });
     }else{
+      console.log('les than');
       this.snackbar.sendNotification('Er zijn geen services in de buurt :(');
     }
 
@@ -114,5 +120,8 @@ export class SearchDetailComponent implements OnInit {
       frmData.append(key, model[key]);
     }
     return frmData;
+  }
+  goBack(){
+    this.location.back();
   }
 }

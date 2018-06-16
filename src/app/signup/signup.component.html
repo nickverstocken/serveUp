@@ -45,7 +45,7 @@
                 <input autocomplete="off" [class.has-error]="!formuser.controls['email'].valid && formuser.controls['email'].touched"
                        formControlName="email" class="editable" id="email" placeholder="Email"/>
                 <div class="has-error">
-                  <p *ngIf="formuser.get('email').hasError('emailTaken') && formuser.get('email').touched">
+                  <p *ngIf="formuser.get('email').hasError('emailTaken')">
                     Email is al in gebruik...
                   </p>
                 </div>
@@ -84,7 +84,7 @@
               </div>
             </div>
             <div class="page" *ngIf="page === 3">
-              <div class="form-group">
+              <div class="form-group" *ngIf="!loading">
                 <input autocomplete="off" [class.has-error]="!formuser.controls['password'].valid && formuser.controls['password'].touched"
                        formControlName="password" validateEqual="password_confirmation" reverse="true" class="editable"
                        type="password" id="password"
@@ -94,14 +94,26 @@
                     Minimuum 6 karakters...
                   </p>
                 </div>
+
               </div>
 
-              <div class="form-group">
+              <div class="form-group" *ngIf="!loading">
                 <input autocomplete="off"
                   [class.has-error]="!formuser.controls['password_confirmation'].valid && formuser.controls['password_confirmation'].touched"
                   formControlName="password_confirmation" validateEqual="password" reverse="true" class="editable"
                   id="password_confirmation"
                   placeholder="Herhaal wachtwoord" type="password"/>
+              </div>
+              <div class="has-error">
+                <p *ngIf="(!formuser.controls['password_confirmation'].valid || !formuser.controls['password'].valid) && formuser.get('password').touched">
+                  Wachtwoord komen niet overeen.
+                </p>
+              </div>
+              <div class="info" *ngIf="loading">
+                <app-subloader></app-subloader>
+                <p>
+                  Bezig met registreren en bevestigingmail te sturen...
+                </p>
               </div>
               <div class="buttons">
                 <button (click)="setpage(2)" class="button">Vorige</button>
@@ -113,17 +125,29 @@
 
             </div>
             <div class="page" *ngIf="page === 4">
-              <div class="info">
+              <div class="info" *ngIf="!loading">
                 <span class="lnr lnr-smile success"></span>
                 <h3>Registratie succesvol! Verifieer gauw je mail en begin direct met ServeUp!</h3>
                 <button class="button" routerLink="/home">Ok</button>
               </div>
+              <div class="info" *ngIf="loading">
+                <app-subloader></app-subloader>
+                <p>
+                  Bezig met registreren en bevestigingmail te sturen...
+                </p>
+              </div>
             </div>
             <div class="page" *ngIf="page === -1">
-              <div class="info">
+              <div class="info" *ngIf="!loading">
              <span class="lnr lnr-sad error"></span>
                 <h3>Er ging iets mis probeer het later opnieuw!</h3>
                 <button class="button" routerLink="/home">Ok</button>
+              </div>
+              <div class="info" *ngIf="loading">
+                <app-subloader></app-subloader>
+                <p>
+                  Bezig met registreren en bevestigingmail te sturen...
+                </p>
               </div>
             </div>
           </div>

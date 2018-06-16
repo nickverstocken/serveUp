@@ -1,15 +1,19 @@
+<button *ngIf="mobile" id="overview" (click)="goBack()"><span class="fas fa-arrow-left"></span></button>
 <div id="projectsWrap" *ngIf="requests">
   <div class="heading">
     <h1>Jouw projecten</h1>
     <div class="seperator"></div>
   </div>
-  <div class="cardsWrap">
+  <div class="cardsWrap" *ngIf="!loading">
       <app-request-card *ngFor="let request of requests" [request]="request" [sender]="user" (onDeleted)="deletedReq($event)"></app-request-card>
   </div>
-  <div class="none" *ngIf="requests.length === 0">
+  <div class="none" *ngIf="requests.length === 0 && !loading">
     <h3>Je hebt nog geen project opgestart.</h3>
     <div>
       <button routerLink="/" class="button">Start nu met je volgende project</button>
     </div>
+  </div>
+  <div class="none" *ngIf="loading">
+    <app-subloader></app-subloader>
   </div>
 </div>

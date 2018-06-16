@@ -54,13 +54,13 @@ button{
   &.disabled{
     background:$backgroundColor;
     border:1px solid $borderColor;
-    color:$borderColor;
+    color:$borderColor !important;
     &:hover{
-      cursor:not-allowed;
-      box-shadow: none;
-      background:$backgroundColor;
+      cursor:not-allowed !important;
+      box-shadow: none !important;
+      background:$backgroundColor !important;
       border:1px solid $borderColor;
-      color:$borderColor;
+      color:$borderColor !important;
     }
   }
   &:hover{
@@ -729,7 +729,7 @@ display:flex;
     margin-right: 5px;
   }
   .timeWrap{
-    width:150px;
+    width:170px;
   }
 }
 .editactions{

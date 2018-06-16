@@ -1,3 +1,4 @@
+<button *ngIf="mobile" id="overview" (click)="goBack()"><span class="fas fa-arrow-left"></span></button>
 <div class="categoriesWrap" *ngIf="category">
   <div class="banner">
     <img [src]="'/assets/' + category.picture + '_bg.jpg'" alt="heroImage">
@@ -9,13 +10,16 @@
       </div>
     </div>
   </div>
-  <div class="subcatswrap">
+  <div class="subcatswrap" *ngIf="!loading">
     <div routerLink="/search/{{subcat.id}}" class="subcat" *ngFor="let subcat of category.subcategories; let i = index">
       <div class="block">
         <a><h3>{{subcat.name}}</h3></a>
       </div>
 
     </div>
+  </div>
+  <div class="loaderwrap" *ngIf="loading">
+    <app-subloader></app-subloader>
   </div>
 </div>
 

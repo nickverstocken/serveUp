@@ -1,5 +1,6 @@
+<button *ngIf="mobile" id="overview" (click)="goBack()"><span class="fas fa-arrow-left"></span></button>
 <div *ngIf="subcat" id="searchDetailWrap" [style.backgroundImage]="'url(/assets/' + subcat.category.picture + '_bg.jpg)'">
-<div class="contentModal">
+<div *ngIf="!loading" class="contentModal">
 
   <h1>{{nearbyCount}} {{subcat.plural}} in jouw buurt</h1>
   <div class="modalcenterfixed">
@@ -20,10 +21,14 @@
 
     </form>
     <div id="go">
-      <button [disabled]="!formRequest.valid" [class.disabled]="!formRequest.valid" (click)="sendRequest()" class="button buttonbig">Volgende</button>
+      <button (click)="sendRequest()" class="button buttonbig">Volgende</button>
     </div>
 
   </div>
 </div>
-
+<div class="contentModal" *ngIf="loading">
+  <div class="modalcenterfixed">
+    <app-subloader></app-subloader>
+  </div>
+</div>
 </div>

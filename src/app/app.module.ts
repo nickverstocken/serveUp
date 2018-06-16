@@ -1,6 +1,3 @@
-
-/*import { PickerModule } from '@ctrl/ngx-emoji-mart';*/
-// angular material components
 import {
   MatDatepickerModule,
   MatNativeDateModule,
@@ -20,7 +17,6 @@ import { registerLocaleData } from '@angular/common';
 import localeBE from '@angular/common/locales/nl-BE';
 registerLocaleData(localeBE, 'nl-BE');
 import {Routing} from './app.routing';
-
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {SignupComponent} from './signup/signup.component';
@@ -93,7 +89,9 @@ import {EqualValidator } from './directives/validateEqual.directive';
 import { ServiceProfileComponent } from './service-profile/service-profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './login/login.component';
-
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { SubloaderComponent } from './components/subloader/subloader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -156,10 +154,14 @@ import { LoginComponent } from './login/login.component';
     UserDetailsComponent,
     EqualValidator,
     ServiceProfileComponent,
-    LoginComponent
+    LoginComponent,
+    SubloaderComponent
   ],
   imports: [
     BrowserModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production
+    }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

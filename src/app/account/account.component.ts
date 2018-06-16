@@ -13,6 +13,7 @@ import {Review} from '../models/Review';
 import {ProfileComponent} from '../components/profile/profile.component';
 import {ToastServiceService} from '../services/toast-service.service';
 import {MatSnackBar} from '@angular/material';
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -33,13 +34,13 @@ export class AccountComponent implements OnInit, AfterViewInit {
   serviceReviews: Review[];
   userMeta;
   serviceMeta;
-
+  loadingadd = true;
   @ViewChild('serviceTravel') serviceTravel: ServiceTravelComponent;
   @ViewChild('servicePrice') servicePrice: ServicePriceComponent;
   @ViewChild('serviceDetail') serviceDetail: ServiceDetailsComponent;
   @ViewChild('userProfile') userProfile: ProfileComponent;
   @ViewChild('serviceProfile') serviceProfile: ProfileComponent;
-  constructor(private snackbar: ToastServiceService, private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
+  constructor(private snackbar: ToastServiceService, private serveUpService: ServupService, private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit() {
     this.cardEdit = 'service-details';
@@ -98,7 +99,21 @@ export class AccountComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
+  deleteService(service) {
+    this.serveUpService.deleteService(service.id).subscribe(result => {
+      this.snackbar.sendNotification('Service succesvol verwijderd!');
+        this.services = this.services.filter(item =>  result.service.id !== item.id);
+      this.user.service = this.user.service.filter(item =>  result.service.id !== item.id);
+        if(this.user.service.length > 0){
+          this.selectedService = this.user.service[0];
+          this.serveUpService.setSelectedService(this.user.service[0].id);
+        }
+      this.serveUpService.serviceDeletedSubj.next(result.service);
+    },
+      error => {
+        this.snackbar.sendNotification('Er ging iets mis bij het verwijderen...', 'Ok');
+      });
+  }
   changePassword(){
     const frmData = this.assignFormData(this.formchangePass.value);
     this.serveUpService.changePass(frmData).subscribe(
@@ -108,6 +123,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   addService(service){
     let frmData = this.assignFormData(service);
+    this.loadingadd = true;
     this.serveUpService.addService(frmData).subscribe(result => {
      this.user.service.push(result.service);
      this.services.push(result.service);
@@ -115,7 +131,17 @@ export class AccountComponent implements OnInit, AfterViewInit {
      this.serveUpService.serviceAddedSubj.next(result.service);
      this.serveUpService.setSelectedService(result.service.id);
      this.showServiceAdd = false;
-    });
+    },
+      error => {
+      this.showServiceAdd = false;
+      this.loadingadd = false;
+      this.snackbar.sendNotification('Er ging iets mis probeer het later opnieuw...');
+      },
+      () => {
+        this.showServiceAdd = false;
+        this.loadingadd = false;
+        this.snackbar.sendNotification('Service succesvol toegevoegd!');
+      });
   }
   buildFormUser(){
     this.formuser = this.fb.group({
@@ -140,31 +166,34 @@ export class AccountComponent implements OnInit, AfterViewInit {
     });
   }
   buidFormService(){
-    this.formService = this.fb.group({
-      name: [this.selectedService.name, Validators.required],
-      description: [this.selectedService.description, Validators.required],
-      logo: [this.selectedService.logo],
-      banner: [this.selectedService.banner],
-      address: [this.selectedService.address, Validators.required],
-      city: this.fb.group({
-        id: [this.selectedService.city.id, Validators.required],
-        name: [this.selectedService.city.name, Validators.required],
-        zip: [this.selectedService.city.zip, [Validators.required, Validators.minLength(4)]],
-        lat: [this.selectedService.city.lat],
-        lng: [this.selectedService.city.lng]
-      }),
-      tel: [this.selectedService.tel],
-      experience: [this.selectedService.experience],
-      website: [this.selectedService.website],
-      social_networks: this.fb.array([]),
-      business_hours: [this.selectedService.business_hours],
-      max_km: [this.selectedService.max_km],
-      price_estimate: [this.selectedService.price_estimate, Validators.required],
-      rate: [this.selectedService.rate, Validators.required],
-      price_extras: this.fb.array([]),
-      subcategory_id: [this.selectedService.sub_category ? this.selectedService.sub_category.id : null],
-      category_id: [this.selectedService.sub_category  ? this.selectedService.sub_category.category.id : null]
-    });
+    if(this.selectedService){
+      this.formService = this.fb.group({
+        name: [this.selectedService.name, Validators.required],
+        description: [this.selectedService.description, Validators.required],
+        logo: [this.selectedService.logo],
+        banner: [this.selectedService.banner],
+        address: [this.selectedService.address, Validators.required],
+        city: this.fb.group({
+          id: [this.selectedService.city.id, Validators.required],
+          name: [this.selectedService.city.name, Validators.required],
+          zip: [this.selectedService.city.zip, [Validators.required, Validators.minLength(4)]],
+          lat: [this.selectedService.city.lat],
+          lng: [this.selectedService.city.lng]
+        }),
+        tel: [this.selectedService.tel],
+        experience: [this.selectedService.experience],
+        website: [this.selectedService.website],
+        social_networks: this.fb.array([]),
+        business_hours: [this.selectedService.business_hours],
+        max_km: [this.selectedService.max_km],
+        price_estimate: [this.selectedService.price_estimate, Validators.required],
+        rate: [this.selectedService.rate, Validators.required],
+        price_extras: this.fb.array([]),
+        subcategory_id: [this.selectedService.sub_category ? this.selectedService.sub_category.id : null],
+        category_id: [this.selectedService.sub_category  ? this.selectedService.sub_category.category.id : null]
+      });
+    }
+
   }
 
   setService(service: Service) {

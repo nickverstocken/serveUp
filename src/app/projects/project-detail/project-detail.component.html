@@ -1,16 +1,21 @@
+<div [class.hidden]="!mobile" class="backbtn"><button (click)="goBack()" class="backbtn"><span class="fas fa-arrow-left"></span></button></div>
 <div [class.hidden]="!chatterOpen" class="backbtn"><button (click)="closeChatter()" class="backbtn"><span class="fas fa-arrow-left"></span></button></div>
 <div class="fixedWrap">
   <div class="leftSubNav">
     <h2>Jouw Dj's</h2>
-    <app-user-price-list (changeSelectedOffer)="changeSelected($event)" [currentSelected]="currentSelected" [offerList]="offerlist"></app-user-price-list>
-
+    <app-user-price-list *ngIf="!loadingOffer" (changeSelectedOffer)="changeSelected($event)" [currentSelected]="currentSelected" [offerList]="offerlist"></app-user-price-list>
+    <app-subloader *ngIf="loadingOffer"></app-subloader>
   </div>
   <button  id="overview" [class.hidden]="chatterOpen" (click)="toggleUserPriceList()"><span class="fas fa-arrow-right"></span></button>
   <button [class.open]="mobile" [class.hidden]="chatterOpen" (click)="openChatter()" class="messagesFloatOpen"><span class="far fa-comments"></span></button>
   <a (click)="closeOverview()" id="overlayProjectDetails" [class.hidden]="!pricelistopened"  class="overlay"></a>
-  <div [class.chatterOpen]="chatterOpen" class="middleFixed" *ngIf="currentService">
+  <div [class.chatterOpen]="chatterOpen" class="middleFixed" *ngIf="currentService && !loadingProfile">
     <app-profile [reviews]="reviews" [reviewMeta]="reviewMeta" (loadmoreReviews)="loadMoreReviews($event)" [service]="currentService" [user]="currentService.user" class="profile"></app-profile>
   </div>
+  <div class="middleFixed loading" *ngIf="loadingProfile">
+    <app-subloader *ngIf="loadingProfile"></app-subloader>
+  </div>
+
   <div class="rightAsside">
     <div class="priceBlock" *ngIf="currentService">
       <div class="priceBigWrap">

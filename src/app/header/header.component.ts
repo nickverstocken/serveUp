@@ -1,5 +1,5 @@
 import {Component, OnInit, HostListener, AfterViewInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {User} from '../models/User';
 import {environment} from '../../environments/environment.prod';
@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   };
   sub;
   pushersub;
-  currentUserSub;
   services = [];
   showMessages = false;
   unreadmsg;
@@ -46,6 +45,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     'Zeer goed'
   ];
   constructor(private router: Router, private route:ActivatedRoute, private auth: AuthService, private servupService: ServupService, private pusherService: PusherService) {
+    router.events.subscribe(event => {
+      if(event instanceof NavigationStart) {
+        this.hideAll();
+      }
+    });
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -98,7 +102,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.services.push(result);
         this.servupService.serviceAddedSubj.next(null);
       }
-
+    });
+    this.servupService.serviceDeletedSubj.subscribe(result => {
+      this.services = this.services.filter(item => item.id !== result.id);
     });
     this.auth.isAuthenticated.subscribe(
       data => {
@@ -162,7 +168,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
     if(notification.type === this.NOTIFICATION_TYPES.action){
       if(notification.data.action === 'accepted'){
-        to = 'project/' + notification.data.request_id + '/offer/' + notification.data.offer_id;
+        to = 'projects/' + notification.data.request_id + '/offer/' + notification.data.offer_id;
       }
       if(notification.data.action === 'declined'){
         to = 'projects';
@@ -190,10 +196,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   hideAll(){
     this.showNoti = 'hideNoti';
     this.showSubnav = 'hideSubnav';
+    this.showMessages = false;
+    this.mobileMenu = '';
   }
 
   receivedMessage(event) {
-    let currentOffer = this.messages.service_messages.filter(message => message.id === event.message_id)[0];
+    let currentOffer = null;
+    if(this.user.role === 'service'){
+      currentOffer = this.messages.service_messages.filter(message => message.id === event.message_id)[0];
+    }
     if (!currentOffer) {
       currentOffer = this.messages.personal_messages.filter(message => message.id === event.message_id)[0];
     }

@@ -11,6 +11,7 @@ import {City} from '../../models/City';
 })
 export class AddServiceModalComponent implements OnInit, OnChanges {
   @Input() show = false;
+  @Input() loading = false;
   @Output() onclose: EventEmitter<any> = new EventEmitter<any>();
   @Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
   selectedService = new Service();
@@ -82,7 +83,7 @@ export class AddServiceModalComponent implements OnInit, OnChanges {
       ...this.step4.value,
       city_id: this.step1.controls.city.controls.id.value
     };
-    console.log(this.formService);
+    this.loading = true;
    this.onAdd.emit(this.formService);
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from './services/auth.service';
-import {ApiService} from './services/api.service';
 import {ServupService} from './services/servup.service';
+import {SwUpdate} from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',

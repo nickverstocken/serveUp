@@ -19,7 +19,7 @@
   </div>
   <div class="cardActions">
     <a *ngIf="!editmode" (click)="editMode()">Wijzig</a>
-    <a *ngIf="!editmode" routerLink="/project/{{request.id}}/offer/{{request.offers[0] ? request.offers[0].id : 'nope'}}">Bekijk</a>
+    <a *ngIf="!editmode" routerLink="/projects/{{request.id}}/offer/{{request.offers[0] ? request.offers[0].id : 'nope'}}">Bekijk</a>
     <a *ngIf="editmode" (click)="deleteRequest()" class="red">Verwijder</a>
     <a *ngIf="editmode" (click)="editRequest()">Ok</a>
   </div>

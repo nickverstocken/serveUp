@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^5.2.10",
     "@angular/platform-browser-dynamic": "^5.2.10",
     "@angular/router": "^5.2.10",
-    "@ctrl/ngx-emoji-mart": "^0.4.0",
+    "@angular/service-worker": "^6.0.5",
     "angular2-jwt": "^0.2.3",
     "core-js": "^2.5.5",
     "fullcalendar": "^3.6.1",

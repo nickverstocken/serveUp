@@ -41,7 +41,16 @@ h2,h3{
   top:0;
   margin:0 auto;
   overflow: auto;
-
+  &.loading{
+    position: relative;
+    app-subloader{
+      position: relative;
+      margin-top: calc(50vh - 75px);
+      display: flex;
+      align-items: center;
+      height: 150px;
+    }
+  }
 }
 h2{
   padding:25px;

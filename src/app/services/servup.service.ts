@@ -10,6 +10,8 @@ export class ServupService {
   public selectedService = this.selectedServiceSubject.asObservable().distinctUntilChanged();
   public serviceAddedSubj = new BehaviorSubject<any>(null);
   public addedService = this.serviceAddedSubj.asObservable().distinctUntilChanged();
+  public serviceDeletedSubj = new BehaviorSubject<any>(null);
+  public deletedService = this.serviceDeletedSubj.asObservable().distinctUntilChanged();
   constructor(private api: ApiService) {
   }
 
@@ -19,6 +21,9 @@ export class ServupService {
   }
   serviceAdded(service){
     this.serviceAddedSubj.next(service);
+  }
+  serviceDeleted(service){
+    this.serviceDeletedSubj.next(service);
   }
   //misc
   getCities(): Observable<any> {
@@ -83,6 +88,9 @@ export class ServupService {
   }
   getService(id): Observable<any> {
     return this.api.get(`/service/${id}`);
+  }
+  deleteService(id): Observable<any> {
+    return this.api.delete(`/service/${id}`);
   }
   //request
   saveRequest(form): Observable<any> {

@@ -14,6 +14,7 @@ export class SearchServiceComponent implements OnInit {
   categories: Category[];
   searchTerm = new Subject<string>();
   searchResult: SubCategory[];
+  loading = true;
   constructor(private auth: AuthService, private serveUpService: ServupService) {
     this.searchTerm.distinctUntilChanged().subscribe(
       searchtrm => {
@@ -39,6 +40,13 @@ export class SearchServiceComponent implements OnInit {
         this.serveUpService.getCategories().subscribe(
           result => {
             this.categories = result.categories;
+            this.loading = false;
+          },
+          error => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
           }
         );
       }else{

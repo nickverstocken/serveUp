@@ -4,6 +4,7 @@ import {ServupService} from '../../services/servup.service';
 import {Service} from '../../models/Service';
 import {AuthService} from '../../services/auth.service';
 import {Review} from '../../models/Review';
+import {Location} from '@angular/common';
 
 declare var $: any;
 
@@ -28,8 +29,9 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   reviewMeta;
   showReviewPop = false;
   user;
-
-  constructor(private router: Router, private route: ActivatedRoute, private serveUpService: ServupService, private auth: AuthService) {
+  loadingOffer = true;
+  loadingProfile = true;
+  constructor(private router: Router, private route: ActivatedRoute, private serveUpService: ServupService, private auth: AuthService, private location: Location) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -64,9 +66,13 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
                   }
                 },
                 error => {
+                this.loadingOffer = false;
                   if (error.status === 404) {
                     this.router.navigate(['projects']);
                   }
+                },
+                () => {
+                  this.loadingOffer = false;
                 });
             }
           });
@@ -101,6 +107,10 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
         if (error.status === 404) {
           this.router.navigate(['projects']);
         }
+        this.loadingProfile = false;
+      },
+      () => {
+      this.loadingProfile = false;
       });
   }
 
@@ -134,9 +144,11 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   }
 
   changeSelected(offerid) {
+    this.loadingProfile = true;
+    this.loading  = true;
     this.closeOverview();
     this.currentSelected = offerid;
-    this.router.navigate(['project/' + this.currentRequest + '/offer/' + this.currentSelected]);
+    this.router.navigate(['projects/' + this.currentRequest + '/offer/' + this.currentSelected]);
     this.getSelectedOffer(this.currentSelected);
   }
 
@@ -301,5 +313,9 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     review.reviewer = this.user;
     review.id = event.id;
     this.reviews.unshift(review);
+    this.showReviewPop = false;
+  }
+  goBack(){
+    this.location.back();
   }
 }

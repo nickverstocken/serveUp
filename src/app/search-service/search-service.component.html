@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="categoriesWrap">
-    <div class="cardsWrap row">
+    <div *ngIf="!loading" class="cardsWrap row">
       <div routerLink="/category/{{cat.id}}" *ngFor="let cat of categories" class="card imagecard">
         <div class="cardHead">
           <img src="/assets/{{cat.picture + '.jpg'}}"/>
@@ -46,6 +46,9 @@
           <h2>{{cat.name}}</h2>
         </div>
       </div>
+    </div>
+    <div class="loader" *ngIf="loading">
+      <app-subloader></app-subloader>
     </div>
   </div>
 </div>
