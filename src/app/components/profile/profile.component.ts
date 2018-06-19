@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.service);
   }
   srcollToReviews(){
     const element = document.querySelector('#reviews');

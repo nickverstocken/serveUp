@@ -44,5 +44,7 @@ export class AppointmentpickerComponent implements OnInit{
   onsendAppointment(){
     this.sendAppointment.emit(this.formAppointment);
   }
-
+  setFocusTime(){
+    document.getElementById('appointmentTimePick').focus();
+  }
 }

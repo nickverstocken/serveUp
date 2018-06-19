@@ -33,7 +33,7 @@ export class AutofillCitiesComponent implements OnInit {
         this.cities.sort();
       });
   }
-  fillInCity(event){
+  fillInCity(){
     if(this.adressForm.controls.zip.value) {
       if (this.adressForm.controls.zip.value.toString().length > 0) {
         const value = $('#' + this.id + ' .rightAutoFill span')[0];
@@ -46,7 +46,7 @@ export class AutofillCitiesComponent implements OnInit {
     }
 
   }
-  fillAll(event){
+  fillAll(){
     if(this.adressForm.controls.zip.value){
       if(this.adressForm.controls.zip.value.toString().length > 0 && this.adressForm.controls.name.value.length){
         const valueZip = $('#' + this.id + ' .leftAutoFill span')[0];

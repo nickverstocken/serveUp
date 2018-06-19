@@ -7,7 +7,7 @@
     <h2>Waar, wanneer en wat voor {{subcat.plural}} zoek je?</h2>
     <form [formGroup]="formRequest">
       <div class="currentLocation">
-        <a class="currentLocation">Huidige locatie</a>
+        <a class="currentLocation" (click)="getCurrentLocation()">Huidige locatie</a>
       </div>
       <app-autofill-cities [id]="'searchCity'" [readonly]="false" [group]="formRequest.controls['city']"></app-autofill-cities>
       <div class="form-group withbutton">

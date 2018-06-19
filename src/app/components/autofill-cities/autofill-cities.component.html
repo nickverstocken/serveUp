@@ -1,6 +1,6 @@
 <div id="{{id}}">
 <div [formGroup]="adressForm" class="inputswrap address">
-  <input [attr.maxlength]="4" numbermask (focus)="!readonly ? showAutoFill=true : ''"  (keydown.tab)="fillAll($event)"  (keyup)="fillInCity($event)" autocomplete="off" [class.has-error]="!adressForm.controls['zip'].valid && adressForm.controls['zip'].touched" formControlName="zip" autocomplete="false" class="editable zip" [class.disabled]="readonly" [readonly]="readonly" placeholder="Postcode" />
+  <input [attr.maxlength]="4" numbermask (focus)="!readonly ? showAutoFill=true : ''"  (keydown.tab)="fillAll()"  (keyup)="fillInCity()" autocomplete="off" [class.has-error]="!adressForm.controls['zip'].valid && adressForm.controls['zip'].touched" formControlName="zip" autocomplete="false" class="editable zip" [class.disabled]="readonly" [readonly]="readonly" placeholder="Postcode" />
   <input autocomplete="off" [class.has-error]="!adressForm.controls['name'].valid && adressForm.controls['name'].touched" formControlName="name"  class="disabled" readonly placeholder="Plaats" />
 </div>
 <div *ngIf="cities" class="autoFillWrap {{showAutoFill ? '' : 'hidden'}}">

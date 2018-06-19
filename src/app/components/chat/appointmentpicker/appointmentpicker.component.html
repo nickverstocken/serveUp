@@ -11,8 +11,8 @@
         <mat-datepicker [touchUi]="mobile" #picker></mat-datepicker>
       </div>
       <div class="timeWrap form-group withbutton">
-        <input [class.has-error]="!formAppointment.controls['time'].valid && formAppointment.controls['time'].touched" formControlName="time" class="timepicker" type="time" name="appointmentTime"/>
-        <button class="button"><span class="icon far fa-clock"></span></button>
+        <input id="appointmentTimePick" [class.has-error]="!formAppointment.controls['time'].valid && formAppointment.controls['time'].touched" formControlName="time" class="timepicker" type="time" name="appointmentTime"/>
+        <button class="button" (click)="setFocusTime()"><span class="icon far fa-clock"></span></button>
       </div>
     </div>
   <div class="placeChooser">

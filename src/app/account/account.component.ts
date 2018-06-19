@@ -199,9 +199,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
   setService(service: Service) {
     this.selectedService = service;
     this.buidFormService();
-    if(this.subnav === 'service-account'){
+
       this.getServiceReviews();
-    }
+
     if(this.serviceTravel){
       this.serviceTravel.setLatLng(this.selectedService.city.lat, this.selectedService.city.lng);
     }
